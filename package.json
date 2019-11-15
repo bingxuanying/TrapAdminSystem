@@ -1,0 +1,28 @@
+{
+  "name": "loginsystem",
+  "version": "1.0.0",
+  "description": "self written login sys for testing purpose; try REST API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bingxuanying/LoginSystem.git"
+  },
+  "keywords": [
+    "login",
+    "sys",
+    "REST",
+    "API"
+  ],
+  "author": "YBX",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bingxuanying/LoginSystem/issues"
+  },
+  "homepage": "https://github.com/bingxuanying/LoginSystem#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
