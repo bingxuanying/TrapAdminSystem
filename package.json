@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/bingxuanying/LoginSystem#readme",
   "dependencies": {
+    "dateformat": "^3.0.3",
     "express": "^4.17.1"
   }
 }
