@@ -6,8 +6,6 @@ body {
     flex-direction: column;
     font-family: sans-serif;
 }
-<<<<<<< HEAD
-=======
 
 .form {
     width: 50%;
@@ -68,4 +66,3 @@ body {
 .form input:valid + .label-username::after {
     transform: translateX(0%);
 }
->>>>>>> 84cfdcb8727009732acb41f5f77831d3dbf4131c
