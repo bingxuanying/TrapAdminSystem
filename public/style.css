@@ -8,13 +8,28 @@ body {
 }
 
 .form {
-    width: 50%;
     position: relative;
+    width: 50%;
+    height: 200px;
+}
+
+.username {
+    position: absolute;
+    top: 0%;
+    width: 100%;
     height: 50px;
     overflow: hidden;
 }
 
-.form input {
+.password {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    height: 50px;
+    overflow: hidden;
+}
+
+.username input, .password input {
     width: 100%;
     height: 100%;
     color: #595f6e;
@@ -24,7 +39,7 @@ body {
     outline: none;
 }
 
-.form label {
+.username label, .password label {
     position: absolute;
     bottom: 0px;
     left: 0%;
@@ -34,7 +49,7 @@ body {
     border-bottom: 1px solid black;
 }
 
-.form label::after {
+.username label::after, .password label:after {
     content: "";
     position: absolute;
     left: 0px;
@@ -46,7 +61,7 @@ body {
     transition: transform 0.3s ease;
 }
 
-.content-username {
+.content-username, .content-password {
     position: absolute;
     font-size: 28px;
     bottom: 5px;
@@ -54,15 +69,19 @@ body {
     transition: all 0.3s ease;
 }
 
-.form input:focus + .label-username .content-username, 
-.form input:valid + .label-username .content-username {
+.username input:focus + .label-username .content-username, 
+.username input:valid + .label-username .content-username,
+.password input:focus + .label-password .content-password, 
+.password input:valid + .label-password .content-password {
     transform: translateY(-110%);
     font-size: 18px;
     color: #5fa8d3;
 }
 
 
-.form input:focus + .label-username::after,
-.form input:valid + .label-username::after {
+.username input:focus + .label-username::after,
+.username input:valid + .label-username::after,
+.password input:focus + .label-password::after,
+.password input:valid + .label-password::after {
     transform: translateX(0%);
 }
