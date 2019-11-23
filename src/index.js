@@ -16,7 +16,7 @@ app.use(function (req, res, next) {
 app.use(express.static(path.join(__dirname, "../public")));
 
 //routers
-app.use(homeRoute);
+app.use("/", homeRoute);
 
 // error handler
 app.use(function (req, res, next) {
