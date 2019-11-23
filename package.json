@@ -4,7 +4,7 @@
   "description": "self written login sys for testing purpose; try REST API",
   "main": "index.js",
   "scripts": {
-    "start": "node src/index.js",
+    "start": "nodemon src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -24,7 +24,9 @@
   },
   "homepage": "https://github.com/bingxuanying/LoginSystem#readme",
   "dependencies": {
+    "core-util-is": "^1.0.2",
     "dateformat": "^3.0.3",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "npm": "^6.13.1"
   }
 }
