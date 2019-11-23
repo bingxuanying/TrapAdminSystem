@@ -33,37 +33,6 @@ body {
   padding: 10px 0px;
 }
 
-.logbtn {
-  position: relative;
-  left: 10%;
-  top: 40px;
-  width: 80%;
-  height: 50px;
-  align-self: center;
-  background: linear-gradient(90deg, lightgray 50%, black 50%);
-  background-size: 200%;
-  border: none;
-  outline: none;
-  color: white;
-  font-size: 20px;
-  padding: 5px;
-  cursor: pointer;
-  margin-top: 13px;
-  margin-bottom: 40px;
-  transition: transform 0.3s ease;
-}
-
-.logbtn:hover {
-  background-position: right;
-}
-
-.bottom-text {
-  position: relative;
-  margin-top:40px;
-  text-align: center;
-  font-size: 15px;
-}
-
 .textbox {
   position: relative;
   left: 10%;
@@ -125,3 +94,35 @@ body {
 .textbox input:valid + .label-textbox::after {
   transform: translateX(0%);
 }
+
+.logbtn {
+  position: relative;
+  left: 10%;
+  top: 40px;
+  width: 80%;
+  height: 50px;
+  align-self: center;
+  background: linear-gradient(90deg, lightgray 50%, black 50%);
+  background-size: 200%;
+  border: 3px solid white;
+  outline: none;
+  color: white;
+  font-size: 20px;
+  padding: 5px;
+  cursor: pointer;
+  margin-top: 13px;
+  margin-bottom: 40px;
+  transition: transform 0.3s ease;
+}
+
+.logbtn:hover {
+  background-position: right;
+}
+
+.bottom-text {
+  position: relative;
+  margin-top:40px;
+  text-align: center;
+  font-size: 15px;
+}
+
