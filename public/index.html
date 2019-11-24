@@ -30,16 +30,25 @@
       <input class="logbtn" type="submit" name="" value="Login" />
       <!-- Create Account -->
       <div class="bottom-text">
-        Don't have account? <a href="#">Sign up</a>
+        Don't have account?
+        <input id="signup" class="signup-btn" type="button" name="" value="Sign Up" />
       </div>
     </div>
 
       <!-- The Modal-->
-    <div id="register-modal" class="modal">
+    <div id="register-modal" class="bg-modal">
       <div class="modal-content">
-        <span class="close">&times;</span>
-
+        <div class="close">+</div>
+        <h1>Create Account</h1>
+        <form action="">
+          <input class="info-box" type="text" placeholder="Account Name">
+          <input class="info-box" type="text" placeholder="Password">
+          <input class="info-box" type="text" placeholder="Serial Number #">
+          <input class="register-btn" type="button" name="" value="register" />
+        </form>
       </div>
     </div>
+
+    <script src="signUpModal.js"></script>
   </body>
 </html>
