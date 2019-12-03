@@ -12,39 +12,42 @@
     <!-- Login Box -->
     <div class="login-box">
       <h1>Login</h1>
-      <!-- Username Block -->
-      <div class="textbox">
-        <input type="text" name="name" autocomplete="off" required />
-        <label for="name" class="label-textbox">
-          <span class="content-textbox">Username</span>
-        </label>
-      </div>
-      <!-- Password Block -->
-      <div class="textbox" style="top: 20px;">
-        <input type="password" name="name" autocomplete="off" required />
-        <label for="name" class="label-textbox">
-          <span class="content-textbox">Password</span>
-        </label>
-      </div>
-      <!-- Login Button -->
-      <input class="logbtn" type="submit" name="" value="Login" />
+      <form action="/login" method="POST">
+        <!-- Username Block -->
+        <div class="textbox">
+          <input type="text" name="username" autocomplete="off" required />
+          <label for="name" class="label-textbox">
+            <span class="content-textbox">Username</span>
+          </label>
+        </div>
+        <!-- Password Block -->
+        <div class="textbox" style="top: 20px;">
+          <input type="password" name="password" autocomplete="off" required />
+          <label for="name" class="label-textbox">
+            <span class="content-textbox">Password</span>
+          </label>
+        </div>
+        <!-- Login Button -->
+        <input class="logbtn" type="submit" name="" value="LOGIN" />
+      </form>
+
       <!-- Create Account -->
       <div class="bottom-text">
         Don't have account?
-        <input id="signup" class="signup-btn" type="button" name="" value="Sign Up" />
+        <input id="signup" class="signup-btn" type="button" name="" value="SIGN UP" />
       </div>
     </div>
 
-      <!-- The Modal-->
+    <!-- The Modal-->
     <div id="register-modal" class="bg-modal">
       <div class="modal-content">
         <div class="close">+</div>
         <h1>Create Account</h1>
-        <form action="">
-          <input class="info-box" type="text" placeholder="Account Name">
-          <input class="info-box" type="text" placeholder="Password">
-          <input class="info-box" type="text" placeholder="Serial Number #">
-          <input class="register-btn" type="button" name="" value="register" />
+        <form action="/register" method="POST">
+          <input class="info-box" name="username" type="text" placeholder="Account Name">
+          <input class="info-box" name="passowrd" type="text" placeholder="Password">
+          <input class="info-box" name="serial-number" type="text" placeholder="Serial Number #">
+          <input class="register-btn" type="submit" name="" value="register" />
         </form>
       </div>
     </div>

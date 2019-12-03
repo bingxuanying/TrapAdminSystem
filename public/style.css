@@ -102,9 +102,9 @@ body {
   width: 80%;
   height: 50px;
   align-self: center;
-  background: linear-gradient(90deg, lightgray 50%, black 50%);
+  background: linear-gradient(90deg, black 50%, white 50%);
   background-size: 200%;
-  border: 3px solid white;
+  border: 2px solid black;
   outline: none;
   color: white;
   font-size: 20px;
@@ -117,6 +117,7 @@ body {
 
 .logbtn:hover {
   background-position: right;
+  color: black;
 }
 
 .bottom-text {
@@ -127,11 +128,12 @@ body {
 }
 
 .signup-btn {
-  background: linear-gradient(90deg, lightgray 50%, black 50%);
+  background: linear-gradient(90deg, black 50%, white 50%);
   background-size: 200%;
-  border: 2px solid white;
+  border: 1px solid black;
   border-radius: 20px;
   outline: none;
+  font-size: 12px;
   color: white;
   cursor: pointer;
   padding: 2px;
@@ -140,6 +142,7 @@ body {
 
 .signup-btn:hover {
   background-position: right;
+  color: black;
 }
 
 .bg-modal {
