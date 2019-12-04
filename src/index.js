@@ -1,13 +1,13 @@
-let express = require("express");
-let app = express();
-let mongoose = require("mongoose");
+const express = require("express");
+const app = express();
+const mongoose = require("mongoose");
 require("dotenv/config");
-let fs = require("fs");
-let f = require("util").format;
-let homeRoute = require("./routes/home");
-let dateFormat = require("dateformat");
-let bodyParser = require("body-parser")
-let path = require("path");
+const fs = require("fs");
+const f = require("util").format;
+const homeRoute = require("./routes/home");
+const dateFormat = require("dateformat");
+const bodyParser = require("body-parser");
+const path = require("path");
 
 app.use((req, res, next) => {
     var myDate = new Date();
@@ -21,7 +21,7 @@ app.use((req, res, next) => {
 app.use(express.static(path.join(__dirname, "../public")));
 
 // for body parser
-app.use(bodyParser.urlencoded({
+app.use(express.urlencoded({
     extended: true
 }));
 
@@ -55,7 +55,7 @@ mongoose.connect(
 });
 
 // setup the server
-let PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, function () {
     console.info(`Server on ${PORT}`);
 });
