@@ -7,7 +7,13 @@ const f = require("util").format;
 const homeRoute = require("./routes/home");
 const dateFormat = require("dateformat");
 const bodyParser = require("body-parser");
+const cookieParser = require('cookie-parser')
 const path = require("path");
+
+const session = require("express-session");
+const passport = require("passport");
+const LocalStrategy = require("passport-local").Strategy;
+const bcrypt = require("bcrypt");
 
 app.use((req, res, next) => {
     var myDate = new Date();
@@ -17,8 +23,21 @@ app.use((req, res, next) => {
     next();
 });
 
+app.use(cookieParser());
+
 // server static files
 app.use(express.static(path.join(__dirname, "../public")));
+
+// create session and initialize passport
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    // set to TRUE only when https
+    // cookie: { secure: true }
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 // for body parser
 app.use(bodyParser.json())
@@ -28,6 +47,31 @@ app.use(bodyParser.urlencoded({
 
 // routers
 app.use("/", homeRoute);
+
+// login authentication
+passport.use(new LocalStrategy(
+    (username, password, done) => {
+        var usersModel = mongoose.connection.collection('users');
+        usersModel.findOne({ username: username }, (err, user) => {
+            if (err) { return done(err); }
+            
+            if (!user) { return done(null, false); }
+            
+            const hash = user.password;
+            bcrypt.compare(password, hash, (err, res) => {
+                if (res === true) {
+                    return done(null, { user_id: user._id });
+                } else {
+                    return done(null, false);
+                }
+            })
+            
+            console.log(user.username);
+            console.log(password);
+            console.log(user.password);
+        });
+    }
+));
 
 // error handler
 app.use((req, res, next) => {

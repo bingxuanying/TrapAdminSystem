@@ -20,9 +20,11 @@ router.get("/home", (req, res, next) => {
 });
 
 // POST login data
-router.post("/login", (req, res, next) => {
-  res.json(req.body);
-});
+router.post("/login", passport.authenticate(
+  "local", {
+  successRedirect: "/trap",
+  failureRedirect: "/trap/wrongTrap"
+}));
 
 // POST register data
 router.post("/register", [
@@ -48,7 +50,7 @@ router.post("/register", [
       return res.json({ errors: result.array() });
     } else {
       // encrypt password
-      await bcrypt.hash(req.body.password, 10, (err, hashedPassword) => {
+      await bcrypt.hash(req.body.password, 10, async (err, hashedPassword) => {
         if(err)
           throw err;
         
@@ -58,7 +60,8 @@ router.post("/register", [
           password: hashedPassword
         });
       
-        const savedUser = user.save();
+        const savedUser = await user.save();
+        console.log("register success");
         res.json(savedUser);
         // res.redirect("/");
       });
