@@ -1,3 +1,6 @@
+# dependencies
 /node_modules
+
+# security pass
 *.pem
 *.env

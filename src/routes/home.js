@@ -4,7 +4,6 @@ const mongoose = require("mongoose");
 const User = require("../models/users-model");
 const bcrypt = require("bcrypt");
 const passport = require("passport");
-const initializePassport = require("../config/passport-config");
 const {check, validationResult} = require("express-validator");
 
 // initializePassport(passport, email => {
@@ -16,9 +15,6 @@ router.get("/", (req, res, next) => {
   res.render('index', {title:"My Application"});
 });
 
-// router.get("/home", (req, res, next) => {
-//   res.redirect("/");
-// });
 
 // POST login data
 router.post("/login", passport.authenticate(
