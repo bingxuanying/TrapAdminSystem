@@ -11,6 +11,7 @@ const cookieParser = require('cookie-parser')
 const path = require("path");
 
 const session = require("express-session");
+const MongoStore = require('connect-mongo')(session);
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const bcrypt = require("bcrypt");
@@ -33,6 +34,7 @@ app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
+    store: new MongoStore({ mongooseConnection: mongoose.connection }),
     // set to TRUE only when https
     // cookie: { secure: true }
 }));
