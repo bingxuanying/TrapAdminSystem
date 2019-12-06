@@ -16,9 +16,9 @@ router.get("/", (req, res, next) => {
   res.render('index', {title:"My Application"});
 });
 
-router.get("/home", (req, res, next) => {
-  res.redirect("/");
-});
+// router.get("/home", (req, res, next) => {
+//   res.redirect("/");
+// });
 
 // POST login data
 router.post("/login", passport.authenticate(
@@ -29,7 +29,8 @@ router.post("/login", passport.authenticate(
 
 // POST register data
 router.post("/register", [
-  check("username", "must be at least 5 - 10 chars long").isLength({ min: 5, max: 10 }),
+  check("username", "must be at least 5 - 10 chars long")
+        .isLength({ min: 5, max: 10 }),
   check("password", "must be at least 5 - 10 chars long")
         .isLength({ min: 5, max: 10 })
         .custom((value, { req, loc, path }) => {
@@ -85,10 +86,8 @@ passport.deserializeUser(function(id, done) {
   });
 });
 
-
-
 // test
-router.get("/trap", (req, res) => {
+router.get("/trap", authenticationMiddleware(), (req, res) => {
   if (req.query.id) {
     res.send(`You have requested trap ID #${req.query.id}`);
   } 
@@ -100,5 +99,20 @@ router.get("/trap", (req, res) => {
 router.get("/trap/:id", (req, res) => {
   res.send(`You have requested trap ID #${req.params.id}`);
 });
+
+
+
+// authentication middleware
+function authenticationMiddleware() {
+  return (req, res, next) => {
+    console.log(`
+        req.session.passport.user: ${JSON.
+        stringify(req.session.passport)}`);
+        
+    if (req.isAuthenticated()) return next();
+    
+    res.redirect('/')
+  }
+}
 
 module.exports = router;
