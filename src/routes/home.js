@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const mongoose = require("mongoose");
 const User = require("../models/users-model");
 const bcrypt = require("bcrypt");
 const passport = require("passport");
@@ -71,6 +72,18 @@ router.post("/register", [
   }
 });
 
+
+// ssesion
+passport.serializeUser(function(user_id, done) {
+  done(null, user_id);
+});
+
+passport.deserializeUser(function(id, done) {
+  var usersModel = mongoose.connection.collection('users');
+  usersModel.find(id, function (err, user) {
+    done(err, user);
+  });
+});
 
 
 

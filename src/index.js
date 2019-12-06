@@ -53,22 +53,20 @@ passport.use(new LocalStrategy(
     (username, password, done) => {
         var usersModel = mongoose.connection.collection('users');
         usersModel.findOne({ username: username }, (err, user) => {
-            if (err) { return done(err); }
+            if (err) { done(err); }
             
-            if (!user) { return done(null, false); }
-            
-            const hash = user.password;
-            bcrypt.compare(password, hash, (err, res) => {
-                if (res === true) {
-                    return done(null, { user_id: user._id });
-                } else {
-                    return done(null, false);
-                }
-            })
-            
-            console.log(user.username);
-            console.log(password);
-            console.log(user.password);
+            if (!user) { 
+                done(null, false); 
+            } else {
+                const hash = user.password;
+                bcrypt.compare(password, hash, (err, res) => {
+                    if (res === true) {
+                        return done(null, { user_id: user._id });
+                    } else {
+                        return done(null, false);
+                    }
+                })
+            }
         });
     }
 ));
