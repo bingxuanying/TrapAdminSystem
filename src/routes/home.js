@@ -37,32 +37,43 @@ router.post("/register", [
                 return value;
             }
         })
-], async (req, res) => {
+], (req, res) => {
   try {
     // validation check
     const errorFormatter = ({ location, msg, param, value, nestedErrors }) => {
       return `[${param}]: ${msg}`;
     };
+    
     var result = validationResult(req).formatWith(errorFormatter);
+    
     if (!result.isEmpty()) {
       return res.json({ errors: result.array() });
     } else {
-      // encrypt password
-      await bcrypt.hash(req.body.password, 10, async (err, hashedPassword) => {
-        if(err)
-          throw err;
-        
-        // save to DB
-        var user = new User({
-          username: req.body.username,
-          password: hashedPassword
-        });
-      
-        const savedUser = await user.save();
-        console.log("register success");
-        res.json(savedUser);
-        // res.redirect("/");
-      });
+      // check if user unique
+      User.findOne({ username: req.body.username }, async (user) => {
+        if (!user) {
+          // encrypt password
+          await bcrypt.hash(
+            req.body.password, 10, 
+            async (err, hashedPassword) => {
+            if(err)
+              throw err;
+            
+            // save to DB
+            var user = new User({
+              username: req.body.username,
+              password: hashedPassword
+            });
+          
+            const savedUser = await user.save();
+            console.log("register success");
+            res.json(savedUser);
+            // res.redirect("/");
+          });
+        } else {
+          res.json({error: "User already exists"});
+        }
+      })
     }
   } catch(err) {
     console.error(err);
@@ -71,13 +82,12 @@ router.post("/register", [
 
 
 // ssesion
-passport.serializeUser(function(user_id, done) {
-  done(null, user_id);
+passport.serializeUser((_id, done) => {
+  done(null, _id);
 });
 
-passport.deserializeUser(function(id, done) {
-  var usersModel = mongoose.connection.collection('users');
-  usersModel.find(id, function (err, user) {
+passport.deserializeUser((id, done) => {
+  User.findOne(id, (err, user) => {
     done(err, user);
   });
 });
