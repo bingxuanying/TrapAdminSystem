@@ -49,6 +49,29 @@ router.post("/register", [
     if (!result.isEmpty()) {
       return res.json({ errors: result.array() });
     } else {
+      /*
+       *
+       * original *else* { xxx }
+       *
+       {
+      // encrypt password
+      await bcrypt.hash(req.body.password, 10, async (err, hashedPassword) => {
+        if(err)
+          throw err;
+        
+        // save to DB
+        var user = new User({
+          username: req.body.username,
+          password: hashedPassword
+        });
+      
+        const savedUser = await user.save();
+        console.log("register success");
+        res.json(savedUser);
+        // res.redirect("/");
+      });
+    }
+       */
       // check if user unique
       User.findOne({ username: req.body.username }, async (user) => {
         if (!user) {
