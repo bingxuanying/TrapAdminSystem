@@ -15,6 +15,7 @@ const MongoStore = require('connect-mongo')(session);
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const bcrypt = require("bcrypt");
+const User = require("./models/users-model");
 
 app.use((req, res, next) => {
     var myDate = new Date();
@@ -53,8 +54,7 @@ app.use("/", homeRoute);
 // login authentication
 passport.use(new LocalStrategy(
     (username, password, done) => {
-        var usersModel = mongoose.connection.collection('users');
-        usersModel.findOne({ username: username }, (err, user) => {
+        User.findOne({ username: username }, (err, user) => {
             if (err) { done(err); }
             
             if (!user) { 
@@ -63,7 +63,7 @@ passport.use(new LocalStrategy(
                 const hash = user.password;
                 bcrypt.compare(password, hash, (err, res) => {
                     if (res === true) {
-                        return done(null, { user_id: user._id });
+                        return done(null, { _id: user._id });
                     } else {
                         return done(null, false);
                     }
