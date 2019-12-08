@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import {
   BrowserRouter as Router,
   Route,
-  Link,
-  NavLink
+  NavLink,
+  Link
 } from "react-router-dom";
 import SignUpForm from "./component/homePage/SignUpForm";
 import SignInForm from "./component/homePage/SignInForm";
@@ -17,31 +17,44 @@ class App extends Component {
           <div className="App_Aside"></div>
           <div className="App_Form">
             <div className="PageSwitcher">
-              <a href="/" className="PageSwitcher_Item">
-                Sign In
-              </a>
-              <a
-                href="/"
-                className="PageSwitcher_Item PageSwitcher_Item--Active"
+              <NavLink
+                to="/sign-in"
+                activeClassName="PageSwitcher_Item-Active"
+                className="PageSwitcher_Item"
               >
-                Sign Up
-              </a>
-            </div>
-            <div className="FormTitle">
-              <Link to="/sign-in" className="FormTitle_Link">
                 Sign In
-              </Link>
-              or
-              <Link
+              </NavLink>
+              <NavLink
                 exact
                 to="/"
-                className="FormTitle_Link FormTitle_Link--Active"
+                activeClassName="PageSwitcher_Item-Active"
+                className="PageSwitcher_Item "
               >
                 Sign Up
-              </Link>
+              </NavLink>
             </div>
-            <Route exact path="/" Component={SignUpForm}></Route>
-            <Route path="/sign-in" Component={SignUpForm}></Route>
+
+            <div className="FormTitle">
+              <NavLink
+                to="/sign-in"
+                activeClassName="FormTitle_Link-Active"
+                className="FormTitle_Link"
+              >
+                Sign In
+              </NavLink>{" "}
+              or{" "}
+              <NavLink
+                exact
+                to="/"
+                activeClassName="FormTitle_Link-Active"
+                className="FormTitle_Link"
+              >
+                Sign Up
+              </NavLink>
+            </div>
+
+            <Route exact path="/" component={SignUpForm}></Route>
+            <Route path="/sign-in" component={SignInForm}></Route>
           </div>
         </div>
       </Router>

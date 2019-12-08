@@ -34,7 +34,7 @@
   text-decoration: none;
 }
 
-.PageSwitcher_Item--Active {
+.PageSwitcher_Item-Active {
   background-color: #5ed0c0;
   color: white;
 }
@@ -71,7 +71,7 @@
   margin-left: 0;
 }
 
-.FormTitle_Link--Active {
+.FormTitle_Link-Active {
   color: white;
   border-bottom: 1px solid #199087;
 }

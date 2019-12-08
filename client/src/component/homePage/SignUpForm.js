@@ -7,15 +7,15 @@ class SignUpForm extends Component {
       <div className="FormCenter">
         <form className="FormFields" onSubmit={this.handleSubmit}>
           <div className="FormField">
-            <label className="FormField_Label" htmlFor="name">
-              Full Name
+            <label className="FormField_Label" htmlFor="username">
+              Username
             </label>
             <input
               type="text"
-              id="name"
+              id="username"
               className="FormField_Input"
-              placeholder="Enter your full name"
-              name="name"
+              placeholder="Enter your username"
+              name="username"
             />
           </div>
           <div className="FormField">
@@ -31,15 +31,15 @@ class SignUpForm extends Component {
             />
           </div>
           <div className="FormField">
-            <label className="FormField_Label" htmlFor="email">
-              E-Mail Address
+            <label className="FormField_Label" htmlFor="reenterPassword">
+              Confirm Password
             </label>
             <input
-              type="email"
-              id="email"
+              type="password"
+              id="reenterPassword"
               className="FormField_Input"
-              placeholder="Enter your email"
-              name="email"
+              placeholder="Reenter your password"
+              name="reenterPassword"
             />
           </div>
 
@@ -59,9 +59,9 @@ class SignUpForm extends Component {
 
           <div className="FormField">
             <button className="FormField_Button mr-20">Sign Up</button>{" "}
-            <a href="#" className="FormField_Link">
+            <Link to="/sign-in" className="FormField_Link">
               I'm already member
-            </a>
+            </Link>
           </div>
         </form>
       </div>

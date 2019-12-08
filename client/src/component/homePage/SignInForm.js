@@ -6,12 +6,11 @@ class SignInForm extends Component {
     super();
 
     this.state = {
-      email: "",
+      username: "",
       password: ""
     };
 
     this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChange(e) {
@@ -24,13 +23,6 @@ class SignInForm extends Component {
     });
   }
 
-  handleSubmit(e) {
-    e.preventDefault();
-
-    console.log("The form was submitted with the following data:");
-    console.log(this.state);
-  }
-
   render() {
     return (
       <div className="FormCenter">
@@ -40,28 +32,28 @@ class SignInForm extends Component {
           onSubmit={this.handleSubmit}
         >
           <div className="FormField">
-            <label className="FormField__Label" htmlFor="email">
-              E-Mail Address
+            <label className="FormField_Label" htmlFor="username">
+              Username
             </label>
             <input
-              type="email"
-              id="email"
-              className="FormField__Input"
-              placeholder="Enter your email"
-              name="email"
-              value={this.state.email}
+              type="text"
+              id="username"
+              className="FormField_Input"
+              placeholder="Enter your username"
+              name="username"
+              value={this.state.username}
               onChange={this.handleChange}
             />
           </div>
 
           <div className="FormField">
-            <label className="FormField__Label" htmlFor="password">
+            <label className="FormField_Label" htmlFor="password">
               Password
             </label>
             <input
               type="password"
               id="password"
-              className="FormField__Input"
+              className="FormField_Input"
               placeholder="Enter your password"
               name="password"
               value={this.state.password}
@@ -70,8 +62,8 @@ class SignInForm extends Component {
           </div>
 
           <div className="FormField">
-            <button className="FormField__Button mr-20">Sign In</button>{" "}
-            <Link to="/" className="FormField__Link">
+            <button className="FormField_Button mr-20">Sign In</button>{" "}
+            <Link to="/" className="FormField_Link">
               Create an account
             </Link>
           </div>
