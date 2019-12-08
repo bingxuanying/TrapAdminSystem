@@ -35,7 +35,9 @@ app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    store: new MongoStore({ mongooseConnection: mongoose.connection }),
+    store: new MongoStore({
+        mongooseConnection: mongoose.connection
+    }),
     // set to TRUE only when https
     // cookie: { secure: true }
 }));
@@ -54,16 +56,22 @@ app.use("/", homeRoute);
 // login authentication
 passport.use(new LocalStrategy(
     (username, password, done) => {
-        User.findOne({ username: username }, (err, user) => {
-            if (err) { done(err); }
-            
-            if (!user) { 
-                done(null, false); 
+        User.findOne({
+            username: username
+        }, (err, user) => {
+            if (err) {
+                done(err);
+            }
+
+            if (!user) {
+                done(null, false);
             } else {
                 const hash = user.password;
                 bcrypt.compare(password, hash, (err, res) => {
                     if (res === true) {
-                        return done(null, { _id: user._id });
+                        return done(null, {
+                            _id: user._id
+                        });
                     } else {
                         return done(null, false);
                     }
@@ -85,22 +93,21 @@ app.use((err, req, res, next) => {
 
 // connect to DB
 mongoose.connect(
-    process.env.DB_CONNECTION,
-    {
-        useUnifiedTopology: true,
-        useNewUrlParser: true,
-    }
-)
-.then(() => {
-    console.log("DB connection successful");
-})
-.catch((err) => {
-    throw err;
-    console.error("DB connection error");
-});
+        process.env.DB_CONNECTION, {
+            useUnifiedTopology: true,
+            useNewUrlParser: true,
+        }
+    )
+    .then(() => {
+        console.log("DB connection successful");
+    })
+    .catch((err) => {
+        throw err;
+        console.error("DB connection error");
+    });
 
 // setup the server
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
     console.info(`Server on ${PORT}`);
 });
