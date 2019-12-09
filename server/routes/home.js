@@ -5,10 +5,8 @@ const User = require("../models/users-model");
 const bcrypt = require("bcrypt");
 const passport = require("passport");
 const { check, validationResult } = require("express-validator");
-
-// initializePassport(passport, email => {
-
-// });
+const jwt = require("jsonwebtoken");
+require("dotenv/config");
 
 // get index page
 router.get("/", (req, res, next) => {
@@ -18,13 +16,30 @@ router.get("/", (req, res, next) => {
 });
 
 // POST login data
-router.post(
-  "/login",
-  passport.authenticate("local", {
-    successRedirect: "/trap",
-    failureRedirect: "/trap/wrongTrap"
-  })
-);
+router.post("/login", (req, res) => {
+  User.findOne({ username: req.body.username })
+    .then(user => {
+      if (user) {
+        if (bcrypt.compareSync(req.body.password, user.password)) {
+          // Password match
+          const payload = {
+            _id: user._id,
+            username: user.username
+          };
+          let token = jwt.sign(payload, process.env.SECRECT_KEY, {
+            expiresIn: "8h"
+          });
+          res.cookie("token", token, { httpOnly: true }).sendStatus(200);
+        } else {
+          // Password doesn't match
+          res.json({ error: "Wrong password" });
+        }
+      } else {
+        res.json({ error: "User doesn't exist" });
+      }
+    })
+    .catch(err => res.send("err: " + err));
+});
 
 // POST register data
 router.post(
@@ -143,7 +158,7 @@ passport.deserializeUser((id, done) => {
 });
 
 // test
-router.get("/trap", authenticationMiddleware(), (req, res) => {
+router.get("/trap", withAuth, function(req, res) {
   if (req.query.id) {
     res.send(`You have requested trap ID #${req.query.id}`);
   } else {
@@ -156,15 +171,21 @@ router.get("/trap/:id", (req, res) => {
 });
 
 // authentication middleware
-function authenticationMiddleware() {
-  return (req, res, next) => {
-    console.log(`
-        req.session.passport.user: ${JSON.stringify(req.session.passport)}`);
+function withAuth(req, res, next) {
+  const token = req.cookies.token || req.body.token || req.query.token;
 
-    if (req.isAuthenticated()) return next();
-
-    res.redirect("/");
-  };
+  if (!token) {
+    res.status(401).send("Unauthorized: No token provided");
+  } else {
+    jwt.verify(token, process.env.SECRECT_KEY, function(err, decode) {
+      if (err) {
+        res.status(401).send("Unauthorized: Invalid token");
+      } else {
+        req.username = decoded.email;
+        next();
+      }
+    });
+  }
 }
 
 module.exports = router;

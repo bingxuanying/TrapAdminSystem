@@ -30,74 +30,6 @@ app.use(cookieParser());
 // server static files
 app.use(express.static(path.join(__dirname, "./public")));
 
-// create session and initialize passport
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-    store: new MongoStore({
-      mongooseConnection: mongoose.connection
-    })
-    // set to TRUE only when https
-    // cookie: { secure: true }
-  })
-);
-app.use(passport.initialize());
-app.use(passport.session());
-
-// for body parser
-app.use(bodyParser.json());
-app.use(
-  bodyParser.urlencoded({
-    extended: true
-  })
-);
-
-// routers
-app.use("/", homeRoute);
-
-// login authentication
-passport.use(
-  new LocalStrategy((username, password, done) => {
-    User.findOne(
-      {
-        username: username
-      },
-      (err, user) => {
-        if (err) {
-          done(err);
-        }
-
-        if (!user) {
-          done(null, false);
-        } else {
-          const hash = user.password;
-          bcrypt.compare(password, hash, (err, res) => {
-            if (res === true) {
-              return done(null, {
-                _id: user._id
-              });
-            } else {
-              return done(null, false);
-            }
-          });
-        }
-      }
-    );
-  })
-);
-
-// error handler
-app.use((req, res, next) => {
-  res.status(404).send("You are LOST");
-});
-
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.sendFile(path.join(__dirname, "./public/500.html"));
-});
-
 // connect to DB
 mongoose
   .connect(process.env.DB_CONNECTION, {
@@ -111,6 +43,74 @@ mongoose
     throw err;
     console.error("DB connection error");
   });
+
+// // create session and initialize passport
+// app.use(
+//   session({
+//     secret: process.env.SESSION_SECRET,
+//     resave: false,
+//     saveUninitialized: false,
+//     store: new MongoStore({
+//       mongooseConnection: mongoose.connection
+//     })
+//     // set to TRUE only when https
+//     // cookie: { secure: true }
+//   })
+// );
+// app.use(passport.initialize());
+// app.use(passport.session());
+
+// for body parser
+app.use(bodyParser.json());
+app.use(
+  bodyParser.urlencoded({
+    extended: true
+  })
+);
+
+// routers
+app.use("/", homeRoute);
+
+// // login authentication
+// passport.use(
+//   new LocalStrategy((username, password, done) => {
+//     User.findOne(
+//       {
+//         username: username
+//       },
+//       (err, user) => {
+//         if (err) {
+//           done(err);
+//         }
+
+//         if (!user) {
+//           done(null, false);
+//         } else {
+//           const hash = user.password;
+//           bcrypt.compare(password, hash, (err, res) => {
+//             if (res === true) {
+//               return done(null, {
+//                 _id: user._id
+//               });
+//             } else {
+//               return done(null, false);
+//             }
+//           });
+//         }
+//       }
+//     );
+//   })
+// );
+
+// error handler
+app.use((req, res, next) => {
+  res.status(404).send("You are LOST");
+});
+
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.sendFile(path.join(__dirname, "./public/500.html"));
+});
 
 // setup the server
 const PORT = process.env.PORT || 3001;
