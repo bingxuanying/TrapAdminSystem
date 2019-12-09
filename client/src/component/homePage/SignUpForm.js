@@ -2,10 +2,54 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
 class SignUpForm extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      username: "",
+      password: "",
+      reEnterPassword: "",
+      hasAgreed: false
+    };
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange(e) {
+    let target = e.target;
+    let value = target.type === "checkbox" ? target.checked : target.value;
+    let name = target.name;
+
+    this.setState({
+      [name]: value
+    });
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    let data = {
+      username: this.state.username,
+      password: this.state.password,
+      reEnterPassword: this.state.reEnterPassword,
+      hasAgreed: this.state.hasAgreed
+    };
+    console.log("The form was submitted with the following data:");
+    console.log(data);
+
+    fetch("/login", {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
+  }
+
   render() {
     return (
       <div className="FormCenter">
-        <form className="FormFields" onSubmit={this.handleSubmit}>
+        <form onSubmit={this.handleSubmit} className="FormFields">
           <div className="FormField">
             <label className="FormField_Label" htmlFor="username">
               Username
@@ -16,6 +60,8 @@ class SignUpForm extends Component {
               className="FormField_Input"
               placeholder="Enter your username"
               name="username"
+              value={this.state.username}
+              onChange={this.handleChange}
             />
           </div>
           <div className="FormField">
@@ -28,18 +74,22 @@ class SignUpForm extends Component {
               className="FormField_Input"
               placeholder="Enter your password"
               name="password"
+              value={this.state.password}
+              onChange={this.handleChange}
             />
           </div>
           <div className="FormField">
-            <label className="FormField_Label" htmlFor="reenterPassword">
+            <label className="FormField_Label" htmlFor="reEnterPassword">
               Confirm Password
             </label>
             <input
               type="password"
-              id="reenterPassword"
+              id="reEnterPassword"
               className="FormField_Input"
               placeholder="Reenter your password"
-              name="reenterPassword"
+              name="reEnterPassword"
+              value={this.state.reEnterPassword}
+              onChange={this.handleChange}
             />
           </div>
 
@@ -49,6 +99,8 @@ class SignUpForm extends Component {
                 className="FormField_Checkbox"
                 type="checkbox"
                 name="hasAgreed"
+                value={this.state.hasAgreed}
+                onChange={this.handleChange}
               />{" "}
               I agree all statements in{" "}
               <a href="" className="FormField_TermsLink">

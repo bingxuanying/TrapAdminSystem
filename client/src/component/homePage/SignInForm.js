@@ -11,6 +11,7 @@ class SignInForm extends Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChange(e) {
@@ -23,14 +24,28 @@ class SignInForm extends Component {
     });
   }
 
+  handleSubmit(e) {
+    e.preventDefault();
+    let data = {
+      username: this.state.username,
+      password: this.state.password
+    };
+    console.log("The form was submitted with the following data:");
+    console.log(data);
+
+    fetch("/login", {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
+  }
+
   render() {
     return (
       <div className="FormCenter">
-        <form
-          onSubmit={this.handleSubmit}
-          className="FormFields"
-          onSubmit={this.handleSubmit}
-        >
+        <form onSubmit={this.handleSubmit} className="FormFields">
           <div className="FormField">
             <label className="FormField_Label" htmlFor="username">
               Username
