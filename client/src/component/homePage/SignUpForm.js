@@ -37,7 +37,7 @@ class SignUpForm extends Component {
     console.log("The form was submitted with the following data:");
     console.log(data);
 
-    fetch("/login", {
+    fetch("/register", {
       method: "POST",
       body: JSON.stringify(data),
       headers: {
