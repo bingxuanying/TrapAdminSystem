@@ -43,6 +43,8 @@ class SignUpForm extends Component {
       headers: {
         "Content-Type": "application/json"
       }
+    }).then(res => {
+      this.props.history.push("/sign-in");
     });
   }
 

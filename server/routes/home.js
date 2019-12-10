@@ -10,15 +10,17 @@ require("dotenv/config");
 
 // get index page
 router.get("/", (req, res, next) => {
-  res.render("index", {
-    title: "My Application"
-  });
+  // res.render("index", {
+  //   title: "My Application"
+  // });
+  res.status(200).send("welcome");
 });
 
 // POST login data
 router.post("/login", (req, res) => {
   User.findOne({ username: req.body.username })
     .then(user => {
+      // Send token to user
       if (user) {
         if (bcrypt.compareSync(req.body.password, user.password)) {
           // Password match
@@ -181,7 +183,7 @@ function withAuth(req, res, next) {
       if (err) {
         res.status(401).send("Unauthorized: Invalid token");
       } else {
-        req.username = decoded.email;
+        req.username = decode.username;
         next();
       }
     });
