@@ -39,7 +39,7 @@ class NavigationBar extends Component {
               <li className="section-task"></li>
               <li className="section-user">
                 <img
-                  src="./adminSample.png"
+                  src="./adminSample.jpg"
                   className="user-image"
                   alt="User Image"
                 ></img>
