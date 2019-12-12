@@ -1,0 +1,21 @@
+.sidemain {
+  font-size: 0px;
+  position: relative;
+  box-sizing: border-box;
+  display: inline-block;
+  background-color: #222d32;
+  top: 0;
+  left: 0;
+  height: calc(100vh - 50px);
+  z-index: 1;
+  /* transform: translateX(-154px); */
+}
+
+.sidemain-bar {
+  width: 75px;
+}
+
+.sidemain-menu {
+  background: #2c3b41;
+  width: 154px;
+}
