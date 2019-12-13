@@ -29,7 +29,7 @@ class SideBar extends Component {
           ></img>
           {this.props.toggleOn && (
             <div className="user-panel-info">
-              <p>Alexander Pierce</p>
+              <p>Bingxuan Ying</p>
               <div className="user-panel-info-online">
                 <FontAwesomeIcon icon={faCircle} size="xs"></FontAwesomeIcon>{" "}
                 <span>Online</span>

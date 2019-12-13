@@ -38,23 +38,33 @@ class NavigationBar extends Component {
 
           <div className="navbar-menu">
             <ul className="navbar-nav">
-              <li className="section-message"></li>
-              <li className="section-notification"></li>
-              <li className="section-task"></li>
+              <li className="section-message">
+                <a href="#"></a>
+              </li>
+              <li className="section-notification">
+                <a href="#"></a>
+              </li>
+              <li className="section-task">
+                <a href="#"></a>
+              </li>
               <li className="section-user">
-                <img
-                  src="./adminSample.jpg"
-                  className="user-image"
-                  alt="User Image"
-                ></img>
-                <span className="user-info">Administrator</span>
+                <a href="#">
+                  <img
+                    src="./adminSample.jpg"
+                    className="user-image"
+                    alt="User Image"
+                  ></img>
+                  <span className="user-info">Administrator</span>
+                </a>
               </li>
               <li className="section-logout">
-                <FontAwesomeIcon
-                  icon={faSignOutAlt}
-                  size="lg"
-                ></FontAwesomeIcon>
-                <span className="logout">Logout</span>
+                <a href="#">
+                  <FontAwesomeIcon
+                    icon={faSignOutAlt}
+                    size="lg"
+                  ></FontAwesomeIcon>
+                  <span className="logout">Logout</span>
+                </a>
               </li>
             </ul>
           </div>

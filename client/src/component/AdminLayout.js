@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
 import NavigationBar from "./bars/NavigationBar";
 import SideBar from "./bars/SideBar";
-import SideMenu from "./bars/SideMenu";
 
 class AdminLayout extends Component {
   constructor() {
@@ -29,7 +28,6 @@ class AdminLayout extends Component {
           toggleOn={this.state.toggleOn}
         />
         <SideBar toggleOn={this.state.toggleOn} />
-        {/* <SideMenu toggleOn={this.state.toggleOn} /> */}
       </div>
     );
   }
