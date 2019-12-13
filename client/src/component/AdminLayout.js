@@ -28,8 +28,8 @@ class AdminLayout extends Component {
           handleToggle={this.handleToggle}
           toggleOn={this.state.toggleOn}
         />
-        <SideBar />
-        <SideMenu toggleOn={this.state.toggleOn} />
+        <SideBar toggleOn={this.state.toggleOn} />
+        {/* <SideMenu toggleOn={this.state.toggleOn} /> */}
       </div>
     );
   }

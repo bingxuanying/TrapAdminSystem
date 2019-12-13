@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import HomeLayout from "./component/HomeLayout";
 import AdminLayout from "./component/AdminLayout";
+import UserLayout from "./component/UserLayout";
 
 class App extends Component {
   render() {

@@ -7,15 +7,19 @@ import { faBars, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 class NavigationBar extends Component {
   render() {
     let logoLarge = (
-      <span className="logo-large">
-        <b>UC</b>
-        Davis
-      </span>
+      <div className="logo-large">
+        <span>
+          <b>UC</b>
+          Davis
+        </span>
+      </div>
     );
     let logoSmall = (
-      <span className="logo-small">
-        <b>UCD</b>
-      </span>
+      <div className="logo-small">
+        <span>
+          <b>UCD</b>
+        </span>
+      </div>
     );
     return (
       <nav className="navmain">
