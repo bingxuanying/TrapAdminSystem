@@ -103,6 +103,32 @@ class SideBar extends Component {
               )}
             </a>
           </li>
+          {/* #3 Data Plot */}
+          <li
+            className={
+              this.props.toggleOn === true
+                ? "mainmenu-home-lg"
+                : "mainmenu-home-sm"
+            }
+          >
+            <a href="#">
+              <FontAwesomeIcon
+                className="mainmenu-fa"
+                icon={faChartPie}
+              ></FontAwesomeIcon>
+              {this.props.toggleOn && (
+                <div>
+                  <span className="mainmenu-middle">Data Plot</span>
+                  <span className="mainmenu-right">
+                    <FontAwesomeIcon
+                      icon={faAngleLeft}
+                      size="xs"
+                    ></FontAwesomeIcon>
+                  </span>
+                </div>
+              )}
+            </a>
+          </li>
         </ul>
       </aside>
     );
