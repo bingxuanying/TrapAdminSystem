@@ -49,6 +49,32 @@ class SideBar extends Component {
               )}
             </span>
           </li>
+          {/* #1 Home */}
+          <li
+            className={
+              this.props.toggleOn === true
+                ? "mainmenu-home-lg"
+                : "mainmenu-home-sm"
+            }
+          >
+            <a href="#">
+              <FontAwesomeIcon
+                className="mainmenu-fa"
+                icon={faHome}
+              ></FontAwesomeIcon>
+              {this.props.toggleOn && (
+                <div>
+                  <span className="mainmenu-middle">Dashboard</span>
+                  <span className="mainmenu-right">
+                    <FontAwesomeIcon
+                      icon={faAngleLeft}
+                      size="xs"
+                    ></FontAwesomeIcon>
+                  </span>
+                </div>
+              )}
+            </a>
+          </li>
         </ul>
       </aside>
     );
