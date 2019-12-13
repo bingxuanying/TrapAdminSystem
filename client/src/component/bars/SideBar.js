@@ -10,8 +10,6 @@ import "./Side.css";
 
 class SideBar extends Component {
   render() {
-    let barHeaderLarge = <li className="header-lg">MAIN NAVIGATION</li>;
-    let barHeaderSmall = <li className="header-sm">MAIN</li>;
     return (
       <aside
         className="sidemain"
@@ -34,6 +32,24 @@ class SideBar extends Component {
             </div>
           )}
         </div>
+        {/* Main Menue */}
+        <ul className="mainmenu">
+          {/* --- Header --- */}
+          <li
+            className="header"
+            style={
+              this.props.toggleOn === true ? { width: 230 } : { width: 70 }
+            }
+          >
+            <span>
+              {this.props.toggleOn === true ? (
+                <div>MAIN NAVIGATION</div>
+              ) : (
+                <div>MAIN</div>
+              )}
+            </span>
+          </li>
+        </ul>
       </aside>
     );
   }
