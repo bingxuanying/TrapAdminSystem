@@ -6,7 +6,8 @@ import {
   faCircle,
   faAngleLeft,
   faCamera,
-  faChartPie
+  faChartPie,
+  faCircleNotch
 } from "@fortawesome/free-solid-svg-icons";
 import "./Side.css";
 
@@ -15,7 +16,9 @@ class SideBar extends Component {
     return (
       <aside
         className="sidemain"
-        style={this.props.toggleOn === true ? { width: 230 } : { width: 70 }}
+        style={
+          this.props.toggleOn === true ? { width: "230px" } : { width: "70px" }
+        }
       >
         {/* User Panel */}
         <div className="user-panel">
@@ -36,11 +39,13 @@ class SideBar extends Component {
         </div>
         {/* Main Menue */}
         <ul className="mainmenu">
-          {/* --- Header --- */}
+          {/* --- MAIN Header --- */}
           <li
             className="header"
             style={
-              this.props.toggleOn === true ? { width: 230 } : { width: 70 }
+              this.props.toggleOn === true
+                ? { width: "230px" }
+                : { width: "70" }
             }
           >
             <span>
@@ -55,8 +60,8 @@ class SideBar extends Component {
           <li
             className={
               this.props.toggleOn === true
-                ? "mainmenu-home-lg"
-                : "mainmenu-home-sm"
+                ? "mainmenu-sub-lg"
+                : "mainmenu-sub-sm"
             }
           >
             <a href="#">
@@ -70,7 +75,7 @@ class SideBar extends Component {
                   <span className="mainmenu-right">
                     <FontAwesomeIcon
                       icon={faAngleLeft}
-                      size="xs"
+                      size="s"
                     ></FontAwesomeIcon>
                   </span>
                 </div>
@@ -81,8 +86,8 @@ class SideBar extends Component {
           <li
             className={
               this.props.toggleOn === true
-                ? "mainmenu-home-lg"
-                : "mainmenu-home-sm"
+                ? "mainmenu-sub-lg"
+                : "mainmenu-sub-sm"
             }
           >
             <a href="#">
@@ -96,7 +101,7 @@ class SideBar extends Component {
                   <span className="mainmenu-right">
                     <FontAwesomeIcon
                       icon={faAngleLeft}
-                      size="xs"
+                      size="s"
                     ></FontAwesomeIcon>
                   </span>
                 </div>
@@ -107,8 +112,8 @@ class SideBar extends Component {
           <li
             className={
               this.props.toggleOn === true
-                ? "mainmenu-home-lg"
-                : "mainmenu-home-sm"
+                ? "mainmenu-sub-lg"
+                : "mainmenu-sub-sm"
             }
           >
             <a href="#">
@@ -122,9 +127,104 @@ class SideBar extends Component {
                   <span className="mainmenu-right">
                     <FontAwesomeIcon
                       icon={faAngleLeft}
-                      size="xs"
+                      size="s"
                     ></FontAwesomeIcon>
                   </span>
+                </div>
+              )}
+            </a>
+          </li>
+          {/* --- LABEL Header --- */}
+          <li
+            className="header"
+            style={
+              this.props.toggleOn === true
+                ? { width: "230px" }
+                : { width: "70px" }
+            }
+          >
+            LABELS
+          </li>
+          {/* #1 LABEL */}
+          <li
+            className={
+              this.props.toggleOn === true
+                ? "mainmenu-sub-lg"
+                : "mainmenu-sub-sm"
+            }
+          >
+            <a href="#">
+              <FontAwesomeIcon
+                className="mainmenu-fa"
+                icon={faCircleNotch}
+                style={{ color: "#00a65a" }}
+              ></FontAwesomeIcon>
+              {this.props.toggleOn && (
+                <div>
+                  <span className="mainmenu-middle">New Message</span>
+                </div>
+              )}
+            </a>
+          </li>
+          {/* #2 LABEL */}
+          <li
+            className={
+              this.props.toggleOn === true
+                ? "mainmenu-sub-lg"
+                : "mainmenu-sub-sm"
+            }
+          >
+            <a href="#">
+              <FontAwesomeIcon
+                className="mainmenu-fa"
+                icon={faCircleNotch}
+                style={{ color: "#00c0ef" }}
+              ></FontAwesomeIcon>
+              {this.props.toggleOn && (
+                <div>
+                  <span className="mainmenu-middle">Information</span>
+                </div>
+              )}
+            </a>
+          </li>
+          {/* #3 LABEL */}
+          <li
+            className={
+              this.props.toggleOn === true
+                ? "mainmenu-sub-lg"
+                : "mainmenu-sub-sm"
+            }
+          >
+            <a href="#">
+              <FontAwesomeIcon
+                className="mainmenu-fa"
+                icon={faCircleNotch}
+                style={{ color: "#39c12 " }}
+              ></FontAwesomeIcon>
+              {this.props.toggleOn && (
+                <div>
+                  <span className="mainmenu-middle">Warning</span>
+                </div>
+              )}
+            </a>
+          </li>
+          {/* #4 LABEL */}
+          <li
+            className={
+              this.props.toggleOn === true
+                ? "mainmenu-sub-lg"
+                : "mainmenu-sub-sm"
+            }
+          >
+            <a href="#">
+              <FontAwesomeIcon
+                className="mainmenu-fa"
+                icon={faCircleNotch}
+                style={{ color: "#dd4b39  " }}
+              ></FontAwesomeIcon>
+              {this.props.toggleOn && (
+                <div>
+                  <span className="mainmenu-middle">Important</span>
                 </div>
               )}
             </a>

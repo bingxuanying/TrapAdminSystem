@@ -3,7 +3,7 @@
   position: relative;
   box-sizing: border-box;
   float: left;
-  background-color: #222d32;
+  background-color: #2e393f;
   top: 0;
   left: 0;
   height: calc(100vh - 50px);
@@ -64,8 +64,15 @@
 }
 
 .mainmenu li a {
+  width: 100%;
+  height: 44px;
   padding: 12px 5px 12px 15px;
   display: block;
+  color: #b8c7ce;
+}
+
+.mainmenu li a:hover {
+  background-color: #222d32;
   color: #fff;
 }
 
@@ -84,31 +91,30 @@
   height: 36px;
 }
 
-.mainmenu-home-lg {
+.mainmenu-sub-lg {
   width: 230px;
   height: 44px;
-  background-color: teal;
 }
 
-.mainmenu-home-sm {
+.mainmenu-sub-sm {
   width: 70px;
   height: 44px;
-  background-color: teal;
 }
 
 .mainmenu-fa {
   float: left;
   font: normal normal normal 14px/1 FontAwesome;
   text-rendering: auto;
-  height: 20px;
-  width: 20px;
+  height: 14px;
+  width: 14px;
   margin-left: 11px;
+  text-align: center;
+  margin-top: 2.5px;
 }
 
 .mainmenu-middle {
   float: left;
   margin-left: 20px;
-  padding-top: 1px;
 }
 .mainmenu-right {
   float: right;
