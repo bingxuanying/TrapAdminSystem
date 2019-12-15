@@ -1,13 +1,14 @@
 .sidemain {
   font-size: 14px;
-  position: relative;
+  position: absolute;
   box-sizing: border-box;
-  float: left;
   background-color: #2e393f;
+  padding-top: 50px;
   top: 0;
   left: 0;
-  height: calc(100vh - 50px);
+  height: 100%;
   outline: none;
+  z-index: 1;
 }
 
 /* User Panel */

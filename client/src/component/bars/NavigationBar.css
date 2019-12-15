@@ -12,7 +12,7 @@
   width: 100%;
   display: block;
   background-color: #3c8dbc;
-  z-index: 0;
+  z-index: 2;
 }
 
 .logo {

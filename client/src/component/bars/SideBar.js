@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHome,
+  faTachometerAlt,
   faCircle,
   faAngleLeft,
   faCamera,
@@ -56,7 +57,7 @@ class SideBar extends Component {
               )}
             </span>
           </li>
-          {/* #1 Home */}
+          {/* #0 Home */}
           <li
             className={
               this.props.toggleOn === true
@@ -68,6 +69,32 @@ class SideBar extends Component {
               <FontAwesomeIcon
                 className="mainmenu-fa"
                 icon={faHome}
+              ></FontAwesomeIcon>
+              {this.props.toggleOn && (
+                <div>
+                  <span className="mainmenu-middle">Home</span>
+                  <span className="mainmenu-right">
+                    <FontAwesomeIcon
+                      icon={faAngleLeft}
+                      size="s"
+                    ></FontAwesomeIcon>
+                  </span>
+                </div>
+              )}
+            </a>
+          </li>
+          {/* #1 Dashboard */}
+          <li
+            className={
+              this.props.toggleOn === true
+                ? "mainmenu-sub-lg"
+                : "mainmenu-sub-sm"
+            }
+          >
+            <a href="#">
+              <FontAwesomeIcon
+                className="mainmenu-fa"
+                icon={faTachometerAlt}
               ></FontAwesomeIcon>
               {this.props.toggleOn && (
                 <div>
