@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome, faTachometerAlt } from "@fortawesome/free-solid-svg-icons";
+import Content from "../box/UserInfoTable";
+import Content from "../box/ProductInfoTable";
+import Content from "../box/OperatingFloor";
 import "./Content.css";
 
 class Content extends Component {
@@ -34,7 +37,11 @@ class Content extends Component {
           </ol>
         </section>
         <section className="content">
-          <div className="row"></div>
+          <div className="row">
+            <UserInfoTable />
+            <ProductInfoTable />
+            <OperatingFloor />
+          </div>
           <div className="row"></div>
           <div className="row"></div>
         </section>

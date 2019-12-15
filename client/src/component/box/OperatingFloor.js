@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {  } from "@fortawesome/free-solid-svg-icons";
-import "./Table.css";
+import "./OperatingFloor.css";
 
-class ProductInfoTable extends Component {
+class OperatingFloor extends Component {
     render() {
         return();
     }
 }
 
-export default ProductInfoTable;
+export default OperatingFloor;
