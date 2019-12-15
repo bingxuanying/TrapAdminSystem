@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome, faTachometerAlt } from "@fortawesome/free-solid-svg-icons";
-import Content from "../box/UserInfoTable";
-import Content from "../box/ProductInfoTable";
-import Content from "../box/OperatingFloor";
+import UserInfoTable from "../box/UserInfoTable";
+import ProductInfoTable from "../box/ProductInfoTable";
+import OperatingFloor from "../box/OperatingFloor";
 import "./Content.css";
 
 class Content extends Component {
@@ -40,9 +40,10 @@ class Content extends Component {
           <div className="row">
             <UserInfoTable />
             <ProductInfoTable />
+          </div>
+          <div className="row">
             <OperatingFloor />
           </div>
-          <div className="row"></div>
           <div className="row"></div>
         </section>
       </div>
