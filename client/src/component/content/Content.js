@@ -7,6 +7,22 @@ import OperatingFloor from "../box/OperatingFloor";
 import "./Content.css";
 
 class Content extends Component {
+  constructor() {
+    super();
+
+    this.fabSwitch = this.fabSwitch.bind(this);
+  }
+
+  fabSwitch(pageName) {
+    switch (pageName) {
+      case "Home":
+        return faHome;
+      case "Dashboard":
+        return faTachometerAlt;
+      default:
+        return null;
+    }
+  }
   render() {
     return (
       <div
@@ -17,9 +33,10 @@ class Content extends Component {
             : { margin: " 0 0 0 70px", width: "calc(100% - 70px)" }
         }
       >
+        {/* Content Header */}
         <section className="content-header">
           <h1>
-            Dashboard
+            {this.props.pageName}
             <small>Version 1.0</small>
           </h1>
           <ol className="content-header-route">
@@ -27,15 +44,16 @@ class Content extends Component {
               <a href="#">
                 <FontAwesomeIcon
                   className="content-header-fa"
-                  icon={faTachometerAlt}
+                  icon={this.fabSwitch(this.props.pageName)}
                   size="xs"
                 ></FontAwesomeIcon>{" "}
                 Home
               </a>
             </li>
-            <li class="end-route">Dashboard</li>
+            <li className="end-route">{this.props.pageName}</li>
           </ol>
         </section>
+        {/* Main Content */}
         <section className="content">
           <div className="row">
             <UserInfoTable />

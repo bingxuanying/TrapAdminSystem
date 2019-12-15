@@ -9,7 +9,8 @@ class AdminLayout extends Component {
     super();
 
     this.state = {
-      toggleOn: true
+      toggleOn: true,
+      pageName: "Dashboard"
     };
 
     this.handleToggle = this.handleToggle.bind(this);
@@ -29,7 +30,10 @@ class AdminLayout extends Component {
           toggleOn={this.state.toggleOn}
         />
         <SideBar toggleOn={this.state.toggleOn} />
-        <Content toggleOn={this.state.toggleOn} />
+        <Content
+          toggleOn={this.state.toggleOn}
+          pageName={this.state.pageName}
+        />
       </div>
     );
   }

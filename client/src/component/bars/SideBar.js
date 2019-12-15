@@ -76,7 +76,7 @@ class SideBar extends Component {
                   <span className="mainmenu-right">
                     <FontAwesomeIcon
                       icon={faAngleLeft}
-                      size="s"
+                      size="sm"
                     ></FontAwesomeIcon>
                   </span>
                 </div>
@@ -102,7 +102,7 @@ class SideBar extends Component {
                   <span className="mainmenu-right">
                     <FontAwesomeIcon
                       icon={faAngleLeft}
-                      size="s"
+                      size="sm"
                     ></FontAwesomeIcon>
                   </span>
                 </div>
@@ -128,7 +128,7 @@ class SideBar extends Component {
                   <span className="mainmenu-right">
                     <FontAwesomeIcon
                       icon={faAngleLeft}
-                      size="s"
+                      size="sm"
                     ></FontAwesomeIcon>
                   </span>
                 </div>
@@ -154,7 +154,7 @@ class SideBar extends Component {
                   <span className="mainmenu-right">
                     <FontAwesomeIcon
                       icon={faAngleLeft}
-                      size="s"
+                      size="sm"
                     ></FontAwesomeIcon>
                   </span>
                 </div>

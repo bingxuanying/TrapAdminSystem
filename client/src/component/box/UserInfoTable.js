@@ -5,7 +5,14 @@ import "./Table.css";
 
 class UserInfoTable extends Component {
   render() {
-    return <div className="box user-box"></div>;
+    return (
+      <div className="box user-box">
+        <div className="box-header">
+          <h3 className="box-title">User Data Table</h3>
+        </div>
+        <div className="box-body"></div>
+      </div>
+    );
   }
 }
 
