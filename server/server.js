@@ -5,6 +5,7 @@ require("dotenv/config");
 const fs = require("fs");
 const f = require("util").format;
 const homeRoute = require("./routes/home");
+const dataRoute = require("./routes/data");
 const dateFormat = require("dateformat");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
@@ -70,6 +71,7 @@ app.use(
 
 // routers
 app.use("/", homeRoute);
+app.use("/data", dataRoute);
 
 // // login authentication
 // passport.use(

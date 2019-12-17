@@ -30,8 +30,6 @@ class SignInForm extends Component {
       username: this.state.username,
       password: this.state.password
     };
-    console.log("The form was submitted with the following data:");
-    console.log(data);
 
     fetch("/login", {
       method: "POST",

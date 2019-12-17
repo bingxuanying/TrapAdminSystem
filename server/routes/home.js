@@ -149,15 +149,15 @@ router.post(
 );
 
 // ssesion
-passport.serializeUser((_id, done) => {
-  done(null, _id);
-});
+// passport.serializeUser((_id, done) => {
+//   done(null, _id);
+// });
 
-passport.deserializeUser((id, done) => {
-  User.findOne(id, (err, user) => {
-    done(err, user);
-  });
-});
+// passport.deserializeUser((id, done) => {
+//   User.findOne(id, (err, user) => {
+//     done(err, user);
+//   });
+// });
 
 // test
 router.get("/trap", withAuth, function(req, res) {
