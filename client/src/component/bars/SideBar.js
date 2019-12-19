@@ -11,6 +11,7 @@ import {
   faCircleNotch
 } from "@fortawesome/free-solid-svg-icons";
 import "./Side.css";
+import adminSample from "../../assets/adminSample.jpg";
 
 class SideBar extends Component {
   render() {
@@ -24,7 +25,7 @@ class SideBar extends Component {
         {/* User Panel */}
         <div className="user-panel">
           <img
-            src="./adminSample.jpg"
+            src={adminSample}
             className="user-image-side"
             alt="User Image"
           ></img>

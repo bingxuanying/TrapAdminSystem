@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
 import "./NavigationBar.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
+import adminSample from "../../assets/adminSample.jpg";
 
 class NavigationBar extends Component {
   render() {
@@ -50,7 +51,7 @@ class NavigationBar extends Component {
               <li className="section-user">
                 <a href="#">
                   <img
-                    src="./adminSample.jpg"
+                    src={adminSample}
                     className="user-image"
                     alt="User Image"
                   ></img>

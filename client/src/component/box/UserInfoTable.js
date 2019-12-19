@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {} from "@fortawesome/free-solid-svg-icons";
 import ReactTable from "react-table";
-// import "react-table/react-table.css";
+import "react-table/react-table.css";
 import "./Table.css";
 
 class UserInfoTable extends Component {
