@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const path = require("path");
 const mongoose = require("mongoose");
 const User = require("../models/users-model");
 const bcrypt = require("bcrypt");
@@ -10,10 +11,7 @@ require("dotenv/config");
 
 // get index page
 router.get("/", (req, res, next) => {
-  // res.render("index", {
-  //   title: "My Application"
-  // });
-  res.status(200).send("welcome");
+  // res.status(200).sendFile(path.join(__dirname, "build", "index.html"));
 });
 
 // POST login data

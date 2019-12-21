@@ -5,7 +5,7 @@
   margin-right: 15px;
   border-radius: 3px;
   background: #fff;
-  border-top: 3px solid #d2d6de;
+  border-top: 3px solid #009879;
   margin-bottom: 20px;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
   float: left;
@@ -14,6 +14,9 @@
 .user-box,
 .product-box {
   width: calc(50% - 30px);
+}
+
+.fa-sort {
 }
 
 /* Box Header*/
@@ -38,4 +41,44 @@
   border-bottom-right-radius: 3px;
   border-bottom-left-radius: 3px;
   padding: 10px;
+}
+
+/*  Table CSS */
+.box-body table {
+  border-collapse: collapse;
+  font-size: 0.9em;
+  min-width: 434px;
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.box-body thead tr {
+  background-color: #009879;
+  color: white;
+  text-align: left;
+  font-weight: bold;
+}
+
+.box-body th,
+.box-body td {
+  padding: 12px 15px;
+  height: 44px;
+}
+
+.box-body tbody tr {
+  border-bottom: 1px solid #ddd;
+}
+
+.box-body tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+.box-body tbody tr:last-of-type {
+  border-bottom: 2px solid #009879;
+}
+
+.box-body tbody tr.active-row {
+  font-weight: bold;
+  color: #009879;
 }

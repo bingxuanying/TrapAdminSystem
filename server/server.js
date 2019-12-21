@@ -29,7 +29,7 @@ app.use((req, res, next) => {
 app.use(cookieParser());
 
 // server static files
-// app.use(express.static(path.join(__dirname, "./public")));
+// app.use(express.static(path.join(__dirname, "../client/build")));
 
 // connect to DB
 mongoose
@@ -45,22 +45,6 @@ mongoose
     console.error("DB connection error");
   });
 
-// // create session and initialize passport
-// app.use(
-//   session({
-//     secret: process.env.SESSION_SECRET,
-//     resave: false,
-//     saveUninitialized: false,
-//     store: new MongoStore({
-//       mongooseConnection: mongoose.connection
-//     })
-//     // set to TRUE only when https
-//     // cookie: { secure: true }
-//   })
-// );
-// app.use(passport.initialize());
-// app.use(passport.session());
-
 // for body parser
 app.use(bodyParser.json());
 app.use(
@@ -72,37 +56,6 @@ app.use(
 // routers
 app.use("/", homeRoute);
 app.use("/data", dataRoute);
-
-// // login authentication
-// passport.use(
-//   new LocalStrategy((username, password, done) => {
-//     User.findOne(
-//       {
-//         username: username
-//       },
-//       (err, user) => {
-//         if (err) {
-//           done(err);
-//         }
-
-//         if (!user) {
-//           done(null, false);
-//         } else {
-//           const hash = user.password;
-//           bcrypt.compare(password, hash, (err, res) => {
-//             if (res === true) {
-//               return done(null, {
-//                 _id: user._id
-//               });
-//             } else {
-//               return done(null, false);
-//             }
-//           });
-//         }
-//       }
-//     );
-//   })
-// );
 
 // error handler
 app.use((req, res, next) => {
