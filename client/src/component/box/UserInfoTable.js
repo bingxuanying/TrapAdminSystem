@@ -37,11 +37,34 @@ class UserInfoTable extends Component {
   }
 
   componentDidMount(e) {
+    let order = "";
+    if (this.state.CompanyNameFilterIcon === faSort) {
+      order =
+        this.state.TrapNumFilterIcon === faSortAmountUp
+          ? "AmountUp"
+          : "AmountDown";
+    } else {
+      order =
+        this.state.CompanyNameFilterIcon === faSortAlphaUp
+          ? "AlphaUp"
+          : "AlphaDown";
+    }
+
+    let pageInfo = {
+      pageNum: this.state.loadPage,
+      order: order
+    };
+
     fetch("/data/fetchUserInfo", {
-      method: "GET"
+      method: "POST",
+      body: JSON.stringify(pageInfo),
+      headers: {
+        "Content-Type": "application/json"
+      }
     })
       .then(res => res.json())
       .then(data => {
+        console.log(data);
         let extra = 6 - data.length;
         for (let i = 0; i < extra; i++) {
           data.push({});

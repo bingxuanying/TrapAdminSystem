@@ -10,10 +10,32 @@ const path = require("path");
  *
  */
 
-router.get("/fetchUserInfo", (req, res) => {
-  User.find({}, "username company totalTraps").then(users => {
-    res.json(users);
-  });
+router.post("/fetchUserInfo", (req, res) => {
+  console.log(req.body);
+  var pageSkip = (req.body.pageNum - 1) * 6;
+  var sortOrder = null;
+  switch (req.body.order) {
+    case "AlphaUp":
+      sortOrder = { company: "asc" };
+      break;
+    case "AlphaDown":
+      sortOrder = { company: "desc" };
+      break;
+    case "AmountUp":
+      sortOrder = { totalTraps: "asc" };
+      break;
+    case "AmountDown":
+      sortOrder = { totalTraps: "desc" };
+      break;
+  }
+
+  User.find({}, "username company totalTraps")
+    .sort(sortOrder)
+    .skip(pageSkip)
+    .limit(6)
+    .then(users => {
+      res.json(users);
+    });
 });
 
 const replaceCircular = (obj, level = 0, already = new WeakSet()) => {

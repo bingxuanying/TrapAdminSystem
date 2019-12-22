@@ -14,7 +14,7 @@ var usersSchema = new mongoose.Schema({
     require: false
   },
   totalTraps: {
-    type: String,
+    type: Number,
     require: false
   }
 });
