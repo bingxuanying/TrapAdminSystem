@@ -12,8 +12,9 @@ const path = require("path");
 
 router.post("/fetchUserInfo", (req, res) => {
   console.log(req.body);
-  var pageSkip = (req.body.pageNum - 1) * 6;
-  var sortOrder = null;
+  let pageSkip = (req.body.pageNum - 1) * 6;
+  let sortOrder = null;
+  let pageCount = null;
   switch (req.body.order) {
     case "AlphaUp":
       sortOrder = { company: "asc" };
@@ -33,7 +34,13 @@ router.post("/fetchUserInfo", (req, res) => {
     .sort(sortOrder)
     .skip(pageSkip)
     .limit(6)
-    .then(users => {
+    .then(async users => {
+      await User.countDocuments({}).then(count => {
+        pageCount = {
+          pageCount: Math.ceil(count / 6)
+        };
+      });
+      users.push(pageCount);
       res.json(users);
     });
 });

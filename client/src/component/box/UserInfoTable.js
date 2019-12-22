@@ -21,7 +21,6 @@ class UserInfoTable extends Component {
       pageIndex: 1,
       pageCount: 10,
       loadData: false,
-      loadPage: 1,
       userInfo: [],
       CompanyNameFilterIcon: faSortAlphaUp,
       TrapNumFilterIcon: faSort
@@ -51,7 +50,7 @@ class UserInfoTable extends Component {
     }
 
     let pageInfo = {
-      pageNum: this.state.loadPage,
+      pageNum: this.state.pageIndex,
       order: order
     };
 
@@ -64,13 +63,17 @@ class UserInfoTable extends Component {
     })
       .then(res => res.json())
       .then(data => {
-        console.log(data);
+        let resPageCount = data.pop().pageCount;
         let extra = 6 - data.length;
         for (let i = 0; i < extra; i++) {
           data.push({});
         }
         // console.log(this.state.CompanyNameFilterIcon === faSortAlphaUp);
-        this.setState({ userInfo: data });
+        this.setState({
+          userInfo: data,
+          pageCount: resPageCount,
+          loadData: false
+        });
       });
   }
 
@@ -90,29 +93,31 @@ class UserInfoTable extends Component {
       }
 
       let pageInfo = {
-        pageNum: this.state.loadPage,
+        pageNum: this.state.pageIndex,
         order: order
       };
 
-      // fetch("/data/fetchUserInfo", {
-      //   method: "POST",
-      //   body: JSON.stringify(pageInfo),
-      //   headers: {
-      //     "Content-Type": "application/json"
-      //   }
-      // })
-      //   .then(res => res.json())
-      //   .then(data => {
-      //     let extra = 6 - data.length;
-      //     for (let i = 0; i < extra; i++) {
-      //       data.push({});
-      //     }
+      fetch("/data/fetchUserInfo", {
+        method: "POST",
+        body: JSON.stringify(pageInfo),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+        .then(res => res.json())
+        .then(data => {
+          let resPageCount = data.pop().pageCount;
+          let extra = 6 - data.length;
+          for (let i = 0; i < extra; i++) {
+            data.push({});
+          }
 
-      //     this.setState({
-      //       userInfo: data,
-      //       loadData: false
-      //     });
-      //   });
+          this.setState({
+            userInfo: data,
+            pageCount: resPageCount,
+            loadData: false
+          });
+        });
     }
   }
 
@@ -170,20 +175,45 @@ class UserInfoTable extends Component {
     });
   }
 
-  handlePaginationStart(e) {}
+  handlePaginationStart(e) {
+    if (this.state.pageIndex > 1) {
+      this.setState({
+        pageIndex: 1,
+        loadData: true
+      });
+    }
+  }
 
-  handlePaginationPre(e) {}
+  handlePaginationPre(e) {
+    let prePage = this.state.pageIndex - 1;
+
+    if (prePage > 0) {
+      this.setState({
+        pageIndex: prePage,
+        loadData: true
+      });
+    }
+  }
 
   handlePaginationNext(e) {
     let nextPage = this.state.pageIndex + 1;
-    this.setState({
-      loadPage: nextPage,
-      loadData: true
-    });
-    console.log(nextPage);
+
+    if (nextPage <= this.state.pageCount) {
+      this.setState({
+        pageIndex: nextPage,
+        loadData: true
+      });
+    }
   }
 
-  handlePaginationEnd(e) {}
+  handlePaginationEnd(e) {
+    if (this.state.pageIndex < this.state.pageCount) {
+      this.setState({
+        pageIndex: this.state.pageCount,
+        loadData: true
+      });
+    }
+  }
 
   render() {
     const data = this.state.userInfo;
