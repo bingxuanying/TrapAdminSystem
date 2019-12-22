@@ -5,15 +5,18 @@
   margin-right: 15px;
   border-radius: 3px;
   background: #fff;
-  border-top: 3px solid #009879;
   margin-bottom: 20px;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
   float: left;
+  width: calc(50% - 30px);
 }
 
-.user-box,
+.user-box {
+  border-top: 3px solid #009879;
+}
+
 .product-box {
-  width: calc(50% - 30px);
+  border-top: 3px solid #f39c12;
 }
 
 .btn-filter {
@@ -71,10 +74,17 @@
 }
 
 .box-body thead tr {
-  background-color: #009879;
   color: white;
   text-align: left;
   font-weight: bold;
+}
+
+.user-box .box-body thead tr {
+  background-color: #009879;
+}
+
+.product-box .box-body thead tr {
+  background-color: #f39c12;
 }
 
 .box-body th,
@@ -95,8 +105,12 @@
   border-bottom: 2px solid #009879;
 } */
 
-.box-body tbody tr:hover {
+.user-box .box-body tbody tr:hover {
   border-bottom: 2px solid #009879;
+}
+
+.product-box .box-body tbody tr:hover {
+  border-bottom: 2px solid #f39c12;
 }
 
 .box-body tbody tr.active-row {
@@ -104,6 +118,42 @@
   color: #009879;
 }
 
+/* Tools */
+.tools {
+  float: left;
+  font-size: 14px;
+  margin: 10px 5px;
+}
+
+.tools-btn {
+  color: #666;
+  height: 50px;
+  width: 40px;
+  background: transparent;
+  background-image: none;
+  text-decoration: none;
+  vertical-align: middle;
+  border: none;
+  border-radius: 50%;
+  outline: none;
+  display: inline-block;
+  cursor: pointer;
+  font-size: 30px;
+}
+
+.tools-add:hover {
+  color: #009879;
+}
+
+.tools-edit:hover {
+  color: #f39c12;
+}
+
+.tools-delete:hover {
+  color: #dd4b39;
+}
+
+/* Pagination */
 .pagination {
   float: right;
   font-size: 14px;
