@@ -57,7 +57,7 @@ class Content extends Component {
         <section className="content">
           <div className="row">
             <UserInfoTable />
-            <ProductInfoTable />
+            <ProductInfoTable {...this.props} />
           </div>
           <div className="row">
             <OperatingFloor />

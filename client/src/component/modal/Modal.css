@@ -1,0 +1,32 @@
+.submit-modal {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: auto;
+  z-index: 100;
+  padding-bottom: 350px;
+  transition: all 0.5s;
+}
+
+.addProduct-content {
+  position: relative;
+  width: 500px;
+  min-height: 200px;
+  background-color: white;
+  border-radius: 4px;
+  text-align: center;
+  padding: 20px;
+}
+
+.close {
+  position: absolute;
+  top: 0;
+  right: 14px;
+  font-size: 40px;
+  cursor: pointer;
+}

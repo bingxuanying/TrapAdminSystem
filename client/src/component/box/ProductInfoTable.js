@@ -12,8 +12,7 @@ import {
   faAngleDoubleLeft,
   faAngleDoubleRight,
   faAngleLeft,
-  faAngleRight,
-  faMinusCircle
+  faAngleRight
 } from "@fortawesome/free-solid-svg-icons";
 import "./Table.css";
 
@@ -277,7 +276,10 @@ class ProductInfoTable extends Component {
           </table>
           {/* Table Tools */}
           <div className="tools">
-            <button className="tools-btn tools-add">
+            <button
+              className="tools-btn tools-add"
+              onClick={this.props.handleAddBtn}
+            >
               <FontAwesomeIcon icon={faPlusSquare}></FontAwesomeIcon>
             </button>{" "}
             <button
