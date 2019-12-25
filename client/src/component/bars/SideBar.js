@@ -10,7 +10,7 @@ import {
   faChartPie,
   faCircleNotch
 } from "@fortawesome/free-solid-svg-icons";
-import "./Side.css";
+import "./SideBar.css";
 import adminSample from "../../assets/adminSample.jpg";
 
 class SideBar extends Component {
@@ -227,7 +227,7 @@ class SideBar extends Component {
               <FontAwesomeIcon
                 className="mainmenu-fa"
                 icon={faCircleNotch}
-                style={{ color: "#39c12 " }}
+                style={{ color: "#f39c12 " }}
               ></FontAwesomeIcon>
               {this.props.toggleOn && (
                 <div>
