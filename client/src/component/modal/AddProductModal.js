@@ -7,14 +7,36 @@ import {
   faPlusSquare
 } from "@fortawesome/free-solid-svg-icons";
 import "./Modal.css";
-import NewProducts from "../../stores/NewProductStore";
+import NewProductStore from "../../stores/NewProductStore";
+import * as NewProductActions from "../../actions/NewProductActions";
 
 class AddProductModal extends Component {
   constructor() {
     super();
     this.state = {
-      newProducts: NewProducts.getAll()
+      newProducts: NewProductStore.getAll()
     };
+
+    this.getNewProducts = this.getNewProducts.bind(this);
+    this.createNew = this.createNew.bind(this);
+  }
+
+  componentWillMount() {
+    NewProductStore.on("change", this.getNewProducts);
+  }
+
+  componentWillUnmount() {
+    NewProductStore.removeListener("change", this.getNewProducts);
+  }
+
+  getNewProducts() {
+    this.setState({
+      newProducts: NewProductStore.getAll()
+    });
+  }
+
+  createNew() {
+    NewProductActions.createNew();
   }
 
   render() {
@@ -33,7 +55,7 @@ class AddProductModal extends Component {
             <form>
               <ol>
                 {newProducts.map(row => (
-                  <li key={row.id + row.company}>
+                  <li key={Math.random()}>
                     <input
                       name="product_id"
                       type="number"
@@ -63,7 +85,11 @@ class AddProductModal extends Component {
                   </li>
                 ))}
               </ol>
-              <button className="addProduct-add-btn" type="button">
+              <button
+                className="addProduct-add-btn"
+                type="button"
+                onClick={this.createNew}
+              >
                 ADD NEW
               </button>
               <button className="addProduct-submit-btn" type="submit">

@@ -12,27 +12,9 @@
   z-index: 100;
 }
 
-.close-btn {
-  position: absolute;
-  top: 5px;
-  right: 10px;
-  cursor: pointer;
-  color: #666;
-  background-color: transparent;
-  background-image: none;
-  text-decoration: none;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  font-size: 20px;
-}
-
-.close-btn:hover {
-  color: #00c0ef;
-}
-
 .addProduct-box {
-  position: relative;
+  position: absolute;
+  top: 50px;
   min-width: 200px;
   min-height: 200px;
   background-color: white;
@@ -126,7 +108,26 @@
   margin: 0;
 }
 
-/* Button */
+/* Buttons */
+.close-btn {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  cursor: pointer;
+  color: #666;
+  background-color: transparent;
+  background-image: none;
+  text-decoration: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.close-btn:hover {
+  color: #00c0ef;
+}
+
 .addProduct-submit-btn,
 .addProduct-add-btn {
   height: 40px;
@@ -143,9 +144,12 @@
   margin-bottom: 10px;
 }
 
-.addProduct-submit-btn:hover,
+.addProduct-submit-btn:hover {
+  background: #009879;
+}
+
 .addProduct-add-btn:hover {
-  background: #131335;
+  background: #3c8dbc;
 }
 
 .addProduct-add-btn {
