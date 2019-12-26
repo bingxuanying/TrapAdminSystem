@@ -45,24 +45,14 @@ router.post("/fetchUserInfo", (req, res) => {
     });
 });
 
-const replaceCircular = (obj, level = 0, already = new WeakSet()) => {
-  switch (typeof obj) {
-    case "object":
-      if (!obj) return obj;
-      if (already.has(obj)) {
-        return "CIRCULAR";
-      }
-      already.add(obj);
-      const newObj = {};
-      Object.keys(obj).forEach(key => {
-        const val = replaceCircular(obj[key], level + 1, already);
-        newObj[key] = val;
-      });
-      already.delete(obj);
-      return newObj;
-    default:
-      return obj;
+router.post("/addNewProduct", (req, res) => {
+  let productInfo = req.body;
+
+  for (key in productInfo) {
+    console.log(key[key.length - 1], " => ", productInfo[key]);
   }
-};
+
+  res.status(200).send();
+});
 
 module.exports = router;

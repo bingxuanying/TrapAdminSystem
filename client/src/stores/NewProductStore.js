@@ -6,22 +6,26 @@ class NewProductStore extends EventEmitter {
     super();
     this.newProducts = [
       {
-        id: "Prodcut ID",
-        company: "Company (Optional: fill NA instead)"
+        num: 0,
+        id: "product_0",
+        company: "company_0"
       },
       {
-        id: "Prodcut ID",
-        company: "Company (Optional: fill NA instead)"
+        num: 1,
+        id: "product_1",
+        company: "company_1"
       }
     ];
   }
 
   createNew() {
+    let _num = this.newProducts[this.newProducts.length - 1].num + 1;
     this.newProducts.push({
-      id: "Prodcut ID",
-      company: "Company (Optional: fill NA instead)"
+      num: _num,
+      id: "product_" + _num.toString(10),
+      company: "company_" + _num.toString(10)
     });
-
+    console.log(this.newProducts[this.newProducts.length - 1]);
     this.emit("change");
   }
 

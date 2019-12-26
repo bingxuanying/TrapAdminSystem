@@ -3,8 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faTimesCircle,
   faToolbox,
-  faBuilding,
-  faPlusSquare
+  faBuilding
 } from "@fortawesome/free-solid-svg-icons";
 import "./Modal.css";
 import NewProductStore from "../../stores/NewProductStore";
@@ -14,11 +13,14 @@ class AddProductModal extends Component {
   constructor() {
     super();
     this.state = {
-      newProducts: NewProductStore.getAll()
+      newProducts: NewProductStore.getAll(),
+      postData: []
     };
 
     this.getNewProducts = this.getNewProducts.bind(this);
     this.createNew = this.createNew.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentWillMount() {
@@ -39,27 +41,62 @@ class AddProductModal extends Component {
     NewProductActions.createNew();
   }
 
+  handleChange(e) {
+    let target = e.target;
+    let value = target.type === "checkbox" ? target.checked : target.value;
+    let name = target.name;
+
+    this.setState({
+      [name]: value
+    });
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    let formData = new FormData(e.target);
+    let data = {};
+    formData.forEach((val, key) => {
+      data[key] = key.slice(0, 7) === "product" ? parseInt(val, 10) : val;
+    });
+
+    console.log(data);
+
+    fetch("/data/addNewProduct", {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).then(res => {
+      console.log(res.status);
+    });
+  }
+
   render() {
     const { newProducts } = this.state;
 
     return (
       <div className="submit-modal">
         <div className="addProduct-box">
-          <button className="close-btn" onClick={this.props.handleAddBtn}>
+          <button
+            className="close-btn"
+            type="button"
+            onClick={this.props.handleAddBtn}
+          >
             <FontAwesomeIcon icon={faTimesCircle}></FontAwesomeIcon>
           </button>
           <div className="addProduct-header">
             <span>Create Account</span>
           </div>
           <div className="addProduct-content">
-            <form>
+            <form onSubmit={this.handleSubmit}>
               <ol>
                 {newProducts.map(row => (
-                  <li key={Math.random()}>
+                  <li key={row.id}>
                     <input
-                      name="product_id"
+                      name={row.id}
                       type="number"
-                      placeholder={row.id}
+                      placeholder="Prodcut ID"
                       required
                       pattern="^[0-9]\d*$"
                     />
@@ -70,9 +107,9 @@ class AddProductModal extends Component {
                       ></FontAwesomeIcon>
                     </div>
                     <input
-                      name="company"
+                      name={row.company}
                       type="text"
-                      placeholder={row.company}
+                      placeholder="Company (Optional: fill NA instead)"
                       required
                       pattern=".*\S.*"
                     />
