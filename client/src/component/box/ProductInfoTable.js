@@ -24,15 +24,13 @@ class ProductInfoTable extends Component {
       pageIndex: 1,
       pageCount: 10,
       loadData: false,
-      userInfo: [],
-      CompanyNameFilterIcon: faSortAlphaUp,
-      TrapNumFilterIcon: faSort
+      productInfo: [],
+      CompanyNameFilterIcon: faSort,
+      TrapIDFilterIcon: faSortAmountUp
     };
 
     this.handleAlphaFilter = this.handleAlphaFilter.bind(this);
     this.handleAmountFilter = this.handleAmountFilter.bind(this);
-
-    this.handleAddProduct = this.handleAddProduct.bind(this);
 
     this.handlePaginationStart = this.handlePaginationStart.bind(this);
     this.handlePaginationPre = this.handlePaginationPre.bind(this);
@@ -44,7 +42,7 @@ class ProductInfoTable extends Component {
     let order = "";
     if (this.state.CompanyNameFilterIcon === faSort) {
       order =
-        this.state.TrapNumFilterIcon === faSortAmountUp
+        this.state.TrapIDFilterIcon === faSortAmountUp
           ? "AmountUp"
           : "AmountDown";
     } else {
@@ -59,7 +57,7 @@ class ProductInfoTable extends Component {
       order: order
     };
 
-    fetch("/data/fetchUserInfo", {
+    fetch("/data/fetchProductInfo", {
       method: "POST",
       body: JSON.stringify(pageInfo),
       headers: {
@@ -75,7 +73,7 @@ class ProductInfoTable extends Component {
         }
         // console.log(this.state.CompanyNameFilterIcon === faSortAlphaUp);
         this.setState({
-          userInfo: data,
+          productInfo: data,
           pageCount: resPageCount,
           loadData: false
         });
@@ -87,7 +85,7 @@ class ProductInfoTable extends Component {
       let order = "";
       if (this.state.CompanyNameFilterIcon === faSort) {
         order =
-          this.state.TrapNumFilterIcon === faSortAmountUp
+          this.state.TrapIDFilterIcon === faSortAmountUp
             ? "AmountUp"
             : "AmountDown";
       } else {
@@ -102,7 +100,7 @@ class ProductInfoTable extends Component {
         order: order
       };
 
-      fetch("/data/fetchUserInfo", {
+      fetch("/data/fetchProductInfo", {
         method: "POST",
         body: JSON.stringify(pageInfo),
         headers: {
@@ -118,7 +116,7 @@ class ProductInfoTable extends Component {
           }
 
           this.setState({
-            userInfo: data,
+            productInfo: data,
             pageCount: resPageCount,
             loadData: false
           });
@@ -126,12 +124,10 @@ class ProductInfoTable extends Component {
     }
   }
 
-  handleAddProduct() {}
-
   handleAlphaFilter(e) {
     // console.log(this.state.CompanyNameFilterIcon.iconName);
     this.setState({
-      TrapNumFilterIcon: faSort
+      TrapIDFilterIcon: faSort
     });
     switch (this.state.CompanyNameFilterIcon.iconName) {
       case "sort":
@@ -160,20 +156,20 @@ class ProductInfoTable extends Component {
     this.setState({
       CompanyNameFilterIcon: faSort
     });
-    switch (this.state.TrapNumFilterIcon.iconName) {
+    switch (this.state.TrapIDFilterIcon.iconName) {
       case "sort":
         this.setState({
-          TrapNumFilterIcon: faSortAmountUp
+          TrapIDFilterIcon: faSortAmountUp
         });
         break;
       case "sort-amount-up":
         this.setState({
-          TrapNumFilterIcon: faSortAmountDown
+          TrapIDFilterIcon: faSortAmountDown
         });
         break;
       case "sort-amount-down":
         this.setState({
-          TrapNumFilterIcon: faSortAmountUp
+          TrapIDFilterIcon: faSortAmountUp
         });
         break;
     }
@@ -223,7 +219,7 @@ class ProductInfoTable extends Component {
   }
 
   render() {
-    const data = this.state.userInfo;
+    const data = this.state.productInfo;
 
     return (
       <div className="box product-box">
@@ -236,6 +232,17 @@ class ProductInfoTable extends Component {
             <thead>
               <tr>
                 <th>
+                  Product ID{" "}
+                  <button
+                    className="btn-filter"
+                    onClick={this.handleAmountFilter}
+                  >
+                    <FontAwesomeIcon
+                      icon={this.state.TrapIDFilterIcon}
+                    ></FontAwesomeIcon>
+                  </button>
+                </th>
+                <th>
                   Company Name{" "}
                   <button
                     className="btn-filter"
@@ -246,30 +253,15 @@ class ProductInfoTable extends Component {
                     ></FontAwesomeIcon>
                   </button>
                 </th>
-                <th>
-                  Number of Traps{" "}
-                  <button
-                    className="btn-filter"
-                    onClick={this.handleAmountFilter}
-                  >
-                    <FontAwesomeIcon
-                      icon={this.state.TrapNumFilterIcon}
-                    ></FontAwesomeIcon>
-                  </button>
-                </th>
-                <th>ID</th>
+                <th>Status</th>
               </tr>
             </thead>
             <tbody>
               {data.map(row => (
-                <tr key={row.company}>
-                  <td>{row.company ? row.company : null}</td>
-                  <td>{row.totalTraps ? row.totalTraps : null}</td>
-                  <td>
-                    {row._id
-                      ? row._id.slice(Math.max(row._id.length - 10, 1))
-                      : null}
-                  </td>
+                <tr key={Math.random()}>
+                  <td>{row.product_id}</td>
+                  <td>{row.company}</td>
+                  <td>#</td>
                 </tr>
               ))}
             </tbody>
@@ -282,10 +274,7 @@ class ProductInfoTable extends Component {
             >
               <FontAwesomeIcon icon={faPlusSquare}></FontAwesomeIcon>
             </button>{" "}
-            <button
-              className="tools-btn tools-edit"
-              onClick={this.handleAddProduct}
-            >
+            <button className="tools-btn tools-edit">
               <FontAwesomeIcon icon={faPenSquare}></FontAwesomeIcon>
             </button>{" "}
             <button className="tools-btn tools-delete">

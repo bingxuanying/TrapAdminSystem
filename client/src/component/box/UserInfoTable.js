@@ -249,7 +249,7 @@ class UserInfoTable extends Component {
                     ></FontAwesomeIcon>
                   </button>
                 </th>
-                <th>ID</th>
+                <th>User ID</th>
               </tr>
             </thead>
             <tbody>

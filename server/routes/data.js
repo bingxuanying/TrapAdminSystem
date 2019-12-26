@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 const User = require("../models/users-model");
+const Product = require("../models/products-model");
 const path = require("path");
 
 /*
@@ -45,11 +46,57 @@ router.post("/fetchUserInfo", (req, res) => {
     });
 });
 
+router.post("/fetchProductInfo", (req, res) => {
+  console.log(req.body);
+  let pageSkip = (req.body.pageNum - 1) * 6;
+  let sortOrder = null;
+  let pageCount = null;
+  switch (req.body.order) {
+    case "AlphaUp":
+      sortOrder = { company: "asc" };
+      break;
+    case "AlphaDown":
+      sortOrder = { company: "desc" };
+      break;
+    case "AmountUp":
+      sortOrder = { product_id: "asc" };
+      break;
+    case "AmountDown":
+      sortOrder = { product_id: "desc" };
+      break;
+  }
+
+  Product.find({}, "product_id company")
+    .sort(sortOrder)
+    .skip(pageSkip)
+    .limit(6)
+    .then(async products => {
+      await User.countDocuments({}).then(count => {
+        pageCount = {
+          pageCount: Math.ceil(count / 6)
+        };
+      });
+      products.push(pageCount);
+      res.json(products);
+    });
+});
+
 router.post("/addNewProduct", (req, res) => {
   let productInfo = req.body;
+  console.log(productInfo);
 
-  for (key in productInfo) {
-    console.log(key[key.length - 1], " => ", productInfo[key]);
+  for (let i = 0; i < productInfo.length; i++) {
+    console.log(productInfo[i]);
+    let curProductInfo = productInfo[i];
+    Product.findOne({ product_id: curProductInfo[0] }, async product => {
+      if (!product) {
+        var product = new Product({
+          product_id: curProductInfo[0],
+          company: curProductInfo[1] === "NA" ? "N/A" : curProductInfo[1]
+        });
+        await product.save();
+      }
+    });
   }
 
   res.status(200).send();

@@ -54,10 +54,15 @@ class AddProductModal extends Component {
   handleSubmit(e) {
     e.preventDefault();
     let formData = new FormData(e.target);
-    let data = {};
-    formData.forEach((val, key) => {
-      data[key] = key.slice(0, 7) === "product" ? parseInt(val, 10) : val;
-    });
+    let _formData = Array.from(formData);
+    let data = [];
+
+    for (let i = 0; i < _formData.length; i += 2) {
+      let dataSet = [];
+      dataSet[0] = parseInt(_formData[i][1], 10);
+      dataSet[1] = _formData[i + 1][1];
+      data.push(dataSet);
+    }
 
     console.log(data);
 
