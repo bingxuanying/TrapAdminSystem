@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {} from "@fortawesome/free-solid-svg-icons";
 import CompanyInfoStore from "../../stores/CompanyInfoStore";
-import "./OperatingFloor.css";
+import "./Table.css";
 
 class OperatingFloor extends Component {
   constructor() {
@@ -35,8 +35,10 @@ class OperatingFloor extends Component {
     console.log(companyInfo);
 
     return (
-      <div className="box opFloor">
-        <h1>info</h1>
+      <div className="box opFloor-box">
+        <div className="box-header">
+          <h3 className="box-title">Company Detailed Info Panel</h3>
+        </div>
         <ul>
           <li>{companyInfo.name}</li>
           <li>{companyInfo.username}</li>
