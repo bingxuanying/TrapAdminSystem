@@ -3,9 +3,9 @@
   min-height: 100px;
   margin-left: 15px;
   margin-right: 15px;
+  margin-bottom: 20px;
   border-radius: 3px;
   background: #fff;
-  margin-bottom: 20px;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
   float: left;
   width: calc(50% - 30px);
@@ -22,6 +22,7 @@
 .opFloor-box {
   width: calc(100% - 30px);
   border-top: 3px solid #3c8dbc;
+  margin-bottom: 0px;
 }
 
 .btn-filter {
@@ -50,7 +51,7 @@
   display: block;
   padding: 10px;
   position: relative;
-  border-bottom: 1px solid #f4f4f4;
+  border-bottom: 1px solid #f1f1f1;
 }
 
 .box-title {
@@ -62,13 +63,78 @@
 }
 
 .box-body {
+  position: relative;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
   border-bottom-right-radius: 3px;
   border-bottom-left-radius: 3px;
+  min-height: 100px;
   padding: 10px;
 }
 
+.box-body-left,
+.box-body-right {
+  width: 49%;
+}
+
+.box-body-left {
+  float: left;
+}
+
+.box-body-right {
+  float: right;
+  padding-bottom: 0;
+}
+
+.box-body-line {
+  position: absolute;
+  width: 2px;
+  height: 290px;
+  left: 49.9%;
+  margin: 20px 0;
+  background-color: #e0e0e0;
+}
+
+/* Info Card */
+.info-card {
+  border: 1px solid #e0e0e0;
+  box-shadow: none;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border-radius: 5px;
+  font-weight: 400;
+}
+
+.info-card-header {
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 0;
+  background-color: rgba(0, 0, 0, 0.03);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.info-card-body {
+  flex: 1 1 auto;
+  height: 266px;
+  padding: 24px;
+}
+
+.info-card-title {
+  margin-bottom: 12px;
+  font-size: 16px;
+}
+
+.info-card-text {
+  font-size: 16px;
+  font-weight: 400;
+  color: #747373;
+  margin-top: 5px;
+  margin-left: 15px;
+}
 /*  Table CSS */
 .box-body table {
   border-collapse: collapse;
@@ -91,6 +157,10 @@
 
 .product-box .box-body thead tr {
   background-color: #f39c12;
+}
+
+.opFloor-box .box-body thead tr {
+  background-color: #3c8dbc;
 }
 
 .box-body th,

@@ -11,9 +11,9 @@ export function selectCompany(company) {
     .then(res => res.json())
     .then(data => {
       let companyInfo = data[0];
-      let productInfo = data[1];
+      let _productInfo = data[1];
 
-      let _productInfo = productInfo
+      let productInfo = _productInfo
         .map(data => data.product_id)
         .sort((a, b) => {
           return a - b;
@@ -21,12 +21,19 @@ export function selectCompany(company) {
       let username = companyInfo.username;
       let numOfProduct = companyInfo.totalTraps;
 
+      let size = 6 - (productInfo.length % 6);
+      for (let i = 0; i < size; i++) {
+        productInfo.push(-1);
+      }
+
+      console.log(productInfo);
+
       dispatcher.dispatch({
         type: "SELECT_COMPANY",
         company,
         username,
         numOfProduct,
-        _productInfo
+        productInfo
       });
     });
 }

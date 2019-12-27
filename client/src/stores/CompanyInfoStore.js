@@ -5,10 +5,10 @@ class CompanyInfoStore extends EventEmitter {
   constructor() {
     super();
     this.companyInfo = {
-      name: "xxx",
+      name: "default",
       username: "default",
       numOfProduct: 0,
-      products_id: []
+      productInfo: [-1, -1, -1, -1, -1, -1]
     };
   }
 
@@ -16,12 +16,12 @@ class CompanyInfoStore extends EventEmitter {
     return this.companyInfo;
   }
 
-  changeInfo(name, username, numOfProduct, _productInfo) {
+  changeInfo(name, username, numOfProduct, productInfo) {
     this.companyInfo = {
       name,
       username,
       numOfProduct,
-      _productInfo
+      productInfo
     };
 
     this.emit("change");
@@ -34,7 +34,7 @@ class CompanyInfoStore extends EventEmitter {
           action.company,
           action.username,
           action.numOfProduct,
-          action._productInfo
+          action.productInfo
         );
       }
     }
