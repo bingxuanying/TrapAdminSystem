@@ -12,7 +12,6 @@ const path = require("path");
  */
 
 router.post("/fetchUserInfo", (req, res) => {
-  console.log(req.body);
   let pageSkip = (req.body.pageNum - 1) * 6;
   let sortOrder = null;
   let pageCount = null;
@@ -31,7 +30,7 @@ router.post("/fetchUserInfo", (req, res) => {
       break;
   }
 
-  User.find({}, "username company totalTraps")
+  User.find({}, "company totalTraps")
     .sort(sortOrder)
     .skip(pageSkip)
     .limit(6)
@@ -47,7 +46,6 @@ router.post("/fetchUserInfo", (req, res) => {
 });
 
 router.post("/fetchProductInfo", (req, res) => {
-  console.log(req.body);
   let pageSkip = (req.body.pageNum - 1) * 6;
   let sortOrder = null;
   let query = {};
@@ -92,10 +90,8 @@ router.post("/fetchProductInfo", (req, res) => {
 
 router.post("/addNewProduct", (req, res) => {
   let productInfo = req.body;
-  console.log(productInfo);
 
   for (let i = 0; i < productInfo.length; i++) {
-    console.log(productInfo[i]);
     let curProductInfo = productInfo[i];
     Product.findOne({ product_id: curProductInfo[0] }, async product => {
       if (!product) {
@@ -116,6 +112,21 @@ router.post("/addNewProduct", (req, res) => {
   }
 
   res.status(200).send();
+});
+
+router.post("/fetchCompanyInfo", (req, res) => {
+  User.findOne({ company: req.body.company_name }, "username totalTraps").then(
+    async companyInfo => {
+      let allInfo = [];
+      allInfo.push(companyInfo);
+      await Product.find({ company: req.body.company_name }, "product_id").then(
+        productInfo => {
+          allInfo.push(productInfo);
+        }
+      );
+      res.json(allInfo);
+    }
+  );
 });
 
 module.exports = router;

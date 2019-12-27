@@ -11,6 +11,7 @@ import {
   faAngleLeft,
   faAngleRight
 } from "@fortawesome/free-solid-svg-icons";
+import * as CompanyInfoActions from "../../actions/CompanyInfoActions";
 import "./Table.css";
 
 class UserInfoTable extends Component {
@@ -33,6 +34,8 @@ class UserInfoTable extends Component {
     this.handlePaginationPre = this.handlePaginationPre.bind(this);
     this.handlePaginationNext = this.handlePaginationNext.bind(this);
     this.handlePaginationEnd = this.handlePaginationEnd.bind(this);
+
+    this.selectCompany = this.selectCompany.bind(this);
   }
 
   componentDidMount(e) {
@@ -215,6 +218,11 @@ class UserInfoTable extends Component {
     }
   }
 
+  selectCompany(e) {
+    const company = e.currentTarget.getAttribute("company");
+    CompanyInfoActions.selectCompany(company);
+  }
+
   render() {
     const data = this.state.userInfo;
 
@@ -254,7 +262,11 @@ class UserInfoTable extends Component {
             </thead>
             <tbody>
               {data.map(row => (
-                <tr key={Math.random()}>
+                <tr
+                  key={Math.random()}
+                  company={row.company}
+                  onClick={this.selectCompany}
+                >
                   <td>{row.company}</td>
                   <td>{row.totalTraps}</td>
                   <td>
