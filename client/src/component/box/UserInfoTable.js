@@ -12,6 +12,7 @@ import {
   faAngleRight
 } from "@fortawesome/free-solid-svg-icons";
 import * as CompanyInfoActions from "../../actions/CompanyInfoActions";
+import CompanyInfoStore from "../../stores/CompanyInfoStore";
 import "./Table.css";
 
 class UserInfoTable extends Component {
@@ -19,6 +20,7 @@ class UserInfoTable extends Component {
     super();
 
     this.state = {
+      companyInfo: CompanyInfoStore.getInfo(),
       pageIndex: 1,
       pageCount: 10,
       loadData: false,
@@ -26,6 +28,8 @@ class UserInfoTable extends Component {
       CompanyNameFilterIcon: faSortAlphaUp,
       TrapNumFilterIcon: faSort
     };
+
+    this.getCompanyInfo = this.getCompanyInfo.bind(this);
 
     this.handleAlphaFilter = this.handleAlphaFilter.bind(this);
     this.handleAmountFilter = this.handleAmountFilter.bind(this);
@@ -36,6 +40,21 @@ class UserInfoTable extends Component {
     this.handlePaginationEnd = this.handlePaginationEnd.bind(this);
 
     this.selectCompany = this.selectCompany.bind(this);
+  }
+
+  componentWillMount() {
+    CompanyInfoStore.on("change", this.getCompanyInfo);
+  }
+
+  componentWillUnmount() {
+    CompanyInfoStore.removeListener("change", this.getCompanyInfo);
+  }
+
+  getCompanyInfo() {
+    this.setState({
+      companyInfo: CompanyInfoStore.getInfo(),
+      pageIndex: 1
+    });
   }
 
   componentDidMount(e) {
@@ -225,6 +244,7 @@ class UserInfoTable extends Component {
 
   render() {
     const data = this.state.userInfo;
+    var { companyInfo } = this.state;
 
     return (
       <div className="box user-box">
@@ -266,6 +286,9 @@ class UserInfoTable extends Component {
                   key={Math.random()}
                   company={row.company}
                   onClick={this.selectCompany}
+                  className={
+                    companyInfo.name == row.company ? "active-row" : null
+                  }
                 >
                   <td>{row.company}</td>
                   <td>{row.totalTraps}</td>

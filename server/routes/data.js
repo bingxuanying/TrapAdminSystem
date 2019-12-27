@@ -129,4 +129,40 @@ router.post("/fetchCompanyInfo", (req, res) => {
   );
 });
 
+router.post("/AssignProduct", async (req, res) => {
+  let companyName = req.body.company;
+  let productArr = req.body.addNewNum.split(",");
+  for (let i = 0; i < productArr.length; i++) {
+    let _productArr = productArr[i].split("-");
+
+    if (_productArr.length > 2 || _productArr.length < 1) {
+      continue;
+    }
+
+    let num0 = parseInt(_productArr[0], 10);
+    let num1 = parseInt(_productArr[1], 10);
+    if (num0 > num1) {
+      continue;
+    }
+
+    let j = num0;
+    let size = _productArr.length === 1 ? j + 1 : num1 + 1;
+
+    for (j; j < size; j++) {
+      console.log(j);
+      console.log(companyName);
+      mongoose.set("useFindAndModify", false);
+      await Product.findOneAndUpdate(
+        { product_id: j },
+        { company: companyName }
+      );
+      await User.findOneAndUpdate(
+        { company: companyName },
+        { $inc: { totalTraps: 1 } }
+      );
+    }
+  }
+  res.status(200).send();
+});
+
 module.exports = router;

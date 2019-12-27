@@ -189,7 +189,7 @@
   border-bottom: 2px solid #f39c12;
 }
 
-.box-body tbody tr.active-row {
+.user-box .active-row {
   font-weight: bold;
   color: #009879;
 }
@@ -217,6 +217,7 @@
   font-size: 30px;
 }
 
+.tools-add-active,
 .tools-add:hover {
   color: #009879;
 }
@@ -227,6 +228,30 @@
 
 .tools-delete:hover {
   color: #dd4b39;
+}
+
+.tools-check {
+  margin-left: 0;
+  width: 26.25px;
+}
+
+.tools-check:hover {
+  color: #009879;
+}
+
+.tool-form {
+  display: inline-block;
+  margin: 0;
+}
+
+.tool-form input {
+  height: 26.25px;
+  font-size: 14px;
+  border: 1px solid #bbbbbb;
+  outline: none;
+  padding-left: 7px;
+  margin-top: 3px;
+  vertical-align: middle;
 }
 
 /* Pagination */

@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPlusSquare,
   faMinusSquare,
+  faCheckSquare,
   faAngleDoubleLeft,
   faAngleDoubleRight,
   faAngleLeft,
@@ -17,15 +18,20 @@ class OperatingFloor extends Component {
 
     this.state = {
       companyInfo: CompanyInfoStore.getInfo(),
-      pageIndex: 1
+      pageIndex: 1,
+      addBtnActive: false,
+      addNewNum: ""
     };
 
     this.getCompanyInfo = this.getCompanyInfo.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
 
     this.handlePaginationStart = this.handlePaginationStart.bind(this);
     this.handlePaginationPre = this.handlePaginationPre.bind(this);
     this.handlePaginationNext = this.handlePaginationNext.bind(this);
     this.handlePaginationEnd = this.handlePaginationEnd.bind(this);
+    this.handleAddBtn = this.handleAddBtn.bind(this);
   }
 
   componentWillMount() {
@@ -40,6 +46,38 @@ class OperatingFloor extends Component {
     this.setState({
       companyInfo: CompanyInfoStore.getInfo(),
       pageIndex: 1
+    });
+  }
+
+  handleChange(e) {
+    let target = e.target;
+    let value = target.type === "checkbox" ? target.checked : target.value;
+    let name = target.name;
+    this.setState({
+      [name]: value
+    });
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    let data = {
+      addNewNum: this.state.addNewNum,
+      company: this.state.companyInfo.name
+    };
+
+    fetch("/data/AssignProduct", {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).then(res => {
+      // this.props.history.push("/sign-in");
+      console.log(res.status);
+      this.setState({
+        addBtnActive: false,
+        addNewNum: ""
+      });
     });
   }
 
@@ -79,6 +117,14 @@ class OperatingFloor extends Component {
     }
   }
 
+  handleAddBtn(e) {
+    if (this.state.companyInfo.name !== "default") {
+      this.setState({
+        addBtnActive: !this.state.addBtnActive
+      });
+    }
+  }
+
   render() {
     var { companyInfo } = this.state;
     var pageCount = this.state.companyInfo.productInfo.length / 6;
@@ -98,7 +144,7 @@ class OperatingFloor extends Component {
                 <div>
                   <h5 className="info-card-title">{companyInfo.name}</h5>
                   <p className="info-card-text">
-                    username: {companyInfo.username}
+                    Username: {companyInfo.username}
                   </p>
                   <p className="info-card-text">
                     Owned Products: {companyInfo.numOfProduct}
@@ -132,14 +178,34 @@ class OperatingFloor extends Component {
           {/* Table Tools */}
           <div className="tools">
             <button
-              className="tools-btn tools-add"
-              onClick={this.props.handleAddBtn}
+              className={
+                this.state.addBtnActive
+                  ? "tools-btn tools-add tools-add-active"
+                  : "tools-btn tools-add"
+              }
+              onClick={this.handleAddBtn}
             >
               <FontAwesomeIcon icon={faPlusSquare}></FontAwesomeIcon>
             </button>{" "}
-            <button className="tools-btn tools-delete">
+            {this.state.addBtnActive && (
+              <form className="tool-form" onSubmit={this.handleSubmit}>
+                <input
+                  name="addNewNum"
+                  type="text"
+                  placeholder="( ex: 1, 2 - 4 )"
+                  required
+                  pattern="\d*([,-]?\d+[,]?)+"
+                  value={this.state.addNewNum}
+                  onChange={this.handleChange}
+                />
+                <button className="tools-btn tools-check" type="submit">
+                  <FontAwesomeIcon icon={faCheckSquare}></FontAwesomeIcon>
+                </button>
+              </form>
+            )}
+            {/* <button className="tools-btn tools-delete">
               <FontAwesomeIcon icon={faMinusSquare}></FontAwesomeIcon>
-            </button>{" "}
+            </button>{" "} */}
           </div>
           {/* Pagination */}
           <div className="pagination">

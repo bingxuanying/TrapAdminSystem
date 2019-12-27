@@ -26,8 +26,6 @@ export function selectCompany(company) {
         productInfo.push(-1);
       }
 
-      console.log(productInfo);
-
       dispatcher.dispatch({
         type: "SELECT_COMPANY",
         company,
