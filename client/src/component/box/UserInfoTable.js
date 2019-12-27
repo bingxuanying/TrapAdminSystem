@@ -254,9 +254,9 @@ class UserInfoTable extends Component {
             </thead>
             <tbody>
               {data.map(row => (
-                <tr key={row.company}>
-                  <td>{row.company ? row.company : null}</td>
-                  <td>{row.totalTraps ? row.totalTraps : null}</td>
+                <tr key={Math.random()}>
+                  <td>{row.company}</td>
+                  <td>{row.totalTraps}</td>
                   <td>
                     {row._id
                       ? row._id.slice(Math.max(row._id.length - 10, 1))

@@ -9,11 +9,6 @@ class NewProductStore extends EventEmitter {
         num: 0,
         id: "product_0",
         company: "company_0"
-      },
-      {
-        num: 1,
-        id: "product_1",
-        company: "company_1"
       }
     ];
   }

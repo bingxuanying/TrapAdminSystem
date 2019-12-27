@@ -12,11 +12,14 @@ class AdminLayout extends Component {
     this.state = {
       toggleOn: true,
       addBtnOn: false,
-      pageName: "Dashboard"
+      pageName: "Dashboard",
+      productLoading: false,
+      userLoading: false
     };
 
     this.handleToggle = this.handleToggle.bind(this);
     this.handleAddBtn = this.handleAddBtn.bind(this);
+    this.handleLoading = this.handleLoading.bind(this);
   }
 
   handleToggle(e) {
@@ -28,6 +31,13 @@ class AdminLayout extends Component {
   handleAddBtn(e) {
     this.setState({
       addBtnOn: !this.state.addBtnOn
+    });
+  }
+
+  handleLoading(e) {
+    this.setState({
+      productLoading: true,
+      userLoading: true
     });
   }
 

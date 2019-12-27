@@ -50,6 +50,7 @@ router.post("/fetchProductInfo", (req, res) => {
   console.log(req.body);
   let pageSkip = (req.body.pageNum - 1) * 6;
   let sortOrder = null;
+  let query = {};
   let pageCount = null;
   switch (req.body.order) {
     case "AlphaUp":
@@ -64,14 +65,22 @@ router.post("/fetchProductInfo", (req, res) => {
     case "AmountDown":
       sortOrder = { product_id: "desc" };
       break;
+    case "Available":
+      sortOrder = { product_id: "asc" };
+      query = { company: "N/A" };
+      break;
+    case "Unavailable":
+      sortOrder = { company: "asc" };
+      query = { company: { $ne: "N/A" } };
+      break;
   }
 
-  Product.find({}, "product_id company")
+  Product.find(query, "product_id company")
     .sort(sortOrder)
     .skip(pageSkip)
     .limit(6)
     .then(async products => {
-      await User.countDocuments({}).then(count => {
+      await Product.countDocuments({}).then(count => {
         pageCount = {
           pageCount: Math.ceil(count / 6)
         };
@@ -95,6 +104,13 @@ router.post("/addNewProduct", (req, res) => {
           company: curProductInfo[1] === "NA" ? "N/A" : curProductInfo[1]
         });
         await product.save();
+        if (curProductInfo[1] !== "NA") {
+          mongoose.set("useFindAndModify", false);
+          await User.findOneAndUpdate(
+            { company: curProductInfo[1] },
+            { $inc: { totalTraps: 1 } }
+          );
+        }
       }
     });
   }

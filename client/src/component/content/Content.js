@@ -23,6 +23,7 @@ class Content extends Component {
         return null;
     }
   }
+
   render() {
     return (
       <div

@@ -185,3 +185,14 @@
   padding-top: 5px;
   margin: 0 10px;
 }
+
+/* Status */
+.status-asg {
+  font-size: 14px;
+  color: green;
+}
+
+.status-unasg {
+  font-size: 14px;
+  color: red;
+}

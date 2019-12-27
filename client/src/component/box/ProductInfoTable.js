@@ -9,10 +9,13 @@ import {
   faSortAlphaDown,
   faSortAmountUp,
   faSortAmountDown,
+  faCheckCircle,
+  faTimesCircle,
   faAngleDoubleLeft,
   faAngleDoubleRight,
   faAngleLeft,
-  faAngleRight
+  faAngleRight,
+  faTimes
 } from "@fortawesome/free-solid-svg-icons";
 import "./Table.css";
 
@@ -26,11 +29,13 @@ class ProductInfoTable extends Component {
       loadData: false,
       productInfo: [],
       CompanyNameFilterIcon: faSort,
-      TrapIDFilterIcon: faSortAmountUp
+      TrapIDFilterIcon: faSortAmountUp,
+      AvailabilityFilterIcon: faSort
     };
 
     this.handleAlphaFilter = this.handleAlphaFilter.bind(this);
     this.handleAmountFilter = this.handleAmountFilter.bind(this);
+    this.handleAvailabilityFilter = this.handleAvailabilityFilter.bind(this);
 
     this.handlePaginationStart = this.handlePaginationStart.bind(this);
     this.handlePaginationPre = this.handlePaginationPre.bind(this);
@@ -83,22 +88,29 @@ class ProductInfoTable extends Component {
   componentDidUpdate(loadData) {
     if (this.state.loadData === true) {
       let order = "";
-      if (this.state.CompanyNameFilterIcon === faSort) {
+      if (this.state.TrapIDFilterIcon !== faSort) {
         order =
           this.state.TrapIDFilterIcon === faSortAmountUp
             ? "AmountUp"
             : "AmountDown";
-      } else {
+      } else if (this.state.CompanyNameFilterIcon !== faSort) {
         order =
           this.state.CompanyNameFilterIcon === faSortAlphaUp
             ? "AlphaUp"
             : "AlphaDown";
+      } else {
+        order =
+          this.state.AvailabilityFilterIcon === faCheckCircle
+            ? "Available"
+            : "Unavailable";
       }
 
       let pageInfo = {
         pageNum: this.state.pageIndex,
         order: order
       };
+
+      console.log(pageInfo);
 
       fetch("/data/fetchProductInfo", {
         method: "POST",
@@ -127,7 +139,8 @@ class ProductInfoTable extends Component {
   handleAlphaFilter(e) {
     // console.log(this.state.CompanyNameFilterIcon.iconName);
     this.setState({
-      TrapIDFilterIcon: faSort
+      TrapIDFilterIcon: faSort,
+      AvailabilityFilterIcon: faSort
     });
     switch (this.state.CompanyNameFilterIcon.iconName) {
       case "sort":
@@ -154,7 +167,8 @@ class ProductInfoTable extends Component {
   handleAmountFilter(e) {
     e.preventDefault();
     this.setState({
-      CompanyNameFilterIcon: faSort
+      CompanyNameFilterIcon: faSort,
+      AvailabilityFilterIcon: faSort
     });
     switch (this.state.TrapIDFilterIcon.iconName) {
       case "sort":
@@ -170,6 +184,34 @@ class ProductInfoTable extends Component {
       case "sort-amount-down":
         this.setState({
           TrapIDFilterIcon: faSortAmountUp
+        });
+        break;
+    }
+    this.setState({
+      loadData: true
+    });
+  }
+
+  handleAvailabilityFilter(e) {
+    e.preventDefault();
+    this.setState({
+      CompanyNameFilterIcon: faSort,
+      TrapIDFilterIcon: faSort
+    });
+    switch (this.state.AvailabilityFilterIcon.iconName) {
+      case "sort":
+        this.setState({
+          AvailabilityFilterIcon: faCheckCircle
+        });
+        break;
+      case "check-circle":
+        this.setState({
+          AvailabilityFilterIcon: faTimesCircle
+        });
+        break;
+      case "times-circle":
+        this.setState({
+          AvailabilityFilterIcon: faCheckCircle
         });
         break;
     }
@@ -253,7 +295,17 @@ class ProductInfoTable extends Component {
                     ></FontAwesomeIcon>
                   </button>
                 </th>
-                <th>Status</th>
+                <th>
+                  Status{" "}
+                  <button
+                    className="btn-filter"
+                    onClick={this.handleAvailabilityFilter}
+                  >
+                    <FontAwesomeIcon
+                      icon={this.state.AvailabilityFilterIcon}
+                    ></FontAwesomeIcon>
+                  </button>
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -261,7 +313,14 @@ class ProductInfoTable extends Component {
                 <tr key={Math.random()}>
                   <td>{row.product_id}</td>
                   <td>{row.company}</td>
-                  <td>#</td>
+                  <td>
+                    {row.company &&
+                      (row.company === "N/A" ? (
+                        <div className="status-asg">available</div>
+                      ) : (
+                        <div className="status-unasg">assigned</div>
+                      ))}
+                  </td>
                 </tr>
               ))}
             </tbody>

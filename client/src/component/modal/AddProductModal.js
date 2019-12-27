@@ -64,8 +64,6 @@ class AddProductModal extends Component {
       data.push(dataSet);
     }
 
-    console.log(data);
-
     fetch("/data/addNewProduct", {
       method: "POST",
       body: JSON.stringify(data),
@@ -74,6 +72,7 @@ class AddProductModal extends Component {
       }
     }).then(res => {
       console.log(res.status);
+      this.props.handleAddBtn();
     });
   }
 
