@@ -1,11 +1,21 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
+import { Cookies } from "react-cookie";
 import "./NavigationBar.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import adminSample from "../../assets/adminSample.jpg";
 
 class NavigationBar extends Component {
+  constructor() {
+    super();
+    this.handleLogout = this.handleLogout.bind(this);
+  }
+
+  handleLogout(e) {
+    this.props.history.push("/");
+  }
+
   render() {
     let logoLarge = (
       <div className="logo-large">
@@ -58,14 +68,12 @@ class NavigationBar extends Component {
                   <span className="user-info">Administrator</span>
                 </a>
               </li>
-              <li className="section-logout">
-                <a href="#">
-                  <FontAwesomeIcon
-                    icon={faSignOutAlt}
-                    size="lg"
-                  ></FontAwesomeIcon>
-                  <span className="logout">Logout</span>
-                </a>
+              <li className="section-logout" onClick={this.handleLogout}>
+                <FontAwesomeIcon
+                  icon={faSignOutAlt}
+                  size="lg"
+                ></FontAwesomeIcon>
+                <span className="logout">Logout</span>
               </li>
             </ul>
           </div>

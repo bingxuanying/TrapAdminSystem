@@ -18,9 +18,13 @@ router.get("/jwtAuth", (req, res) => {
   var token = req.cookies.token;
   jwt.verify(token, process.env.SECRECT_KEY, (err, verifiedJwt) => {
     if (err) {
-      console.log(err.message);
+      res.status(401).json({ err: err.message });
     } else {
-      console.log(verifiedJwt);
+      var adminList = process.env.ADMINISTRATOR_LIST.split(",");
+      var jwtRole = adminList.includes(verifiedJwt.username)
+        ? "administrator"
+        : "user";
+      res.status(200).json({ role: jwtRole });
     }
   });
 });
@@ -37,16 +41,25 @@ router.post("/login", (req, res) => {
             _id: user._id,
             username: user.username
           };
-          let token = jwt.sign(payload, process.env.SECRECT_KEY, {
-            expiresIn: "1m"
+          var token = jwt.sign(payload, process.env.SECRECT_KEY, {
+            expiresIn: "12h"
           });
-          res.cookie("token", token, { httpOnly: true }).sendStatus(200);
+
+          var adminList = process.env.ADMINISTRATOR_LIST.split(",");
+          var loginRole = adminList.includes(user.username)
+            ? "administrator"
+            : "user";
+
+          res
+            .status(200)
+            .cookie("token", token, { httpOnly: true })
+            .json({ role: loginRole });
         } else {
           // Password doesn't match
-          res.status(401).json({ error: "Wrong password" });
+          res.status(401).json({ err: "Wrong password" });
         }
       } else {
-        res.status(401).json({ error: "User doesn't exist" });
+        res.status(401).json({ err: "User doesn't exist" });
       }
     })
     .catch(err => res.send("err: " + err));
