@@ -20,7 +20,9 @@ class OperatingFloor extends Component {
       companyInfo: CompanyInfoStore.getInfo(),
       pageIndex: 1,
       addBtnActive: false,
-      addNewNum: ""
+      addNewNum: "",
+      trapSelected: false,
+      selectTrapId: -1
     };
 
     this.getCompanyInfo = this.getCompanyInfo.bind(this);
@@ -32,6 +34,8 @@ class OperatingFloor extends Component {
     this.handlePaginationNext = this.handlePaginationNext.bind(this);
     this.handlePaginationEnd = this.handlePaginationEnd.bind(this);
     this.handleAddBtn = this.handleAddBtn.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
+    this.selectTrap = this.selectTrap.bind(this);
   }
 
   componentWillMount() {
@@ -45,7 +49,9 @@ class OperatingFloor extends Component {
   getCompanyInfo() {
     this.setState({
       companyInfo: CompanyInfoStore.getInfo(),
-      pageIndex: 1
+      pageIndex: 1,
+      trapSelected: false,
+      selectTrapId: -1
     });
   }
 
@@ -78,6 +84,25 @@ class OperatingFloor extends Component {
         addBtnActive: false,
         addNewNum: ""
       });
+    });
+  }
+
+  handleDelete(e) {
+    e.preventDefault();
+    let data = {
+      trap_id: this.state.selectTrapId,
+      company: this.state.companyInfo.name
+    };
+
+    fetch("/data/UnassignProduct", {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).then(res => {
+      // this.props.history.push("/sign-in");
+      console.log(res.status);
     });
   }
 
@@ -125,6 +150,15 @@ class OperatingFloor extends Component {
     }
   }
 
+  async selectTrap(e) {
+    let trap_id = parseInt(e.currentTarget.getAttribute("trap_id"), 10);
+    await this.setState({
+      trapSelected: true,
+      selectTrapId: trap_id
+    });
+    console.log(this.state.trapSelected, this.state.selectTrapId);
+  }
+
   render() {
     var { companyInfo } = this.state;
     var pageCount = this.state.companyInfo.productInfo.length / 6;
@@ -168,7 +202,14 @@ class OperatingFloor extends Component {
               {companyInfo.productInfo
                 .slice(this.state.pageIndex * 6 - 6, this.state.pageIndex * 6)
                 .map(row => (
-                  <tr key={Math.random()}>
+                  <tr
+                    key={Math.random()}
+                    trap_id={row === -1 ? null : row}
+                    onClick={this.selectTrap}
+                    className={
+                      this.state.selectTrapId === row ? "active-row" : null
+                    }
+                  >
                     <td>{row === -1 ? null : row}</td>
                     <td>{row === -1 ? null : "Location"}</td>
                   </tr>
@@ -203,9 +244,14 @@ class OperatingFloor extends Component {
                 </button>
               </form>
             )}
-            {/* <button className="tools-btn tools-delete">
-              <FontAwesomeIcon icon={faMinusSquare}></FontAwesomeIcon>
-            </button>{" "} */}
+            {this.state.trapSelected && (
+              <button
+                className="tools-btn tools-delete"
+                onClick={this.handleDelete}
+              >
+                <FontAwesomeIcon icon={faMinusSquare}></FontAwesomeIcon>
+              </button>
+            )}{" "}
           </div>
           {/* Pagination */}
           <div className="pagination">

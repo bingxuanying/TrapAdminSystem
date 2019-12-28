@@ -14,6 +14,17 @@ router.get("/", (req, res, next) => {
   // res.status(200).sendFile(path.join(__dirname, "build", "index.html"));
 });
 
+router.get("/jwtAuth", (req, res) => {
+  var token = req.cookies.token;
+  jwt.verify(token, process.env.SECRECT_KEY, (err, verifiedJwt) => {
+    if (err) {
+      console.log(err.message);
+    } else {
+      console.log(verifiedJwt);
+    }
+  });
+});
+
 // POST login data
 router.post("/login", (req, res) => {
   User.findOne({ username: req.body.username })
@@ -27,15 +38,15 @@ router.post("/login", (req, res) => {
             username: user.username
           };
           let token = jwt.sign(payload, process.env.SECRECT_KEY, {
-            expiresIn: "8h"
+            expiresIn: "1m"
           });
           res.cookie("token", token, { httpOnly: true }).sendStatus(200);
         } else {
           // Password doesn't match
-          res.json({ error: "Wrong password" });
+          res.status(401).json({ error: "Wrong password" });
         }
       } else {
-        res.json({ error: "User doesn't exist" });
+        res.status(401).json({ error: "User doesn't exist" });
       }
     })
     .catch(err => res.send("err: " + err));
@@ -73,13 +84,14 @@ router.post(
         value,
         nestedErrors
       }) => {
-        return `[${param}]: ${msg}`;
+        return `${param}: ${msg}`;
       };
 
       var result = validationResult(req).formatWith(errorFormatter);
 
+      console.log(result.array());
       if (!result.isEmpty()) {
-        return res.json({
+        res.status(406).json({
           errors: result.array()
         });
       } else {
@@ -128,12 +140,12 @@ router.post(
 
                   const savedUser = await user.save();
                   console.log("register success");
-                  res.json(savedUser);
+                  res.status(201).json(savedUser);
                   // res.redirect("/");
                 }
               );
             } else {
-              res.json({
+              res.status(403).json({
                 error: "User already exists"
               });
             }

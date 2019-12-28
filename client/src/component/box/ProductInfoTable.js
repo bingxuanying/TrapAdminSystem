@@ -333,12 +333,12 @@ class ProductInfoTable extends Component {
             >
               <FontAwesomeIcon icon={faPlusSquare}></FontAwesomeIcon>
             </button>{" "}
-            <button className="tools-btn tools-edit">
+            {/* <button className="tools-btn tools-edit">
               <FontAwesomeIcon icon={faPenSquare}></FontAwesomeIcon>
             </button>{" "}
             <button className="tools-btn tools-delete">
               <FontAwesomeIcon icon={faMinusSquare}></FontAwesomeIcon>
-            </button>{" "}
+            </button>{" "} */}
           </div>
           {/* Pagination */}
           <div className="pagination">

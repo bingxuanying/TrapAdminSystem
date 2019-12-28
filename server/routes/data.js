@@ -41,7 +41,7 @@ router.post("/fetchUserInfo", (req, res) => {
         };
       });
       users.push(pageCount);
-      res.json(users);
+      res.status(200).json(users);
     });
 });
 
@@ -84,7 +84,7 @@ router.post("/fetchProductInfo", (req, res) => {
         };
       });
       products.push(pageCount);
-      res.json(products);
+      res.status(200).json(products);
     });
 });
 
@@ -111,7 +111,7 @@ router.post("/addNewProduct", (req, res) => {
     });
   }
 
-  res.status(200).send();
+  res.status(201).send();
 });
 
 router.post("/fetchCompanyInfo", (req, res) => {
@@ -124,7 +124,7 @@ router.post("/fetchCompanyInfo", (req, res) => {
           allInfo.push(productInfo);
         }
       );
-      res.json(allInfo);
+      res.status(200).json(allInfo);
     }
   );
 });
@@ -162,7 +162,20 @@ router.post("/AssignProduct", async (req, res) => {
       );
     }
   }
-  res.status(200).send();
+  res.status(202).send();
+});
+
+router.post("/UnassignProduct", async (req, res) => {
+  mongoose.set("useFindAndModify", false);
+  await Product.findOneAndUpdate(
+    { product_id: req.body.trap_id },
+    { company: "N/A" }
+  );
+  await User.findOneAndUpdate(
+    { company: req.body.company },
+    { $inc: { totalTraps: -1 } }
+  );
+  res.status(202).send();
 });
 
 module.exports = router;

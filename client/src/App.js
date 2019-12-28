@@ -10,10 +10,16 @@ import AdminLayout from "./component/AdminLayout";
 import UserLayout from "./component/UserLayout";
 
 class App extends Component {
+  componentDidMount(e) {
+    fetch("/jwtAuth", {
+      method: "GET"
+    });
+  }
+
   render() {
     return (
       <div>
-        <AdminLayout />
+        <HomeLayout />
       </div>
     );
   }
