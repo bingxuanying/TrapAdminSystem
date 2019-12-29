@@ -65,7 +65,6 @@ class OperatingFloor extends Component {
   }
 
   handleSubmit(e) {
-    e.preventDefault();
     let data = {
       addNewNum: this.state.addNewNum,
       company: this.state.companyInfo.name
@@ -88,7 +87,6 @@ class OperatingFloor extends Component {
   }
 
   handleDelete(e) {
-    e.preventDefault();
     let data = {
       trap_id: this.state.selectTrapId,
       company: this.state.companyInfo.name
@@ -103,6 +101,7 @@ class OperatingFloor extends Component {
     }).then(res => {
       // this.props.history.push("/sign-in");
       console.log(res.status);
+      window.location.reload(false);
     });
   }
 

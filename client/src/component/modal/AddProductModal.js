@@ -52,7 +52,6 @@ class AddProductModal extends Component {
   }
 
   handleSubmit(e) {
-    e.preventDefault();
     let formData = new FormData(e.target);
     let _formData = Array.from(formData);
     let data = [];
