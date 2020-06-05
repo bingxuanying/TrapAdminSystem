@@ -1,14 +1,19 @@
 import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-// import { userActions } from "../../stroe/actions/";
-var { userActions } = require("../../stroe/actions");
+// import { userActions } from "../../../../store/actions/";
+// import { updateLoginUsr } from "../../../../store/actions/userActions";
+// import * as userActions from "../../../../store/actions/userActions";
+import { userActions } from "../../../../store/actions/index";
 
 class SignInForm extends Component {
   constructor() {
     super();
-
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentDidMount() {
+    console.log(userActions);
   }
 
   handleSubmit(e) {
@@ -78,8 +83,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = () => {
   return {
     updateLoginUsr: userActions.updateLoginUsr,
-    updateLoginPassword: userActions.updateLoginPassword,
-    proceedLogin: userActions.proceedLogin,
+    // updateLoginPassword: userActions.updateLoginPassword,
+    // proceedLogin: userActions.proceedLogin,
   };
 };
 

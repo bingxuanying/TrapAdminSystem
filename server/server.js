@@ -53,7 +53,7 @@ app.use(
   })
 );
 
-// routers
+// routes
 app.use("/", homeRoute);
 app.use("/data", dataRoute);
 

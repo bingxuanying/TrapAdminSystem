@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
-import NavigationBar from "./bars/NavigationBar";
-import SideBar from "./bars/SideBar";
-import Content from "./content/Content";
-import AddProductModal from "./modal/AddProductModal";
+import NavigationBar from "../component/bars/NavigationBar";
+import SideBar from "../component/bars/SideBar";
+import Content from "../component/content/Content";
+import AddProductModal from "../component/modal/AddProductModal";
 
-class AdminLayout extends Component {
+class AdminPage extends Component {
   constructor() {
     super();
 
@@ -14,7 +14,7 @@ class AdminLayout extends Component {
       addBtnOn: false,
       pageName: "Dashboard",
       productLoading: false,
-      userLoading: false
+      userLoading: false,
     };
 
     this.handleToggle = this.handleToggle.bind(this);
@@ -24,20 +24,20 @@ class AdminLayout extends Component {
 
   handleToggle(e) {
     this.setState({
-      toggleOn: !this.state.toggleOn
+      toggleOn: !this.state.toggleOn,
     });
   }
 
   handleAddBtn(e) {
     this.setState({
-      addBtnOn: !this.state.addBtnOn
+      addBtnOn: !this.state.addBtnOn,
     });
   }
 
   handleLoading(e) {
     this.setState({
       productLoading: true,
-      userLoading: true
+      userLoading: true,
     });
   }
 
@@ -63,4 +63,4 @@ class AdminLayout extends Component {
   }
 }
 
-export default AdminLayout;
+export default AdminPage;

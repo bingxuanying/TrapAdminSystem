@@ -32,17 +32,17 @@ router.get("/jwtAuth", (req, res) => {
 // POST login data
 router.post("/login", (req, res) => {
   User.findOne({ username: req.body.username })
-    .then(user => {
+    .then((user) => {
       // Send token to user
       if (user) {
         if (bcrypt.compareSync(req.body.password, user.password)) {
           // Password match
           const payload = {
             _id: user._id,
-            username: user.username
+            username: user.username,
           };
           var token = jwt.sign(payload, process.env.SECRECT_KEY, {
-            expiresIn: "12h"
+            expiresIn: "12h",
           });
 
           var adminList = process.env.ADMINISTRATOR_LIST.split(",");
@@ -62,7 +62,7 @@ router.post("/login", (req, res) => {
         res.status(401).json({ err: "User doesn't exist" });
       }
     })
-    .catch(err => res.send("err: " + err));
+    .catch((err) => res.send("err: " + err));
 });
 
 // POST register data
@@ -71,12 +71,12 @@ router.post(
   [
     check("username", "must be at least 5 - 10 chars long").isLength({
       min: 5,
-      max: 10
+      max: 10,
     }),
     check("password", "must be at least 5 - 10 chars long")
       .isLength({
         min: 5,
-        max: 10
+        max: 10,
       })
       .custom((value, { req, loc, path }) => {
         if (value !== req.body.reEnterPassword) {
@@ -85,7 +85,7 @@ router.post(
         } else {
           return value;
         }
-      })
+      }),
   ],
   (req, res) => {
     try {
@@ -95,7 +95,7 @@ router.post(
         msg,
         param,
         value,
-        nestedErrors
+        nestedErrors,
       }) => {
         return `${param}: ${msg}`;
       };
@@ -105,38 +105,15 @@ router.post(
       console.log(result.array());
       if (!result.isEmpty()) {
         res.status(406).json({
-          errors: result.array()
+          errors: result.array(),
         });
       } else {
-        /*
-       *
-       * original *else* { xxx }
-       *
-       {
-      // encrypt password
-      await bcrypt.hash(req.body.password, 10, async (err, hashedPassword) => {
-        if(err)
-          throw err;
-        
-        // save to DB
-        var user = new User({
-          username: req.body.username,
-          password: hashedPassword
-        });
-      
-        const savedUser = await user.save();
-        console.log("register success");
-        res.json(savedUser);
-        // res.redirect("/");
-      });
-    }
-       */
         // check if user unique
         User.findOne(
           {
-            username: req.body.username
+            username: req.body.username,
           },
-          async user => {
+          async (user) => {
             if (!user) {
               // encrypt password
               await bcrypt.hash(
@@ -148,7 +125,7 @@ router.post(
                   // save to DB
                   var user = new User({
                     username: req.body.username,
-                    password: hashedPassword
+                    password: hashedPassword,
                   });
 
                   const savedUser = await user.save();
@@ -159,7 +136,7 @@ router.post(
               );
             } else {
               res.status(403).json({
-                error: "User already exists"
+                error: "User already exists",
               });
             }
           }
@@ -171,19 +148,8 @@ router.post(
   }
 );
 
-// ssesion
-// passport.serializeUser((_id, done) => {
-//   done(null, _id);
-// });
-
-// passport.deserializeUser((id, done) => {
-//   User.findOne(id, (err, user) => {
-//     done(err, user);
-//   });
-// });
-
 // test
-router.get("/trap", withAuth, function(req, res) {
+router.get("/trap", withAuth, function (req, res) {
   if (req.query.id) {
     res.send(`You have requested trap ID #${req.query.id}`);
   } else {
@@ -202,7 +168,7 @@ function withAuth(req, res, next) {
   if (!token) {
     res.status(401).send("Unauthorized: No token provided");
   } else {
-    jwt.verify(token, process.env.SECRECT_KEY, function(err, decode) {
+    jwt.verify(token, process.env.SECRECT_KEY, function (err, decode) {
       if (err) {
         res.status(401).send("Unauthorized: Invalid token");
       } else {

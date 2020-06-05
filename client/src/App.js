@@ -1,39 +1,41 @@
 import React, { Component } from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  NavLink,
-  Link
-} from "react-router-dom";
-import HomeLayout from "./component/HomeLayout";
-import AdminLayout from "./component/AdminLayout";
-import UserLayout from "./component/UserLayout";
+import { Provider } from "react-redux";
+import store from "./stroe/store";
+import axios from "axios";
+
+import HomePage from "./pages/HomePage";
+import AdminPage from "./pages/AdminPage";
+import UserPage from "./pages/UserPage";
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
-      page: <HomeLayout />
+      page: <HomePage />,
     };
   }
 
-  componentDidMount(e) {
-    fetch("/jwtAuth", {
-      method: "GET"
-    })
-      .then(res => res.json())
-      .then(data => {
+  componentDidMount() {
+    axios
+      .get("/jwtAuth")
+      .then((res) => res.json())
+      .then((data) => {
         console.log(data);
         if (!data.err) {
           switch (data.role) {
             case "administrator":
               this.setState({
-                page: <AdminLayout />
+                page: <AdminPage />,
               });
               break;
             case "user":
               this.setState({
-                page: <UserLayout />
+                page: <UserPage />,
+              });
+              break;
+            default:
+              this.setState({
+                page: <HomePage />,
               });
               break;
           }
@@ -42,7 +44,7 @@ class App extends Component {
   }
 
   render() {
-    return <div>{this.state.page}</div>;
+    return <Provider store={store}>{this.state.page}</Provider>;
   }
 }
 

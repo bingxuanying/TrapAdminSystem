@@ -1,15 +1,10 @@
 import React, { Component } from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  NavLink,
-  Link
-} from "react-router-dom";
-import SignUpForm from "./logIO/SignUpForm";
-import SignInForm from "./logIO/SignInForm";
+import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
+import SignUpForm from "../component/logIO/SignUpForm";
+import SignInForm from "../component/logIO/SignInForm";
 import "..//App.css";
 
-class HomeLayout extends Component {
+class HomePage extends Component {
   render() {
     return (
       <Router>
@@ -62,4 +57,4 @@ class HomeLayout extends Component {
   }
 }
 
-export default HomeLayout;
+export default HomePage;
