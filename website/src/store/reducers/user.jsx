@@ -1,23 +1,33 @@
 const initialState = {
   isLogin: false,
   userInfo: {
+    page: "home",
     companyName: null,
-    email: null,
+    username: null,
   },
   loginInfo: {
-    username: null,
-    password: null,
+    username: "",
+    password: "",
   },
   registerInfo: {
-    email: null,
-    password: null,
-    // rePassword: null
+    username: "",
+    password: "",
+    rePassword: "",
   },
   error: "none",
 };
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
+    case "UPDATE_PAGE":
+      return {
+        ...state,
+        userInfo: {
+          ...state.userInfo,
+          page: action.payload,
+        },
+      };
+
     case "UPDATE_LOGIN_USR":
       return {
         ...state,
@@ -40,13 +50,55 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         userInfo: {
-          companyName: null,
-          email: null,
+          ...state.userInfo,
+          username: state.loginInfo.username,
         },
         loginInfo: {
           ...state.loginInfo,
-          username: null,
-          password: null,
+          username: "",
+          password: "",
+        },
+      };
+
+    case "UPDATE_REGISTER_USR":
+      return {
+        ...state,
+        registerInfo: {
+          ...state.registerInfo,
+          username: action.payload,
+        },
+      };
+
+    case "UPDATE_REGISTER_PASSWORD":
+      return {
+        ...state,
+        registerInfo: {
+          ...state.registerInfo,
+          password: action.payload,
+        },
+      };
+
+    case "UPDATE_REGISTER_REPASSWORD":
+      return {
+        ...state,
+        registerInfo: {
+          ...state.registerInfo,
+          rePassword: action.payload,
+        },
+      };
+
+    case "CLEAR_REGISTER_INFO":
+      return {
+        ...state,
+        userInfo: {
+          ...state.userInfo,
+          username: state.registerInfo.username,
+        },
+        registerInfo: {
+          ...state.registerInfo,
+          username: "",
+          password: "",
+          rePassword: "",
         },
       };
 

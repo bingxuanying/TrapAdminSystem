@@ -1,10 +1,7 @@
 import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-// import { userActions } from "../../../../store/actions/";
-// import { updateLoginUsr } from "../../../../store/actions/userActions";
-// import * as userActions from "../../../../store/actions/userActions";
-import { userActions } from "../../../../store/actions/index";
+import { userActions } from "store/actions/index";
 
 class SignInForm extends Component {
   constructor() {
@@ -12,15 +9,11 @@ class SignInForm extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentDidMount() {
-    console.log(userActions);
-  }
-
   handleSubmit(e) {
     e.preventDefault();
     let data = {
-      username: this.state.username,
-      password: this.state.password,
+      username: this.props.username,
+      password: this.props.password,
     };
 
     this.props.proceedLogin(data);
@@ -41,7 +34,7 @@ class SignInForm extends Component {
               placeholder="Enter your username"
               name="username"
               value={this.props.username}
-              onChange={(username) => this.props.updateLoginUsr(username)}
+              onChange={(e) => this.props.updateLoginUsr(e.target.value)}
             />
           </div>
 
@@ -56,7 +49,7 @@ class SignInForm extends Component {
               placeholder="Enter your password"
               name="password"
               value={this.props.password}
-              onChange={(password) => this.props.updateLoginPassword(password)}
+              onChange={(e) => this.props.updateLoginPassword(e.target.value)}
             />
           </div>
 
@@ -83,8 +76,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = () => {
   return {
     updateLoginUsr: userActions.updateLoginUsr,
-    // updateLoginPassword: userActions.updateLoginPassword,
-    // proceedLogin: userActions.proceedLogin,
+    updateLoginPassword: userActions.updateLoginPassword,
+    proceedLogin: userActions.proceedLogin,
   };
 };
 

@@ -1,50 +1,52 @@
 import React, { Component } from "react";
-import "./App.css";
-import { Provider } from "react-redux";
-import store from "./store/store";
+import "App.css";
+
+import { connect } from "react-redux";
+import { userActions } from "store/actions/index";
 import axios from "axios";
 
-import HomePage from "./pages/HomePage/HomePage";
+import HomePage from "pages/HomePage/HomePage";
+// import AdminPage from "pages/AdminPage/AdminPage";
+// import UserPage from "pages/UserPage/UserPage";
 
 class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      page: <HomePage />,
-    };
+  componentDidMount() {
+    axios
+      .get("/jwtAuth")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (!data.err) this.props.updatePage(data.role);
+        else this.props.updatePage("home");
+      });
   }
 
-  // componentDidMount() {
-  //   axios
-  //     .get("/jwtAuth")
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       console.log(data);
-  //       if (!data.err) {
-  //         switch (data.role) {
-  //           case "administrator":
-  //             this.setState({
-  //               page: <AdminPage />,
-  //             });
-  //             break;
-  //           case "user":
-  //             this.setState({
-  //               page: <UserPage />,
-  //             });
-  //             break;
-  //           default:
-  //             this.setState({
-  //               page: <HomePage />,
-  //             });
-  //             break;
-  //         }
-  //       }
-  //     });
-  // }
-
   render() {
-    return <Provider store={store}>{this.state.page}</Provider>;
+    return (
+      <>
+        {this.props.page === "home" ? (
+          <HomePage />
+        ) : this.props.page === "administrator" ? (
+          <HomePage />
+        ) : (
+          <HomePage />
+        )}
+      </>
+    );
   }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  // console.log(state.plan[0].home);
+  return {
+    page: state.user.userInfo.page,
+  };
+};
+
+const mapDispatchToProps = () => {
+  return {
+    updatePage: userActions.updatePage,
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps())(App);

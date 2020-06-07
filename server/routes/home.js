@@ -37,16 +37,16 @@ router.post("/login", (req, res) => {
       if (user) {
         if (bcrypt.compareSync(req.body.password, user.password)) {
           // Password match
-          const payload = {
+          let payload = {
             _id: user._id,
             username: user.username,
           };
-          var token = jwt.sign(payload, process.env.SECRECT_KEY, {
+          let token = jwt.sign(payload, process.env.SECRECT_KEY, {
             expiresIn: "12h",
           });
 
-          var adminList = process.env.ADMINISTRATOR_LIST.split(",");
-          var loginRole = adminList.includes(user.username)
+          let adminList = process.env.ADMINISTRATOR_LIST.split(",");
+          let loginRole = adminList.includes(user.username)
             ? "administrator"
             : "user";
 
@@ -79,7 +79,7 @@ router.post(
         max: 10,
       })
       .custom((value, { req, loc, path }) => {
-        if (value !== req.body.reEnterPassword) {
+        if (value !== req.body.rePassword) {
           // trow error if passwords do not match
           throw new Error("Passwords don't match");
         } else {
@@ -129,8 +129,18 @@ router.post(
                   });
 
                   const savedUser = await user.save();
+
+                  let payload = {
+                    _id: savedUser._id,
+                    username: savedUser.username,
+                  };
+
+                  let token = jwt.sign(payload, process.env.SECRECT_KEY, {
+                    expiresIn: "12h",
+                  });
                   console.log("register success");
-                  res.status(201).json(savedUser);
+                  res.status(201).cookie("token", token, { httpOnly: true });
+                  // .json(savedUser);
                   // res.redirect("/");
                 }
               );

@@ -1,54 +1,23 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import { userActions } from "store/actions/index";
 
 class SignUpForm extends Component {
   constructor() {
     super();
-
-    this.state = {
-      username: "",
-      password: "",
-      reEnterPassword: "",
-      hasAgreed: false,
-    };
-
-    this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  handleChange(e) {
-    let target = e.target;
-    let value = target.type === "checkbox" ? target.checked : target.value;
-    let name = target.name;
-
-    this.setState({
-      [name]: value,
-    });
   }
 
   handleSubmit(e) {
     e.preventDefault();
     let data = {
-      username: this.state.username,
-      password: this.state.password,
-      reEnterPassword: this.state.reEnterPassword,
-      hasAgreed: this.state.hasAgreed,
+      username: this.props.username,
+      password: this.props.password,
+      rePassword: this.props.rePassword,
     };
-    console.log("The form was submitted with the following data:");
-    console.log(data);
 
-    fetch("/register", {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        // this.props.history.push("/sign-in");
-      });
+    this.props.proceedRegister(data);
   }
 
   render() {
@@ -65,8 +34,8 @@ class SignUpForm extends Component {
               className="FormField_Input"
               placeholder="Enter your username"
               name="username"
-              value={this.state.username}
-              onChange={this.handleChange}
+              value={this.props.username}
+              onChange={(e) => this.props.updateRegisterUsr(e.target.value)}
             />
           </div>
           <div className="FormField">
@@ -79,39 +48,27 @@ class SignUpForm extends Component {
               className="FormField_Input"
               placeholder="Enter your password"
               name="password"
-              value={this.state.password}
-              onChange={this.handleChange}
+              value={this.props.password}
+              onChange={(e) =>
+                this.props.updateRegisterPassword(e.target.value)
+              }
             />
           </div>
           <div className="FormField">
-            <label className="FormField_Label" htmlFor="reEnterPassword">
+            <label className="FormField_Label" htmlFor="rePassword">
               Confirm Password
             </label>
             <input
               type="password"
-              id="reEnterPassword"
+              id="rePassword"
               className="FormField_Input"
               placeholder="Reenter your password"
-              name="reEnterPassword"
-              value={this.state.reEnterPassword}
-              onChange={this.handleChange}
+              name="rePassword"
+              value={this.props.rePassword}
+              onChange={(e) =>
+                this.props.updateRegisterRePassword(e.target.value)
+              }
             />
-          </div>
-
-          <div className="FormField">
-            <label className="FormField_CheckboxLabel">
-              <input
-                className="FormField_Checkbox"
-                type="checkbox"
-                name="hasAgreed"
-                value={this.state.hasAgreed}
-                onChange={this.handleChange}
-              />{" "}
-              I agree all statements in{" "}
-              <a href="" className="FormField_TermsLink">
-                terms of service
-              </a>
-            </label>
           </div>
 
           <div className="FormField">
@@ -126,4 +83,24 @@ class SignUpForm extends Component {
   }
 }
 
-export default SignUpForm;
+const mapStateToProps = (state) => {
+  // console.log(state.plan[0].home);
+  return {
+    username: state.user.registerInfo.username,
+    password: state.user.registerInfo.password,
+    rePassword: state.user.registerInfo.rePassword,
+  };
+};
+
+const mapDispatchToProps = () => {
+  return {
+    updateRegisterUsr: userActions.updateRegisterUsr,
+    updateRegisterPassword: userActions.updateRegisterPassword,
+    updateRegisterRePassword: userActions.updateRegisterRePassword,
+    proceedRegister: userActions.proceedRegister,
+  };
+};
+
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps())(SignUpForm)
+);

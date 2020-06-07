@@ -1,0 +1,131 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+.navmain {
+  position: relative;
+  margin: 0 auto;
+  height: 60px;
+  width: 100%;
+  display: block;
+  background-color: #111111;
+  z-index: 2;
+}
+
+.logo {
+  background-color: black;
+  color: #fff;
+  border-bottom: 0 solid transparent;
+  transition: width 0.3s ease-in-out;
+  display: block;
+  float: left;
+  height: 100%;
+  font-size: 20px;
+  line-height: 60px;
+  text-align: center;
+  padding: 0 10px;
+  font-weight: 300;
+  overflow: hidden;
+}
+
+.logo-large {
+  width: 210px;
+}
+
+.logo-small {
+  width: 50px;
+}
+
+.sidebar-toggle {
+  float: left;
+  color: #fff;
+  background-color: transparent;
+  background-image: none;
+  text-align: center;
+  padding: 20px 20px;
+  font-family: fontAwesome;
+  height: 60px;
+  font-size: 16px;
+}
+
+.sidebar-toggle:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+[role="button"] {
+  cursor: pointer;
+}
+
+.navbar-menu {
+  float: right;
+}
+
+.navbar-nav {
+  list-style: none;
+}
+
+.navbar-nav li {
+  float: left;
+  position: relative;
+  display: block;
+}
+
+.section-user {
+  height: 100%;
+  width: 220px;
+  text-align: center;
+  outline: none;
+}
+
+.section-user:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.user-image {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 10px;
+  vertical-align: middle;
+  border: 0;
+  text-align: 30px;
+}
+
+.user-info {
+  color: #fff;
+  line-height: 60px;
+  font-weight: 300;
+  font-size: 14px;
+}
+
+.section-logout {
+  color: #fff;
+  height: 60px;
+  background-color: transparent;
+  background-image: none;
+  text-align: center;
+  padding: 20px 15px;
+  font-family: fontAwesome;
+  font-size: 14px;
+}
+
+.section-logout:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.logout {
+  margin-left: 5px;
+  font-family: sans-serif;
+  font-weight: 300;
+}
+
+.navmain li a {
+  color: #fff;
+  cursor: pointer;
+  text-decoration: none;
+  height: 60px;
+  width: 100%;
+}

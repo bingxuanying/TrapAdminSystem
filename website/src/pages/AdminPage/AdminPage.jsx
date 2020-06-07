@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
-import NavigationBar from "../component/bars/NavigationBar";
-import SideBar from "../component/bars/SideBar";
-import Content from "../component/content/Content";
-import AddProductModal from "../component/modal/AddProductModal";
+import NavigationBar from "component/bars/NavigationBar";
+import SideBar from "component/bars/SideBar";
+import Content from "component/content/Content";
+import AddProductModal from "component/modal/AddProductModal";
 
 class AdminPage extends Component {
   constructor() {
