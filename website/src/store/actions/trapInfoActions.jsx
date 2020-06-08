@@ -2,6 +2,22 @@ import axios from "axios";
 
 // axios.defaults.baseURL = 'http://13.57.57.242:3000';
 
+// btn
+export const switchBarToggle = () => {
+  return {
+    type: "SWITCH_BARTOGGLE",
+    payload: null,
+  };
+};
+
+export const swithModalAdd = () => {
+  return {
+    type: "SWITCH_MODAL_ADD",
+    payload: null,
+  };
+};
+
+// Fetch trap lst
 export const fetchTrapLst = () => {
   return function (dispatch) {
     dispatch({

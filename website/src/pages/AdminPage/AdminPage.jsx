@@ -43,11 +43,8 @@ class AdminPage extends Component {
   render() {
     return (
       <div>
-        <NavigationBar
-          handleToggle={this.handleToggle}
-          toggleOn={this.state.toggleOn}
-        />
-        <SideBar toggleOn={this.state.toggleOn} />
+        <NavigationBar />
+        <SideBar />
         <Content
           toggleOn={this.state.toggleOn}
           handleAddBtn={this.handleAddBtn}

@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHome,
@@ -8,10 +7,13 @@ import {
   faAngleLeft,
   faCamera,
   faChartPie,
-  faCircleNotch
+  faCircleNotch,
 } from "@fortawesome/free-solid-svg-icons";
 import "./SideBar.css";
 import adminSample from "../../assets/adminSample.jpg";
+
+import { connect } from "react-redux";
+import { trapInfoActions } from "store/actions/index";
 
 class SideBar extends Component {
   render() {
@@ -19,7 +21,7 @@ class SideBar extends Component {
       <aside
         className="sidemain"
         style={
-          this.props.toggleOn === true ? { width: "230px" } : { width: "70px" }
+          this.props.barToggle === true ? { width: "230px" } : { width: "70px" }
         }
       >
         {/* User Panel */}
@@ -29,7 +31,7 @@ class SideBar extends Component {
             className="user-image-side"
             alt="User Image"
           ></img>
-          {this.props.toggleOn && (
+          {this.props.barToggle && (
             <div className="user-panel-info">
               <p>Bingxuan Ying</p>
               <div className="user-panel-info-online">
@@ -45,13 +47,13 @@ class SideBar extends Component {
           <li
             className="header"
             style={
-              this.props.toggleOn === true
+              this.props.barToggle === true
                 ? { width: "230px" }
                 : { width: "70" }
             }
           >
             <span>
-              {this.props.toggleOn === true ? (
+              {this.props.barToggle === true ? (
                 <div>MAIN NAVIGATION</div>
               ) : (
                 <div>MAIN</div>
@@ -61,7 +63,7 @@ class SideBar extends Component {
           {/* #0 Home */}
           <li
             className={
-              this.props.toggleOn === true
+              this.props.barToggle === true
                 ? "mainmenu-sub-lg"
                 : "mainmenu-sub-sm"
             }
@@ -71,7 +73,7 @@ class SideBar extends Component {
                 className="mainmenu-fa"
                 icon={faHome}
               ></FontAwesomeIcon>
-              {this.props.toggleOn && (
+              {this.props.barToggle && (
                 <div>
                   <span className="mainmenu-middle">Home</span>
                   <span className="mainmenu-right">
@@ -87,7 +89,7 @@ class SideBar extends Component {
           {/* #1 Dashboard */}
           <li
             className={
-              this.props.toggleOn === true
+              this.props.barToggle === true
                 ? "mainmenu-sub-lg"
                 : "mainmenu-sub-sm"
             }
@@ -97,7 +99,7 @@ class SideBar extends Component {
                 className="mainmenu-fa"
                 icon={faTachometerAlt}
               ></FontAwesomeIcon>
-              {this.props.toggleOn && (
+              {this.props.barToggle && (
                 <div>
                   <span className="mainmenu-middle">Dashboard</span>
                   <span className="mainmenu-right">
@@ -113,7 +115,7 @@ class SideBar extends Component {
           {/* #2 Monitoring */}
           <li
             className={
-              this.props.toggleOn === true
+              this.props.barToggle === true
                 ? "mainmenu-sub-lg"
                 : "mainmenu-sub-sm"
             }
@@ -123,7 +125,7 @@ class SideBar extends Component {
                 className="mainmenu-fa"
                 icon={faCamera}
               ></FontAwesomeIcon>
-              {this.props.toggleOn && (
+              {this.props.barToggle && (
                 <div>
                   <span className="mainmenu-middle">Monitoring</span>
                   <span className="mainmenu-right">
@@ -139,7 +141,7 @@ class SideBar extends Component {
           {/* #3 Data Plot */}
           <li
             className={
-              this.props.toggleOn === true
+              this.props.barToggle === true
                 ? "mainmenu-sub-lg"
                 : "mainmenu-sub-sm"
             }
@@ -149,7 +151,7 @@ class SideBar extends Component {
                 className="mainmenu-fa"
                 icon={faChartPie}
               ></FontAwesomeIcon>
-              {this.props.toggleOn && (
+              {this.props.barToggle && (
                 <div>
                   <span className="mainmenu-middle">Data Plot</span>
                   <span className="mainmenu-right">
@@ -166,7 +168,7 @@ class SideBar extends Component {
           <li
             className="header"
             style={
-              this.props.toggleOn === true
+              this.props.barToggle === true
                 ? { width: "230px" }
                 : { width: "70px" }
             }
@@ -176,7 +178,7 @@ class SideBar extends Component {
           {/* #1 LABEL */}
           <li
             className={
-              this.props.toggleOn === true
+              this.props.barToggle === true
                 ? "mainmenu-sub-lg"
                 : "mainmenu-sub-sm"
             }
@@ -187,7 +189,7 @@ class SideBar extends Component {
                 icon={faCircleNotch}
                 style={{ color: "#00a65a" }}
               ></FontAwesomeIcon>
-              {this.props.toggleOn && (
+              {this.props.barToggle && (
                 <div>
                   <span className="mainmenu-middle">New Message</span>
                 </div>
@@ -197,7 +199,7 @@ class SideBar extends Component {
           {/* #2 LABEL */}
           <li
             className={
-              this.props.toggleOn === true
+              this.props.barToggle === true
                 ? "mainmenu-sub-lg"
                 : "mainmenu-sub-sm"
             }
@@ -208,7 +210,7 @@ class SideBar extends Component {
                 icon={faCircleNotch}
                 style={{ color: "#00c0ef" }}
               ></FontAwesomeIcon>
-              {this.props.toggleOn && (
+              {this.props.barToggle && (
                 <div>
                   <span className="mainmenu-middle">Information</span>
                 </div>
@@ -218,7 +220,7 @@ class SideBar extends Component {
           {/* #3 LABEL */}
           <li
             className={
-              this.props.toggleOn === true
+              this.props.barToggle === true
                 ? "mainmenu-sub-lg"
                 : "mainmenu-sub-sm"
             }
@@ -229,7 +231,7 @@ class SideBar extends Component {
                 icon={faCircleNotch}
                 style={{ color: "#f39c12 " }}
               ></FontAwesomeIcon>
-              {this.props.toggleOn && (
+              {this.props.barToggle && (
                 <div>
                   <span className="mainmenu-middle">Warning</span>
                 </div>
@@ -239,7 +241,7 @@ class SideBar extends Component {
           {/* #4 LABEL */}
           <li
             className={
-              this.props.toggleOn === true
+              this.props.barToggle === true
                 ? "mainmenu-sub-lg"
                 : "mainmenu-sub-sm"
             }
@@ -250,7 +252,7 @@ class SideBar extends Component {
                 icon={faCircleNotch}
                 style={{ color: "#dd4b39  " }}
               ></FontAwesomeIcon>
-              {this.props.toggleOn && (
+              {this.props.barToggle && (
                 <div>
                   <span className="mainmenu-middle">Important</span>
                 </div>
@@ -263,4 +265,17 @@ class SideBar extends Component {
   }
 }
 
-export default SideBar;
+const mapStateToProps = (state) => {
+  // console.log(state.plan[0].home);
+  return {
+    barToggle: state.trapInfo.btn.barToggle,
+  };
+};
+
+const mapDispatchToProps = () => {
+  return {
+    switchBarToggle: trapInfoActions.switchBarToggle,
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps())(SideBar);

@@ -1,4 +1,9 @@
 const initialState = {
+  page: "Dashboard",
+  btn: {
+    barToggle: true,
+    modalAdd: false,
+  },
   trapLst: [],
   currentTrap: {
     id: null,
@@ -10,18 +15,40 @@ const initialState = {
 
 const trapInfoReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'FETCH_TRAP_LST_DONE':
+    // btn
+    case "SWITCH_BARTOGGLE":
+      return {
+        ...state,
+        btn: {
+          ...state.btn,
+          barToggle: state.btn.barToggle,
+        },
+      };
+
+    // btn
+    case "SWITCH_MODAL_ADD":
+      return {
+        ...state,
+        btn: {
+          ...state.btn,
+          modalAdd: state.btn.modalAdd,
+        },
+      };
+
+    // Fetch Trap Lst
+    case "FETCH_TRAP_LST_DONE":
       return {
         ...state,
         trapLst: action.payload,
       };
-    case 'FETCH_TRAP_LST_ERR':
+
+    case "FETCH_TRAP_LST_ERR":
       return {
         ...state,
         err: action.payload,
       };
 
-    case 'UPDATE_CURRENT_TRAP':
+    case "UPDATE_CURRENT_TRAP":
       return {
         ...state,
         currentTrap: {
@@ -29,7 +56,8 @@ const trapInfoReducer = (state = initialState, action) => {
           id: action.payload,
         },
       };
-    case 'CLEAR_CURRENT_TRAP':
+
+    case "CLEAR_CURRENT_TRAP":
       return {
         ...state,
         currentTrap: {
@@ -39,7 +67,7 @@ const trapInfoReducer = (state = initialState, action) => {
         },
       };
 
-    case 'FETCH_TRAP_DATA_DONE':
+    case "FETCH_TRAP_DATA_DONE":
       return {
         ...state,
         currentTrap: {
@@ -48,13 +76,14 @@ const trapInfoReducer = (state = initialState, action) => {
           data: action.payload,
         },
       };
-    case 'FETCH_TRAP_DATA_ERR':
+
+    case "FETCH_TRAP_DATA_ERR":
       return {
         ...state,
         err: action.payload,
       };
 
-    case 'PRE_DATA':
+    case "PRE_DATA":
       return {
         ...state,
         currentTrap: {
@@ -62,7 +91,8 @@ const trapInfoReducer = (state = initialState, action) => {
           num: state.currentTrap.num - 1,
         },
       };
-    case 'NEXT_DATA':
+
+    case "NEXT_DATA":
       return {
         ...state,
         currentTrap: {

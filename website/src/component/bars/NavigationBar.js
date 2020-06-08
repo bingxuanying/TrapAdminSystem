@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
-import { Cookies } from "react-cookie";
 import "./NavigationBar.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import adminSample from "../../assets/adminSample.jpg";
+
+import { connect } from "react-redux";
+import { trapInfoActions } from "store/actions/index";
 
 class NavigationBar extends Component {
   constructor() {
@@ -35,14 +36,14 @@ class NavigationBar extends Component {
     return (
       <nav className="navmain">
         <a className="logo">
-          {this.props.toggleOn === true ? logoLarge : logoSmall}
+          {this.props.usernabarToggleme === true ? logoLarge : logoSmall}
         </a>
 
         <div className="navbar">
           <div
             className="sidebar-toggle"
             role="button"
-            onClick={this.props.handleToggle}
+            onClick={this.props.switchBarToggle}
           >
             <FontAwesomeIcon icon={faBars} size="1x"></FontAwesomeIcon>
           </div>
@@ -83,4 +84,17 @@ class NavigationBar extends Component {
   }
 }
 
-export default NavigationBar;
+const mapStateToProps = (state) => {
+  // console.log(state.plan[0].home);
+  return {
+    barToggle: state.trapInfo.btn.barToggle,
+  };
+};
+
+const mapDispatchToProps = () => {
+  return {
+    switchBarToggle: trapInfoActions.switchBarToggle,
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps())(NavigationBar);
