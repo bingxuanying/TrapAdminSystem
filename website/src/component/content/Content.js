@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome, faTachometerAlt } from "@fortawesome/free-solid-svg-icons";
-// import UserInfoTable from "../box/UserInfoTable";
+import UserInfoTable from "../box/UserInfoTable";
 // import ProductInfoTable from "../box/ProductInfoTable";
 // import OperatingFloor from "../box/OperatingFloor";
 import "./Content.css";
@@ -60,7 +60,7 @@ class Content extends Component {
         {/* Main Content */}
         <section className="content">
           <div className="row">
-            {/* <UserInfoTable /> */}
+            <UserInfoTable />
             {/* <ProductInfoTable {...this.props} /> */}
           </div>
           <div className="row">{/* <OperatingFloor /> */}</div>

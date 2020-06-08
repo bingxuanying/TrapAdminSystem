@@ -4,7 +4,6 @@ const initialState = {
     barToggle: true,
     modalAdd: false,
   },
-  companys: [],
   products: [],
   modal: {
     products: [
@@ -15,7 +14,24 @@ const initialState = {
       },
     ],
   },
-  userBox: {},
+  companyInfo: {
+    name: "default",
+    username: "default",
+    numOfProduct: 0,
+    productInfo: [-1, -1, -1, -1, -1, -1],
+  },
+  userBox: {
+    pageIdx: 1,
+    totalPages: 10,
+    order: "AlphaUp",
+    clientInfo: [],
+  },
+  productBox: {
+    pageIndex: 1,
+    pageCount: 10,
+    order: "AlphaUp",
+    productInfo: [],
+  },
   operatingBox: {
     addBtnActive: false,
     addNewNum: "",
@@ -42,6 +58,73 @@ const trapInfoReducer = (state = initialState, action) => {
         btn: {
           ...state.btn,
           modalAdd: !state.btn.modalAdd,
+        },
+      };
+
+    // Fetch Data
+    case "FETCH_USERINFO": {
+      return {
+        ...state,
+        userBox: {
+          ...state.userBox,
+          clientInfo: action.payload.clientInfo,
+          totalPages: action.payload.pageCount,
+        },
+      };
+    }
+
+    // Company Info
+    case "SELECT_COMPANY": {
+      return {
+        ...state,
+        companyInfo: action.payload,
+      };
+    }
+
+    // Filter
+    case "CHANGE_ORDER":
+      return {
+        ...state,
+        [action.path]: {
+          ...state[action.path],
+          order: action.payload,
+        },
+      };
+
+    // Pagination
+    case "PAGE_START":
+      return {
+        ...state,
+        [action.path]: {
+          ...state[action.path],
+          pageIdx: 1,
+        },
+      };
+
+    case "PAGE_PRE":
+      return {
+        ...state,
+        [action.path]: {
+          ...state[action.path],
+          pageIdx: action.payload,
+        },
+      };
+
+    case "PAGE_NEXT":
+      return {
+        ...state,
+        [action.path]: {
+          ...state[action.path],
+          pageIdx: action.payload,
+        },
+      };
+
+    case "PAGE_END":
+      return {
+        ...state,
+        [action.path]: {
+          ...state[action.path],
+          pageIdx: action.payload,
         },
       };
 

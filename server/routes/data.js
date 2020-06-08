@@ -30,18 +30,21 @@ router.post("/fetchUserInfo", (req, res) => {
       break;
   }
 
-  User.find({}, "company totalTraps")
+  User.find(
+    { company: { $exists: true }, totalTraps: { $exists: true } },
+    "company totalTraps"
+  )
     .sort(sortOrder)
     .skip(offset)
     .limit(6)
-    .then(async (users) => {
-      await User.countDocuments({}).then((count) => {
+    .then((users) => {
+      User.countDocuments({}).then((count) => {
         pageCount = {
           pageCount: Math.ceil(count / 6),
         };
+        users.push(pageCount);
+        res.status(200).json(users);
       });
-      users.push(pageCount);
-      res.status(200).json(users);
     });
 });
 

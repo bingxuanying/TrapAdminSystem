@@ -15,7 +15,7 @@ import {
   faAngleDoubleRight,
   faAngleLeft,
   faAngleRight,
-  faTimes
+  faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 import "./Table.css";
 
@@ -30,7 +30,7 @@ class ProductInfoTable extends Component {
       productInfo: [],
       CompanyNameFilterIcon: faSort,
       TrapIDFilterIcon: faSortAmountUp,
-      AvailabilityFilterIcon: faSort
+      AvailabilityFilterIcon: faSort,
     };
 
     this.handleAlphaFilter = this.handleAlphaFilter.bind(this);
@@ -59,18 +59,18 @@ class ProductInfoTable extends Component {
 
     let pageInfo = {
       pageNum: this.state.pageIndex,
-      order: order
+      order: order,
     };
 
     fetch("/data/fetchProductInfo", {
       method: "POST",
       body: JSON.stringify(pageInfo),
       headers: {
-        "Content-Type": "application/json"
-      }
+        "Content-Type": "application/json",
+      },
     })
-      .then(res => res.json())
-      .then(data => {
+      .then((res) => res.json())
+      .then((data) => {
         let resPageCount = data.pop().pageCount;
         let extra = 6 - data.length;
         for (let i = 0; i < extra; i++) {
@@ -80,7 +80,7 @@ class ProductInfoTable extends Component {
         this.setState({
           productInfo: data,
           pageCount: resPageCount,
-          loadData: false
+          loadData: false,
         });
       });
   }
@@ -107,7 +107,7 @@ class ProductInfoTable extends Component {
 
       let pageInfo = {
         pageNum: this.state.pageIndex,
-        order: order
+        order: order,
       };
 
       console.log(pageInfo);
@@ -116,11 +116,11 @@ class ProductInfoTable extends Component {
         method: "POST",
         body: JSON.stringify(pageInfo),
         headers: {
-          "Content-Type": "application/json"
-        }
+          "Content-Type": "application/json",
+        },
       })
-        .then(res => res.json())
-        .then(data => {
+        .then((res) => res.json())
+        .then((data) => {
           let resPageCount = data.pop().pageCount;
           let extra = 6 - data.length;
           for (let i = 0; i < extra; i++) {
@@ -130,7 +130,7 @@ class ProductInfoTable extends Component {
           this.setState({
             productInfo: data,
             pageCount: resPageCount,
-            loadData: false
+            loadData: false,
           });
         });
     }
@@ -140,27 +140,27 @@ class ProductInfoTable extends Component {
     // console.log(this.state.CompanyNameFilterIcon.iconName);
     this.setState({
       TrapIDFilterIcon: faSort,
-      AvailabilityFilterIcon: faSort
+      AvailabilityFilterIcon: faSort,
     });
     switch (this.state.CompanyNameFilterIcon.iconName) {
       case "sort":
         this.setState({
-          CompanyNameFilterIcon: faSortAlphaUp
+          CompanyNameFilterIcon: faSortAlphaUp,
         });
         break;
       case "sort-alpha-up":
         this.setState({
-          CompanyNameFilterIcon: faSortAlphaDown
+          CompanyNameFilterIcon: faSortAlphaDown,
         });
         break;
       case "sort-alpha-down":
         this.setState({
-          CompanyNameFilterIcon: faSortAlphaUp
+          CompanyNameFilterIcon: faSortAlphaUp,
         });
         break;
     }
     this.setState({
-      loadData: true
+      loadData: true,
     });
   }
 
@@ -168,27 +168,27 @@ class ProductInfoTable extends Component {
     e.preventDefault();
     this.setState({
       CompanyNameFilterIcon: faSort,
-      AvailabilityFilterIcon: faSort
+      AvailabilityFilterIcon: faSort,
     });
     switch (this.state.TrapIDFilterIcon.iconName) {
       case "sort":
         this.setState({
-          TrapIDFilterIcon: faSortAmountUp
+          TrapIDFilterIcon: faSortAmountUp,
         });
         break;
       case "sort-amount-up":
         this.setState({
-          TrapIDFilterIcon: faSortAmountDown
+          TrapIDFilterIcon: faSortAmountDown,
         });
         break;
       case "sort-amount-down":
         this.setState({
-          TrapIDFilterIcon: faSortAmountUp
+          TrapIDFilterIcon: faSortAmountUp,
         });
         break;
     }
     this.setState({
-      loadData: true
+      loadData: true,
     });
   }
 
@@ -196,27 +196,27 @@ class ProductInfoTable extends Component {
     e.preventDefault();
     this.setState({
       CompanyNameFilterIcon: faSort,
-      TrapIDFilterIcon: faSort
+      TrapIDFilterIcon: faSort,
     });
     switch (this.state.AvailabilityFilterIcon.iconName) {
       case "sort":
         this.setState({
-          AvailabilityFilterIcon: faCheckCircle
+          AvailabilityFilterIcon: faCheckCircle,
         });
         break;
       case "check-circle":
         this.setState({
-          AvailabilityFilterIcon: faTimesCircle
+          AvailabilityFilterIcon: faTimesCircle,
         });
         break;
       case "times-circle":
         this.setState({
-          AvailabilityFilterIcon: faCheckCircle
+          AvailabilityFilterIcon: faCheckCircle,
         });
         break;
     }
     this.setState({
-      loadData: true
+      loadData: true,
     });
   }
 
@@ -224,7 +224,7 @@ class ProductInfoTable extends Component {
     if (this.state.pageIndex > 1) {
       this.setState({
         pageIndex: 1,
-        loadData: true
+        loadData: true,
       });
     }
   }
@@ -235,7 +235,7 @@ class ProductInfoTable extends Component {
     if (prePage > 0) {
       this.setState({
         pageIndex: prePage,
-        loadData: true
+        loadData: true,
       });
     }
   }
@@ -246,7 +246,7 @@ class ProductInfoTable extends Component {
     if (nextPage <= this.state.pageCount) {
       this.setState({
         pageIndex: nextPage,
-        loadData: true
+        loadData: true,
       });
     }
   }
@@ -255,7 +255,7 @@ class ProductInfoTable extends Component {
     if (this.state.pageIndex < this.state.pageCount) {
       this.setState({
         pageIndex: this.state.pageCount,
-        loadData: true
+        loadData: true,
       });
     }
   }
@@ -309,7 +309,7 @@ class ProductInfoTable extends Component {
               </tr>
             </thead>
             <tbody>
-              {data.map(row => (
+              {data.map((row) => (
                 <tr key={Math.random()}>
                   <td>{row.product_id}</td>
                   <td>{row.company}</td>

@@ -11,233 +11,37 @@ import {
   faAngleLeft,
   faAngleRight,
 } from "@fortawesome/free-solid-svg-icons";
-import * as CompanyInfoActions from "../../actions/CompanyInfoActions";
-import CompanyInfoStore from "../../stores/CompanyInfoStore";
 import "./Table.css";
 
-class UserInfoTable extends Component {
+import { connect } from "react-redux";
+import { adminActions } from "store/actions/index";
+
+class clientInfoTable extends Component {
   constructor() {
     super();
 
     this.state = {
-      companyInfo: CompanyInfoStore.getInfo(),
-      pageIndex: 1,
-      pageCount: 10,
       loadData: false,
-      userInfo: [],
-      CompanyNameFilterIcon: faSortAlphaUp,
-      TrapNumFilterIcon: faSort,
+      clientInfo: [],
     };
-
-    this.getCompanyInfo = this.getCompanyInfo.bind(this);
-
-    this.handleAlphaFilter = this.handleAlphaFilter.bind(this);
-    this.handleAmountFilter = this.handleAmountFilter.bind(this);
-
-    this.handlePaginationStart = this.handlePaginationStart.bind(this);
-    this.handlePaginationPre = this.handlePaginationPre.bind(this);
-    this.handlePaginationNext = this.handlePaginationNext.bind(this);
-    this.handlePaginationEnd = this.handlePaginationEnd.bind(this);
 
     this.selectCompany = this.selectCompany.bind(this);
   }
 
-  getCompanyInfo() {
-    this.setState({
-      companyInfo: CompanyInfoStore.getInfo(),
-      pageIndex: 1,
-    });
-  }
-
   componentDidMount(e) {
-    let order = "";
-    if (this.state.CompanyNameFilterIcon === faSort) {
-      order =
-        this.state.TrapNumFilterIcon === faSortAmountUp
-          ? "AmountUp"
-          : "AmountDown";
-    } else {
-      order =
-        this.state.CompanyNameFilterIcon === faSortAlphaUp
-          ? "AlphaUp"
-          : "AlphaDown";
-    }
-
-    let pageInfo = {
-      pageNum: this.state.pageIndex,
-      order: order,
-    };
-
-    fetch("/data/fetchUserInfo", {
-      method: "POST",
-      body: JSON.stringify(pageInfo),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        let resPageCount = data.pop().pageCount;
-        let extra = 6 - data.length;
-        for (let i = 0; i < extra; i++) {
-          data.push({});
-        }
-        // console.log(this.state.CompanyNameFilterIcon === faSortAlphaUp);
-        this.setState({
-          userInfo: data,
-          pageCount: resPageCount,
-          loadData: false,
-        });
-      });
-  }
-
-  componentDidUpdate(loadData) {
-    if (this.state.loadData === true) {
-      let order = "";
-      if (this.state.CompanyNameFilterIcon === faSort) {
-        order =
-          this.state.TrapNumFilterIcon === faSortAmountUp
-            ? "AmountUp"
-            : "AmountDown";
-      } else {
-        order =
-          this.state.CompanyNameFilterIcon === faSortAlphaUp
-            ? "AlphaUp"
-            : "AlphaDown";
-      }
-
-      let pageInfo = {
-        pageNum: this.state.pageIndex,
-        order: order,
-      };
-
-      fetch("/data/fetchUserInfo", {
-        method: "POST",
-        body: JSON.stringify(pageInfo),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          let resPageCount = data.pop().pageCount;
-          let extra = 6 - data.length;
-          for (let i = 0; i < extra; i++) {
-            data.push({});
-          }
-
-          this.setState({
-            userInfo: data,
-            pageCount: resPageCount,
-            loadData: false,
-          });
-        });
-    }
-  }
-
-  handleAlphaFilter(e) {
-    // console.log(this.state.CompanyNameFilterIcon.iconName);
-    this.setState({
-      TrapNumFilterIcon: faSort,
+    this.props.pageStart("userBox", {
+      pageIdx: this.props.pageIdx,
+      order: this.props.order,
+      totalPages: this.props.totalPages,
     });
-    switch (this.state.CompanyNameFilterIcon.iconName) {
-      case "sort":
-        this.setState({
-          CompanyNameFilterIcon: faSortAlphaUp,
-        });
-        break;
-      case "sort-alpha-up":
-        this.setState({
-          CompanyNameFilterIcon: faSortAlphaDown,
-        });
-        break;
-      case "sort-alpha-down":
-        this.setState({
-          CompanyNameFilterIcon: faSortAlphaUp,
-        });
-        break;
-    }
-    this.setState({
-      loadData: true,
-    });
-  }
-
-  handleAmountFilter(e) {
-    e.preventDefault();
-    this.setState({
-      CompanyNameFilterIcon: faSort,
-    });
-    switch (this.state.TrapNumFilterIcon.iconName) {
-      case "sort":
-        this.setState({
-          TrapNumFilterIcon: faSortAmountUp,
-        });
-        break;
-      case "sort-amount-up":
-        this.setState({
-          TrapNumFilterIcon: faSortAmountDown,
-        });
-        break;
-      case "sort-amount-down":
-        this.setState({
-          TrapNumFilterIcon: faSortAmountUp,
-        });
-        break;
-    }
-    this.setState({
-      loadData: true,
-    });
-  }
-
-  handlePaginationStart(e) {
-    if (this.state.pageIndex > 1) {
-      this.setState({
-        pageIndex: 1,
-        loadData: true,
-      });
-    }
-  }
-
-  handlePaginationPre(e) {
-    let prePage = this.state.pageIndex - 1;
-
-    if (prePage > 0) {
-      this.setState({
-        pageIndex: prePage,
-        loadData: true,
-      });
-    }
-  }
-
-  handlePaginationNext(e) {
-    let nextPage = this.state.pageIndex + 1;
-
-    if (nextPage <= this.state.pageCount) {
-      this.setState({
-        pageIndex: nextPage,
-        loadData: true,
-      });
-    }
-  }
-
-  handlePaginationEnd(e) {
-    if (this.state.pageIndex < this.state.pageCount) {
-      this.setState({
-        pageIndex: this.state.pageCount,
-        loadData: true,
-      });
-    }
   }
 
   selectCompany(e) {
     const company = e.currentTarget.getAttribute("company");
-    CompanyInfoActions.selectCompany(company);
+    this.props.selectCompany(company);
   }
 
   render() {
-    const data = this.state.userInfo;
-    var { companyInfo } = this.state;
-
     return (
       <div className="box user-box">
         <div className="box-header">
@@ -251,35 +55,61 @@ class UserInfoTable extends Component {
                   Company Name{" "}
                   <button
                     className="btn-filter"
-                    onClick={this.handleAlphaFilter}
+                    onClick={() =>
+                      this.props.changeOrder("userBox", {
+                        pageIdx: this.props.pageIdx,
+                        order: this.props.order,
+                        filter: "company",
+                      })
+                    }
                   >
                     <FontAwesomeIcon
-                      icon={this.state.CompanyNameFilterIcon}
-                    ></FontAwesomeIcon>
+                      icon={
+                        this.props.order === "AlphaUp"
+                          ? faSortAlphaUp
+                          : this.props.order === "AlphaDown"
+                          ? faSortAlphaDown
+                          : faSort
+                      }
+                    />
                   </button>
                 </th>
                 <th>
                   Number of Traps{" "}
                   <button
                     className="btn-filter"
-                    onClick={this.handleAmountFilter}
+                    onClick={() =>
+                      this.props.changeOrder("userBox", {
+                        pageIdx: this.props.pageIdx,
+                        order: this.props.order,
+                        filter: "trap",
+                      })
+                    }
                   >
                     <FontAwesomeIcon
-                      icon={this.state.TrapNumFilterIcon}
-                    ></FontAwesomeIcon>
+                      icon={
+                        this.props.order === "AmountUp"
+                          ? faSortAmountUp
+                          : this.props.order === "AmountDown"
+                          ? faSortAmountDown
+                          : faSort
+                      }
+                    />
                   </button>
                 </th>
                 <th>User ID</th>
               </tr>
             </thead>
             <tbody>
-              {data.map((row) => (
+              {this.props.clientInfo.map((row) => (
                 <tr
                   key={Math.random()}
                   company={row.company}
                   onClick={this.selectCompany}
                   className={
-                    companyInfo.name == row.company ? "active-row" : null
+                    this.props.companyInfo.name == row.company
+                      ? "active-row"
+                      : null
                   }
                 >
                   <td>{row.company}</td>
@@ -295,20 +125,52 @@ class UserInfoTable extends Component {
           </table>
           {/* Pagination */}
           <div className="pagination">
-            <button onClick={this.handlePaginationStart}>
-              <FontAwesomeIcon icon={faAngleDoubleLeft}></FontAwesomeIcon>
+            <button
+              onClick={() =>
+                this.props.pageStart("userBox", {
+                  pageIdx: this.props.pageIdx,
+                  order: this.props.order,
+                  totalPages: this.props.totalPages,
+                })
+              }
+            >
+              <FontAwesomeIcon icon={faAngleDoubleLeft} />
             </button>{" "}
-            <button onClick={this.handlePaginationPre}>
-              <FontAwesomeIcon icon={faAngleLeft}></FontAwesomeIcon>
+            <button
+              onClick={() =>
+                this.props.pagePre("userBox", {
+                  pageIdx: this.props.pageIdx,
+                  order: this.props.order,
+                  totalPages: this.props.totalPages,
+                })
+              }
+            >
+              <FontAwesomeIcon icon={faAngleLeft} />
             </button>{" "}
             <span>
-              Page {this.state.pageIndex} of {this.state.pageCount}{" "}
+              Page {this.props.pageIdx} of {this.props.totalPages}{" "}
             </span>
-            <button onClick={this.handlePaginationNext}>
-              <FontAwesomeIcon icon={faAngleRight}></FontAwesomeIcon>
+            <button
+              onClick={() =>
+                this.props.pageNext("userBox", {
+                  pageIdx: this.props.pageIdx,
+                  order: this.props.order,
+                  totalPages: this.props.totalPages,
+                })
+              }
+            >
+              <FontAwesomeIcon icon={faAngleRight} />
             </button>{" "}
-            <button onClick={this.handlePaginationEnd}>
-              <FontAwesomeIcon icon={faAngleDoubleRight}></FontAwesomeIcon>
+            <button
+              onClick={() =>
+                this.props.pageEnd("userBox", {
+                  pageIdx: this.props.pageIdx,
+                  order: this.props.order,
+                  totalPages: this.props.totalPages,
+                })
+              }
+            >
+              <FontAwesomeIcon icon={faAngleDoubleRight} />
             </button>
           </div>
         </div>
@@ -317,4 +179,27 @@ class UserInfoTable extends Component {
   }
 }
 
-export default UserInfoTable;
+const mapStateToProps = (state) => {
+  return {
+    page: state.admin.btn.page,
+    barToggle: state.admin.btn.barToggle,
+    pageIdx: state.admin.userBox.pageIdx,
+    totalPages: state.admin.userBox.totalPages,
+    clientInfo: state.admin.userBox.clientInfo,
+    companyInfo: state.admin.companyInfo,
+    order: state.admin.userBox.order,
+  };
+};
+
+const mapDispatchToProps = () => {
+  return {
+    pageStart: adminActions.pageStart,
+    pagePre: adminActions.pagePre,
+    pageNext: adminActions.pageNext,
+    pageEnd: adminActions.pageEnd,
+    selectCompany: adminActions.selectCompany,
+    changeOrder: adminActions.changeOrder,
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps())(clientInfoTable);
