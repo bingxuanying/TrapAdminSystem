@@ -12,7 +12,7 @@ const path = require("path");
  */
 
 router.post("/fetchUserInfo", (req, res) => {
-  let pageSkip = (req.body.pageNum - 1) * 6;
+  let offset = (req.body.pageNum - 1) * 6;
   let sortOrder = null;
   let pageCount = null;
   switch (req.body.order) {
@@ -32,12 +32,12 @@ router.post("/fetchUserInfo", (req, res) => {
 
   User.find({}, "company totalTraps")
     .sort(sortOrder)
-    .skip(pageSkip)
+    .skip(offset)
     .limit(6)
-    .then(async users => {
-      await User.countDocuments({}).then(count => {
+    .then(async (users) => {
+      await User.countDocuments({}).then((count) => {
         pageCount = {
-          pageCount: Math.ceil(count / 6)
+          pageCount: Math.ceil(count / 6),
         };
       });
       users.push(pageCount);
@@ -46,7 +46,7 @@ router.post("/fetchUserInfo", (req, res) => {
 });
 
 router.post("/fetchProductInfo", (req, res) => {
-  let pageSkip = (req.body.pageNum - 1) * 6;
+  let offset = (req.body.pageNum - 1) * 6;
   let sortOrder = null;
   let query = {};
   let pageCount = null;
@@ -75,12 +75,12 @@ router.post("/fetchProductInfo", (req, res) => {
 
   Product.find(query, "product_id company")
     .sort(sortOrder)
-    .skip(pageSkip)
+    .skip(offset)
     .limit(6)
-    .then(async products => {
-      await Product.countDocuments({}).then(count => {
+    .then(async (products) => {
+      await Product.countDocuments({}).then((count) => {
         pageCount = {
-          pageCount: Math.ceil(count / 6)
+          pageCount: Math.ceil(count / 6),
         };
       });
       products.push(pageCount);
@@ -93,11 +93,11 @@ router.post("/addNewProduct", (req, res) => {
 
   for (let i = 0; i < productInfo.length; i++) {
     let curProductInfo = productInfo[i];
-    Product.findOne({ product_id: curProductInfo[0] }, async product => {
+    Product.findOne({ product_id: curProductInfo[0] }, async (product) => {
       if (!product) {
         var product = new Product({
           product_id: curProductInfo[0],
-          company: curProductInfo[1] === "NA" ? "N/A" : curProductInfo[1]
+          company: curProductInfo[1] === "NA" ? "N/A" : curProductInfo[1],
         });
         await product.save();
         if (curProductInfo[1] !== "NA") {
@@ -116,11 +116,11 @@ router.post("/addNewProduct", (req, res) => {
 
 router.post("/fetchCompanyInfo", (req, res) => {
   User.findOne({ company: req.body.company_name }, "username totalTraps").then(
-    async companyInfo => {
+    async (companyInfo) => {
       let allInfo = [];
       allInfo.push(companyInfo);
       await Product.find({ company: req.body.company_name }, "product_id").then(
-        productInfo => {
+        (productInfo) => {
           allInfo.push(productInfo);
         }
       );

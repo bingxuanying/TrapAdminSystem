@@ -1,140 +1,84 @@
 const initialState = {
-  isLogin: false,
-  userInfo: {
-    page: "home",
-    companyName: null,
-    username: null,
+  trapLst: [],
+  currentTrap: {
+    id: null,
+    num: null,
+    data: null,
   },
-  loginInfo: {
-    username: "",
-    password: "",
-  },
-  registerInfo: {
-    username: "",
-    password: "",
-    rePassword: "",
-  },
-  error: "none",
+  err: null,
 };
 
-const userReducer = (state = initialState, action) => {
+const trapInfoReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "UPDATE_PAGE":
+    // Fetch Trap Lst
+    case "FETCH_TRAP_LST_DONE":
       return {
         ...state,
-        userInfo: {
-          ...state.userInfo,
-          page: action.payload,
+        trapLst: action.payload,
+      };
+
+    case "FETCH_TRAP_LST_ERR":
+      return {
+        ...state,
+        err: action.payload,
+      };
+
+    case "UPDATE_CURRENT_TRAP":
+      return {
+        ...state,
+        currentTrap: {
+          ...state.currentTrap,
+          id: action.payload,
         },
       };
 
-    case "UPDATE_LOGIN_USR":
+    case "CLEAR_CURRENT_TRAP":
       return {
         ...state,
-        loginInfo: {
-          ...state.loginInfo,
-          username: action.payload,
+        currentTrap: {
+          id: null,
+          num: null,
+          data: null,
         },
       };
 
-    case "UPDATE_LOGIN_PASSWORD":
+    case "FETCH_TRAP_DATA_DONE":
       return {
         ...state,
-        loginInfo: {
-          ...state.loginInfo,
-          password: action.payload,
+        currentTrap: {
+          ...state.currentTrap,
+          num: 0,
+          data: action.payload,
         },
       };
 
-    case "CLEAR_LOGIN_INFO":
+    case "FETCH_TRAP_DATA_ERR":
       return {
         ...state,
-        userInfo: {
-          ...state.userInfo,
-          username: state.loginInfo.username,
-        },
-        loginInfo: {
-          ...state.loginInfo,
-          username: "",
-          password: "",
+        err: action.payload,
+      };
+
+    case "PRE_DATA":
+      return {
+        ...state,
+        currentTrap: {
+          ...state.currentTrap,
+          num: state.currentTrap.num - 1,
         },
       };
 
-    case "UPDATE_REGISTER_USR":
+    case "NEXT_DATA":
       return {
         ...state,
-        registerInfo: {
-          ...state.registerInfo,
-          username: action.payload,
+        currentTrap: {
+          ...state.currentTrap,
+          num: state.currentTrap.num + 1,
         },
       };
-
-    case "UPDATE_REGISTER_PASSWORD":
-      return {
-        ...state,
-        registerInfo: {
-          ...state.registerInfo,
-          password: action.payload,
-        },
-      };
-
-    case "UPDATE_REGISTER_REPASSWORD":
-      return {
-        ...state,
-        registerInfo: {
-          ...state.registerInfo,
-          rePassword: action.payload,
-        },
-      };
-
-    case "CLEAR_REGISTER_INFO":
-      return {
-        ...state,
-        userInfo: {
-          ...state.userInfo,
-          username: state.registerInfo.username,
-        },
-        registerInfo: {
-          ...state.registerInfo,
-          username: "",
-          password: "",
-          rePassword: "",
-        },
-      };
-
-    case "FETCH_DATA_INIT":
-      return {
-        ...state,
-        status: {
-          ...state.status,
-          isLoading: true,
-        },
-      };
-
-    case "FETCH_DATA_DONE":
-      return {
-        ...state,
-        status: {
-          ...state.status,
-          isLoading: false,
-        },
-      };
-
-    case "FETCH_USER_TOKEN":
-      return { ...state, token: action.payload, isLogin: true };
-
-    case "FETCH_USER_DATA":
-      return { ...state, userInfo: action.payload };
-
-    case "FETCHnSEND_USER_DATA_ERROR":
-      return { ...state, error: action.payload };
-
-    case "STATUS_LOGOUT":
-      return initialState;
 
     default:
       return state;
   }
 };
 
-export default userReducer;
+export default trapInfoReducer;

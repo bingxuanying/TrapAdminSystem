@@ -9,7 +9,7 @@ import {
   faAngleDoubleLeft,
   faAngleDoubleRight,
   faAngleLeft,
-  faAngleRight
+  faAngleRight,
 } from "@fortawesome/free-solid-svg-icons";
 import * as CompanyInfoActions from "../../actions/CompanyInfoActions";
 import CompanyInfoStore from "../../stores/CompanyInfoStore";
@@ -26,7 +26,7 @@ class UserInfoTable extends Component {
       loadData: false,
       userInfo: [],
       CompanyNameFilterIcon: faSortAlphaUp,
-      TrapNumFilterIcon: faSort
+      TrapNumFilterIcon: faSort,
     };
 
     this.getCompanyInfo = this.getCompanyInfo.bind(this);
@@ -42,18 +42,10 @@ class UserInfoTable extends Component {
     this.selectCompany = this.selectCompany.bind(this);
   }
 
-  componentWillMount() {
-    CompanyInfoStore.on("change", this.getCompanyInfo);
-  }
-
-  componentWillUnmount() {
-    CompanyInfoStore.removeListener("change", this.getCompanyInfo);
-  }
-
   getCompanyInfo() {
     this.setState({
       companyInfo: CompanyInfoStore.getInfo(),
-      pageIndex: 1
+      pageIndex: 1,
     });
   }
 
@@ -73,18 +65,18 @@ class UserInfoTable extends Component {
 
     let pageInfo = {
       pageNum: this.state.pageIndex,
-      order: order
+      order: order,
     };
 
     fetch("/data/fetchUserInfo", {
       method: "POST",
       body: JSON.stringify(pageInfo),
       headers: {
-        "Content-Type": "application/json"
-      }
+        "Content-Type": "application/json",
+      },
     })
-      .then(res => res.json())
-      .then(data => {
+      .then((res) => res.json())
+      .then((data) => {
         let resPageCount = data.pop().pageCount;
         let extra = 6 - data.length;
         for (let i = 0; i < extra; i++) {
@@ -94,7 +86,7 @@ class UserInfoTable extends Component {
         this.setState({
           userInfo: data,
           pageCount: resPageCount,
-          loadData: false
+          loadData: false,
         });
       });
   }
@@ -116,18 +108,18 @@ class UserInfoTable extends Component {
 
       let pageInfo = {
         pageNum: this.state.pageIndex,
-        order: order
+        order: order,
       };
 
       fetch("/data/fetchUserInfo", {
         method: "POST",
         body: JSON.stringify(pageInfo),
         headers: {
-          "Content-Type": "application/json"
-        }
+          "Content-Type": "application/json",
+        },
       })
-        .then(res => res.json())
-        .then(data => {
+        .then((res) => res.json())
+        .then((data) => {
           let resPageCount = data.pop().pageCount;
           let extra = 6 - data.length;
           for (let i = 0; i < extra; i++) {
@@ -137,7 +129,7 @@ class UserInfoTable extends Component {
           this.setState({
             userInfo: data,
             pageCount: resPageCount,
-            loadData: false
+            loadData: false,
           });
         });
     }
@@ -146,54 +138,54 @@ class UserInfoTable extends Component {
   handleAlphaFilter(e) {
     // console.log(this.state.CompanyNameFilterIcon.iconName);
     this.setState({
-      TrapNumFilterIcon: faSort
+      TrapNumFilterIcon: faSort,
     });
     switch (this.state.CompanyNameFilterIcon.iconName) {
       case "sort":
         this.setState({
-          CompanyNameFilterIcon: faSortAlphaUp
+          CompanyNameFilterIcon: faSortAlphaUp,
         });
         break;
       case "sort-alpha-up":
         this.setState({
-          CompanyNameFilterIcon: faSortAlphaDown
+          CompanyNameFilterIcon: faSortAlphaDown,
         });
         break;
       case "sort-alpha-down":
         this.setState({
-          CompanyNameFilterIcon: faSortAlphaUp
+          CompanyNameFilterIcon: faSortAlphaUp,
         });
         break;
     }
     this.setState({
-      loadData: true
+      loadData: true,
     });
   }
 
   handleAmountFilter(e) {
     e.preventDefault();
     this.setState({
-      CompanyNameFilterIcon: faSort
+      CompanyNameFilterIcon: faSort,
     });
     switch (this.state.TrapNumFilterIcon.iconName) {
       case "sort":
         this.setState({
-          TrapNumFilterIcon: faSortAmountUp
+          TrapNumFilterIcon: faSortAmountUp,
         });
         break;
       case "sort-amount-up":
         this.setState({
-          TrapNumFilterIcon: faSortAmountDown
+          TrapNumFilterIcon: faSortAmountDown,
         });
         break;
       case "sort-amount-down":
         this.setState({
-          TrapNumFilterIcon: faSortAmountUp
+          TrapNumFilterIcon: faSortAmountUp,
         });
         break;
     }
     this.setState({
-      loadData: true
+      loadData: true,
     });
   }
 
@@ -201,7 +193,7 @@ class UserInfoTable extends Component {
     if (this.state.pageIndex > 1) {
       this.setState({
         pageIndex: 1,
-        loadData: true
+        loadData: true,
       });
     }
   }
@@ -212,7 +204,7 @@ class UserInfoTable extends Component {
     if (prePage > 0) {
       this.setState({
         pageIndex: prePage,
-        loadData: true
+        loadData: true,
       });
     }
   }
@@ -223,7 +215,7 @@ class UserInfoTable extends Component {
     if (nextPage <= this.state.pageCount) {
       this.setState({
         pageIndex: nextPage,
-        loadData: true
+        loadData: true,
       });
     }
   }
@@ -232,7 +224,7 @@ class UserInfoTable extends Component {
     if (this.state.pageIndex < this.state.pageCount) {
       this.setState({
         pageIndex: this.state.pageCount,
-        loadData: true
+        loadData: true,
       });
     }
   }
@@ -281,7 +273,7 @@ class UserInfoTable extends Component {
               </tr>
             </thead>
             <tbody>
-              {data.map(row => (
+              {data.map((row) => (
                 <tr
                   key={Math.random()}
                   company={row.company}

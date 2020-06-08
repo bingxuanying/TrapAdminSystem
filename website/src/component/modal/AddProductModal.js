@@ -3,52 +3,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faTimesCircle,
   faToolbox,
-  faBuilding
+  faBuilding,
 } from "@fortawesome/free-solid-svg-icons";
 import "./Modal.css";
-import NewProductStore from "../../stores/NewProductStore";
-import * as NewProductActions from "../../actions/NewProductActions";
+
+import { connect } from "react-redux";
+import { adminActions } from "store/actions/index";
 
 class AddProductModal extends Component {
   constructor() {
     super();
-    this.state = {
-      newProducts: NewProductStore.getAll(),
-      postData: []
-    };
-
-    this.getNewProducts = this.getNewProducts.bind(this);
-    this.createNew = this.createNew.bind(this);
-    this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  componentWillMount() {
-    NewProductStore.on("change", this.getNewProducts);
-  }
-
-  componentWillUnmount() {
-    NewProductStore.removeListener("change", this.getNewProducts);
-  }
-
-  getNewProducts() {
-    this.setState({
-      newProducts: NewProductStore.getAll()
-    });
-  }
-
-  createNew() {
-    NewProductActions.createNew();
-  }
-
-  handleChange(e) {
-    let target = e.target;
-    let value = target.type === "checkbox" ? target.checked : target.value;
-    let name = target.name;
-
-    this.setState({
-      [name]: value
-    });
   }
 
   handleSubmit(e) {
@@ -63,28 +28,17 @@ class AddProductModal extends Component {
       data.push(dataSet);
     }
 
-    fetch("/data/addNewProduct", {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    }).then(res => {
-      console.log(res.status);
-      this.props.handleAddBtn();
-    });
+    this.props.submitNewProds(data);
   }
 
   render() {
-    const { newProducts } = this.state;
-
     return (
       <div className="submit-modal">
         <div className="addProduct-box">
           <button
             className="close-btn"
             type="button"
-            onClick={this.props.handleAddBtn}
+            onClick={this.props.swithModalAdd}
           >
             <FontAwesomeIcon icon={faTimesCircle}></FontAwesomeIcon>
           </button>
@@ -94,7 +48,7 @@ class AddProductModal extends Component {
           <div className="addProduct-content">
             <form onSubmit={this.handleSubmit}>
               <ol>
-                {newProducts.map(row => (
+                {this.props.products.map((row) => (
                   <li key={row.id}>
                     <input
                       name={row.id}
@@ -128,7 +82,7 @@ class AddProductModal extends Component {
               <button
                 className="addProduct-add-btn"
                 type="button"
-                onClick={this.createNew}
+                onClick={this.props.modalAddRow}
               >
                 ADD NEW
               </button>
@@ -143,4 +97,20 @@ class AddProductModal extends Component {
   }
 }
 
-export default AddProductModal;
+const mapStateToProps = (state) => {
+  // console.log(state.plan[0].home);
+  return {
+    modalAdd: state.admin.btn.modalAdd,
+    products: state.admin.modal.products,
+  };
+};
+
+const mapDispatchToProps = () => {
+  return {
+    swithModalAdd: adminActions.swithModalAdd,
+    modalAddRow: adminActions.modalAddRow,
+    submitNewProds: adminActions.submitNewProds,
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps())(AddProductModal);

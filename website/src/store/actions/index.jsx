@@ -1,9 +1,5 @@
-import * as trapInfoActions from "./trapInfoActions";
+import * as adminActions from "./adminActions";
+import * as homeActions from "./homeActions";
 import * as userActions from "./userActions";
 
-// module.exports = {
-//   trapInfoActions: trapInfoActions,
-//   userActions: userActions,
-// };
-
-export { trapInfoActions, userActions };
+export { adminActions, homeActions, userActions };

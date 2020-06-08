@@ -7,10 +7,13 @@ import {
   faAngleDoubleLeft,
   faAngleDoubleRight,
   faAngleLeft,
-  faAngleRight
+  faAngleRight,
 } from "@fortawesome/free-solid-svg-icons";
 import CompanyInfoStore from "../../stores/CompanyInfoStore";
 import "./Table.css";
+
+import { connect } from "react-redux";
+import { adminActions } from "store/actions/index";
 
 class OperatingFloor extends Component {
   constructor() {
@@ -22,7 +25,7 @@ class OperatingFloor extends Component {
       addBtnActive: false,
       addNewNum: "",
       trapSelected: false,
-      selectTrapId: -1
+      selectTrapId: -1,
     };
 
     this.getCompanyInfo = this.getCompanyInfo.bind(this);
@@ -38,20 +41,12 @@ class OperatingFloor extends Component {
     this.selectTrap = this.selectTrap.bind(this);
   }
 
-  componentWillMount() {
-    CompanyInfoStore.on("change", this.getCompanyInfo);
-  }
-
-  componentWillUnmount() {
-    CompanyInfoStore.removeListener("change", this.getCompanyInfo);
-  }
-
   getCompanyInfo() {
     this.setState({
       companyInfo: CompanyInfoStore.getInfo(),
       pageIndex: 1,
       trapSelected: false,
-      selectTrapId: -1
+      selectTrapId: -1,
     });
   }
 
@@ -60,28 +55,28 @@ class OperatingFloor extends Component {
     let value = target.type === "checkbox" ? target.checked : target.value;
     let name = target.name;
     this.setState({
-      [name]: value
+      [name]: value,
     });
   }
 
   handleSubmit(e) {
     let data = {
       addNewNum: this.state.addNewNum,
-      company: this.state.companyInfo.name
+      company: this.state.companyInfo.name,
     };
 
     fetch("/data/AssignProduct", {
       method: "POST",
       body: JSON.stringify(data),
       headers: {
-        "Content-Type": "application/json"
-      }
-    }).then(res => {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
       // this.props.history.push("/sign-in");
       console.log(res.status);
       this.setState({
         addBtnActive: false,
-        addNewNum: ""
+        addNewNum: "",
       });
     });
   }
@@ -89,16 +84,16 @@ class OperatingFloor extends Component {
   handleDelete(e) {
     let data = {
       trap_id: this.state.selectTrapId,
-      company: this.state.companyInfo.name
+      company: this.state.companyInfo.name,
     };
 
     fetch("/data/UnassignProduct", {
       method: "POST",
       body: JSON.stringify(data),
       headers: {
-        "Content-Type": "application/json"
-      }
-    }).then(res => {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
       // this.props.history.push("/sign-in");
       console.log(res.status);
       window.location.reload(false);
@@ -108,7 +103,7 @@ class OperatingFloor extends Component {
   handlePaginationStart(e) {
     if (this.state.pageIndex > 1) {
       this.setState({
-        pageIndex: 1
+        pageIndex: 1,
       });
     }
   }
@@ -118,7 +113,7 @@ class OperatingFloor extends Component {
 
     if (prePage > 0) {
       this.setState({
-        pageIndex: prePage
+        pageIndex: prePage,
       });
     }
   }
@@ -128,7 +123,7 @@ class OperatingFloor extends Component {
 
     if (nextPage <= this.state.companyInfo.productInfo.length / 6) {
       this.setState({
-        pageIndex: nextPage
+        pageIndex: nextPage,
       });
     }
   }
@@ -136,7 +131,7 @@ class OperatingFloor extends Component {
   handlePaginationEnd(e) {
     if (this.state.pageIndex < this.state.companyInfo.productInfo.length / 6) {
       this.setState({
-        pageIndex: this.state.companyInfo.productInfo.length / 6
+        pageIndex: this.state.companyInfo.productInfo.length / 6,
       });
     }
   }
@@ -144,7 +139,7 @@ class OperatingFloor extends Component {
   handleAddBtn(e) {
     if (this.state.companyInfo.name !== "default") {
       this.setState({
-        addBtnActive: !this.state.addBtnActive
+        addBtnActive: !this.state.addBtnActive,
       });
     }
   }
@@ -153,7 +148,7 @@ class OperatingFloor extends Component {
     let trap_id = parseInt(e.currentTarget.getAttribute("trap_id"), 10);
     await this.setState({
       trapSelected: true,
-      selectTrapId: trap_id
+      selectTrapId: trap_id,
     });
     console.log(this.state.trapSelected, this.state.selectTrapId);
   }
@@ -200,7 +195,7 @@ class OperatingFloor extends Component {
             <tbody>
               {companyInfo.productInfo
                 .slice(this.state.pageIndex * 6 - 6, this.state.pageIndex * 6)
-                .map(row => (
+                .map((row) => (
                   <tr
                     key={Math.random()}
                     trap_id={row === -1 ? null : row}
@@ -276,4 +271,17 @@ class OperatingFloor extends Component {
   }
 }
 
-export default OperatingFloor;
+const mapStateToProps = (state) => {
+  return {
+    page: state.admin.btn.page,
+    barToggle: state.admin.btn.barToggle,
+  };
+};
+
+const mapDispatchToProps = () => {
+  return {
+    switchBarToggle: adminActions.switchBarToggle,
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps())(OperatingFloor);

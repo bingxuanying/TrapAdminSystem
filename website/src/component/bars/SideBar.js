@@ -10,10 +10,10 @@ import {
   faCircleNotch,
 } from "@fortawesome/free-solid-svg-icons";
 import "./SideBar.css";
-import adminSample from "../../assets/adminSample.jpg";
+import adminSample from "assets/adminSample.jpg";
 
 import { connect } from "react-redux";
-import { trapInfoActions } from "store/actions/index";
+import { adminActions } from "store/actions/index";
 
 class SideBar extends Component {
   render() {
@@ -268,13 +268,13 @@ class SideBar extends Component {
 const mapStateToProps = (state) => {
   // console.log(state.plan[0].home);
   return {
-    barToggle: state.trapInfo.btn.barToggle,
+    barToggle: state.admin.btn.barToggle,
   };
 };
 
 const mapDispatchToProps = () => {
   return {
-    switchBarToggle: trapInfoActions.switchBarToggle,
+    switchBarToggle: adminActions.switchBarToggle,
   };
 };
 

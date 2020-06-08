@@ -1,10 +1,12 @@
+import homeReducer from "./home";
+import adminReducer from "./admin";
 import userReducer from "./user";
-import trapInfoReducer from "./trapInfo";
 import { combineReducers } from "redux";
 
 const allReducers = combineReducers({
+  home: homeReducer,
+  admin: adminReducer,
   user: userReducer,
-  trapInfo: trapInfoReducer,
 });
 
 export default allReducers;

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { userActions } from "store/actions/index";
+import { homeActions } from "store/actions/index";
 
 class SignUpForm extends Component {
   constructor() {
@@ -86,18 +86,18 @@ class SignUpForm extends Component {
 const mapStateToProps = (state) => {
   // console.log(state.plan[0].home);
   return {
-    username: state.user.registerInfo.username,
-    password: state.user.registerInfo.password,
-    rePassword: state.user.registerInfo.rePassword,
+    username: state.home.registerInfo.username,
+    password: state.home.registerInfo.password,
+    rePassword: state.home.registerInfo.rePassword,
   };
 };
 
 const mapDispatchToProps = () => {
   return {
-    updateRegisterUsr: userActions.updateRegisterUsr,
-    updateRegisterPassword: userActions.updateRegisterPassword,
-    updateRegisterRePassword: userActions.updateRegisterRePassword,
-    proceedRegister: userActions.proceedRegister,
+    updateRegisterUsr: homeActions.updateRegisterUsr,
+    updateRegisterPassword: homeActions.updateRegisterPassword,
+    updateRegisterRePassword: homeActions.updateRegisterRePassword,
+    proceedRegister: homeActions.proceedRegister,
   };
 };
 
