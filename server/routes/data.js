@@ -134,7 +134,7 @@ router.post("/fetchCompanyInfo", (req, res) => {
 
 router.post("/AssignProduct", async (req, res) => {
   let companyName = req.body.company;
-  let productArr = req.body.addNewNum.split(",");
+  let productArr = req.body.addTrapNum.split(",");
   for (let i = 0; i < productArr.length; i++) {
     let _productArr = productArr[i].split("-");
 

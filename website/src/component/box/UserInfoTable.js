@@ -19,12 +19,6 @@ import { adminActions } from "store/actions/index";
 class clientInfoTable extends Component {
   constructor() {
     super();
-
-    this.state = {
-      loadData: false,
-      clientInfo: [],
-    };
-
     this.selectCompany = this.selectCompany.bind(this);
   }
 
@@ -107,7 +101,7 @@ class clientInfoTable extends Component {
                   company={row.company}
                   onClick={this.selectCompany}
                   className={
-                    this.props.companyInfo.name == row.company
+                    this.props.companyInfo.name === row.company
                       ? "active-row"
                       : null
                   }
@@ -181,8 +175,6 @@ class clientInfoTable extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    page: state.admin.btn.page,
-    barToggle: state.admin.btn.barToggle,
     pageIdx: state.admin.userBox.pageIdx,
     totalPages: state.admin.userBox.totalPages,
     clientInfo: state.admin.userBox.clientInfo,

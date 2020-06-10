@@ -1,54 +1,45 @@
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
   font-family: sans-serif;
 }
 
 .navmain {
   position: relative;
-  margin: 0 auto;
-  height: 60px;
+  margin: 0;
+  height: 100%;
   width: 100%;
   display: block;
   background-color: #111111;
-  z-index: 2;
 }
 
 .logo {
+  height: 100%;
   background-color: black;
-  color: #fff;
-  border-bottom: 0 solid transparent;
-  transition: width 0.3s ease-in-out;
+  position: relative;
   display: block;
   float: left;
-  height: 100%;
-  font-size: 20px;
-  line-height: 60px;
-  text-align: center;
-  padding: 0 10px;
   font-weight: 300;
-  overflow: hidden;
+  color: #fff;
+  font-size: 20px;
 }
 
-.logo-large {
-  width: 210px;
-}
-
-.logo-small {
-  width: 50px;
+.position-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .sidebar-toggle {
-  float: left;
-  color: #fff;
-  background-color: transparent;
-  background-image: none;
-  text-align: center;
-  padding: 20px 20px;
-  font-family: fontAwesome;
   height: 60px;
+  width: 60px;
+  position: relative;
+  float: left;
+  text-align: center;
+  font-family: fontAwesome;
   font-size: 16px;
+  color: #fff;
 }
 
 .sidebar-toggle:hover {
@@ -75,9 +66,12 @@
 
 .section-user {
   height: 100%;
-  width: 220px;
-  text-align: center;
-  outline: none;
+  float: right;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20px;
 }
 
 .section-user:hover {
@@ -89,9 +83,6 @@
   height: 30px;
   border-radius: 50%;
   margin-right: 10px;
-  vertical-align: middle;
-  border: 0;
-  text-align: 30px;
 }
 
 .user-info {
@@ -102,14 +93,16 @@
 }
 
 .section-logout {
-  color: #fff;
   height: 60px;
-  background-color: transparent;
-  background-image: none;
+  float: right;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 0 15px;
   text-align: center;
-  padding: 20px 15px;
-  font-family: fontAwesome;
   font-size: 14px;
+  color: #fff;
 }
 
 .section-logout:hover {
@@ -120,12 +113,4 @@
   margin-left: 5px;
   font-family: sans-serif;
   font-weight: 300;
-}
-
-.navmain li a {
-  color: #fff;
-  cursor: pointer;
-  text-decoration: none;
-  height: 60px;
-  width: 100%;
 }

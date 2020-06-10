@@ -18,19 +18,13 @@ import { adminActions } from "store/actions/index";
 class SideBar extends Component {
   render() {
     return (
-      <aside
+      <div
         className="sidemain"
-        style={
-          this.props.barToggle === true ? { width: "230px" } : { width: "70px" }
-        }
+        style={!this.props.barToggle ? { width: "70px" } : {}}
       >
         {/* User Panel */}
         <div className="user-panel">
-          <img
-            src={adminSample}
-            className="user-image-side"
-            alt="User Image"
-          ></img>
+          <img src={adminSample} className="user-image-side" alt="User Image" />
           {this.props.barToggle && (
             <div className="user-panel-info">
               <p>Bingxuan Ying</p>
@@ -260,7 +254,7 @@ class SideBar extends Component {
             </a>
           </li>
         </ul>
-      </aside>
+      </div>
     );
   }
 }

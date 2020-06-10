@@ -9,7 +9,6 @@ import {
   faAngleLeft,
   faAngleRight,
 } from "@fortawesome/free-solid-svg-icons";
-import CompanyInfoStore from "../../stores/CompanyInfoStore";
 import "./Table.css";
 
 import { connect } from "react-redux";
@@ -19,143 +18,34 @@ class OperatingFloor extends Component {
   constructor() {
     super();
 
-    this.state = {
-      companyInfo: CompanyInfoStore.getInfo(),
-      pageIndex: 1,
-      addBtnActive: false,
-      addNewNum: "",
-      trapSelected: false,
-      selectTrapId: -1,
-    };
-
-    this.getCompanyInfo = this.getCompanyInfo.bind(this);
-    this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-
-    this.handlePaginationStart = this.handlePaginationStart.bind(this);
-    this.handlePaginationPre = this.handlePaginationPre.bind(this);
-    this.handlePaginationNext = this.handlePaginationNext.bind(this);
-    this.handlePaginationEnd = this.handlePaginationEnd.bind(this);
-    this.handleAddBtn = this.handleAddBtn.bind(this);
-    this.handleDelete = this.handleDelete.bind(this);
-    this.selectTrap = this.selectTrap.bind(this);
-  }
-
-  getCompanyInfo() {
-    this.setState({
-      companyInfo: CompanyInfoStore.getInfo(),
-      pageIndex: 1,
-      trapSelected: false,
-      selectTrapId: -1,
-    });
-  }
-
-  handleChange(e) {
-    let target = e.target;
-    let value = target.type === "checkbox" ? target.checked : target.value;
-    let name = target.name;
-    this.setState({
-      [name]: value,
-    });
   }
 
   handleSubmit(e) {
-    let data = {
-      addNewNum: this.state.addNewNum,
-      company: this.state.companyInfo.name,
+    e.preventDefault();
+
+    let req = {
+      addTrapNum: this.props.addTrapNum,
+      company: this.props.companyInfo.name,
     };
 
-    fetch("/data/AssignProduct", {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json",
+    this.props.assignTrapsOPRT(
+      req,
+      {
+        pageIdx: this.props.userBox.pageIdx,
+        order: this.props.userBox.order,
       },
-    }).then((res) => {
-      // this.props.history.push("/sign-in");
-      console.log(res.status);
-      this.setState({
-        addBtnActive: false,
-        addNewNum: "",
-      });
-    });
-  }
-
-  handleDelete(e) {
-    let data = {
-      trap_id: this.state.selectTrapId,
-      company: this.state.companyInfo.name,
-    };
-
-    fetch("/data/UnassignProduct", {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json",
+      {
+        pageIdx: this.props.productBox.pageIdx,
+        order: this.props.productBox.order,
       },
-    }).then((res) => {
-      // this.props.history.push("/sign-in");
-      console.log(res.status);
-      window.location.reload(false);
-    });
-  }
-
-  handlePaginationStart(e) {
-    if (this.state.pageIndex > 1) {
-      this.setState({
-        pageIndex: 1,
-      });
-    }
-  }
-
-  handlePaginationPre(e) {
-    let prePage = this.state.pageIndex - 1;
-
-    if (prePage > 0) {
-      this.setState({
-        pageIndex: prePage,
-      });
-    }
-  }
-
-  handlePaginationNext(e) {
-    let nextPage = this.state.pageIndex + 1;
-
-    if (nextPage <= this.state.companyInfo.productInfo.length / 6) {
-      this.setState({
-        pageIndex: nextPage,
-      });
-    }
-  }
-
-  handlePaginationEnd(e) {
-    if (this.state.pageIndex < this.state.companyInfo.productInfo.length / 6) {
-      this.setState({
-        pageIndex: this.state.companyInfo.productInfo.length / 6,
-      });
-    }
-  }
-
-  handleAddBtn(e) {
-    if (this.state.companyInfo.name !== "default") {
-      this.setState({
-        addBtnActive: !this.state.addBtnActive,
-      });
-    }
-  }
-
-  async selectTrap(e) {
-    let trap_id = parseInt(e.currentTarget.getAttribute("trap_id"), 10);
-    await this.setState({
-      trapSelected: true,
-      selectTrapId: trap_id,
-    });
-    console.log(this.state.trapSelected, this.state.selectTrapId);
+      this.props.companyInfo.name
+    );
   }
 
   render() {
-    var { companyInfo } = this.state;
-    var pageCount = this.state.companyInfo.productInfo.length / 6;
+    var { companyInfo } = this.props;
+    var pageCount = Math.ceil(companyInfo.productInfo.length / 6);
 
     return (
       <div className="box opFloor-box">
@@ -194,15 +84,14 @@ class OperatingFloor extends Component {
             </thead>
             <tbody>
               {companyInfo.productInfo
-                .slice(this.state.pageIndex * 6 - 6, this.state.pageIndex * 6)
+                .slice(this.props.pageIdx * 6 - 6, this.props.pageIdx * 6)
                 .map((row) => (
                   <tr
                     key={Math.random()}
-                    trap_id={row === -1 ? null : row}
-                    onClick={this.selectTrap}
-                    className={
-                      this.state.selectTrapId === row ? "active-row" : null
+                    onClick={() =>
+                      this.props.selectTrap(row === -1 ? null : row)
                     }
+                    className={this.props._trapid === row ? "active-row" : null}
                   >
                     <td>{row === -1 ? null : row}</td>
                     <td>{row === -1 ? null : "Location"}</td>
@@ -214,15 +103,15 @@ class OperatingFloor extends Component {
           <div className="tools">
             <button
               className={
-                this.state.addBtnActive
+                this.props.addBtn
                   ? "tools-btn tools-add tools-add-active"
                   : "tools-btn tools-add"
               }
-              onClick={this.handleAddBtn}
+              onClick={() => this.props.switchOPRTAdd()}
             >
               <FontAwesomeIcon icon={faPlusSquare}></FontAwesomeIcon>
             </button>{" "}
-            {this.state.addBtnActive && (
+            {this.props.addBtn && (
               <form className="tool-form" onSubmit={this.handleSubmit}>
                 <input
                   name="addNewNum"
@@ -230,39 +119,84 @@ class OperatingFloor extends Component {
                   placeholder="( ex: 1, 2 - 4 )"
                   required
                   pattern="\d*([,-]?\d+[,]?)+"
-                  value={this.state.addNewNum}
-                  onChange={this.handleChange}
+                  value={this.props.addTrapNum}
+                  onChange={(e) => {
+                    this.props.onChangeOPRT("addTrapNum", e.target.value);
+                  }}
                 />
                 <button className="tools-btn tools-check" type="submit">
-                  <FontAwesomeIcon icon={faCheckSquare}></FontAwesomeIcon>
+                  <FontAwesomeIcon icon={faCheckSquare} />
                 </button>
               </form>
             )}
-            {this.state.trapSelected && (
+            {this.props._trapid && (
               <button
                 className="tools-btn tools-delete"
-                onClick={this.handleDelete}
+                onClick={() =>
+                  this.props.unassignTrapsOPRT(
+                    {
+                      trap_id: this.props._trapid,
+                      company: this.props.companyInfo.name,
+                    },
+                    {
+                      pageIdx: this.props.userBox.pageIdx,
+                      order: this.props.userBox.order,
+                    },
+                    {
+                      pageIdx: this.props.productBox.pageIdx,
+                      order: this.props.productBox.order,
+                    }
+                  )
+                }
               >
-                <FontAwesomeIcon icon={faMinusSquare}></FontAwesomeIcon>
+                <FontAwesomeIcon icon={faMinusSquare} />
               </button>
             )}{" "}
           </div>
           {/* Pagination */}
           <div className="pagination">
-            <button onClick={this.handlePaginationStart}>
-              <FontAwesomeIcon icon={faAngleDoubleLeft}></FontAwesomeIcon>
+            <button
+              onClick={() =>
+                this.props.pageStart("operatingBox", {
+                  pageIdx: this.props.pageIdx,
+                  totalPages: pageCount,
+                })
+              }
+            >
+              <FontAwesomeIcon icon={faAngleDoubleLeft} />
             </button>{" "}
-            <button onClick={this.handlePaginationPre}>
-              <FontAwesomeIcon icon={faAngleLeft}></FontAwesomeIcon>
+            <button
+              onClick={() =>
+                this.props.pagePre("operatingBox", {
+                  pageIdx: this.props.pageIdx,
+                  totalPages: pageCount,
+                })
+              }
+            >
+              <FontAwesomeIcon icon={faAngleLeft} />
             </button>{" "}
             <span>
-              Page {this.state.pageIndex} of {pageCount}{" "}
+              Page {this.props.pageIdx} of {pageCount}{" "}
             </span>
-            <button onClick={this.handlePaginationNext}>
-              <FontAwesomeIcon icon={faAngleRight}></FontAwesomeIcon>
+            <button
+              onClick={() =>
+                this.props.pageNext("operatingBox", {
+                  pageIdx: this.props.pageIdx,
+                  totalPages: pageCount,
+                })
+              }
+            >
+              <FontAwesomeIcon icon={faAngleRight} />
             </button>{" "}
-            <button onClick={this.handlePaginationEnd}>
-              <FontAwesomeIcon icon={faAngleDoubleRight}></FontAwesomeIcon>
+            <button
+              onClick={() =>
+                this.props.pageEnd("operatingBox", {
+                  pageIdx: this.props.pageIdx,
+                  totalPages: pageCount,
+                })
+              }
+            >
+              <FontAwesomeIcon icon={faAngleDoubleRight} />
             </button>
           </div>
         </div>
@@ -273,14 +207,29 @@ class OperatingFloor extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    page: state.admin.btn.page,
-    barToggle: state.admin.btn.barToggle,
+    userBox: state.admin.userBox,
+    productBox: state.admin.productBox,
+    pageIdx: state.admin.operatingBox.pageIdx,
+    totalPages: state.admin.operatingBox.totalPages,
+    clientInfo: state.admin.operatingBox.clientInfo,
+    companyInfo: state.admin.companyInfo,
+    _trapid: state.admin.operatingBox._trapid,
+    addBtn: state.admin.operatingBox.addBtn,
+    addTrapNum: state.admin.operatingBox.addTrapNum,
   };
 };
 
 const mapDispatchToProps = () => {
   return {
-    switchBarToggle: adminActions.switchBarToggle,
+    pageStart: adminActions.pageStart,
+    pagePre: adminActions.pagePre,
+    pageNext: adminActions.pageNext,
+    pageEnd: adminActions.pageEnd,
+    selectTrap: adminActions.selectTrap,
+    switchOPRTAdd: adminActions.switchOPRTAdd,
+    unassignTrapsOPRT: adminActions.unassignTrapsOPRT,
+    onChangeOPRT: adminActions.onChangeOPRT,
+    assignTrapsOPRT: adminActions.assignTrapsOPRT,
   };
 };
 

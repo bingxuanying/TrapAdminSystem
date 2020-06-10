@@ -19,7 +19,7 @@ class NavigationBar extends Component {
 
   render() {
     let logoLarge = (
-      <div className="logo-large">
+      <div className="position-center">
         <span>
           <b>UC</b>
           Davis
@@ -27,7 +27,7 @@ class NavigationBar extends Component {
       </div>
     );
     let logoSmall = (
-      <div className="logo-small">
+      <div className="position-center">
         <span>
           <b>UCD</b>
         </span>
@@ -35,49 +35,37 @@ class NavigationBar extends Component {
     );
     return (
       <nav className="navmain">
-        <a className="logo">
-          {this.props.usernabarToggleme === true ? logoLarge : logoSmall}
+        <a
+          className="logo"
+          style={
+            this.props.barToggle === true
+              ? { width: "230px" }
+              : { width: "70px" }
+          }
+        >
+          {this.props.barToggle === true ? logoLarge : logoSmall}
         </a>
 
-        <div className="navbar">
-          <div
-            className="sidebar-toggle"
-            role="button"
-            onClick={this.props.switchBarToggle}
-          >
-            <FontAwesomeIcon icon={faBars} size="1x"></FontAwesomeIcon>
-          </div>
+        <div
+          className="sidebar-toggle"
+          role="button"
+          onClick={this.props.switchBarToggle}
+        >
+          <FontAwesomeIcon
+            className="position-center"
+            icon={faBars}
+            size="1x"
+          />
+        </div>
 
-          <div className="navbar-menu">
-            <ul className="navbar-nav">
-              <li className="section-message">
-                <a href="#"></a>
-              </li>
-              <li className="section-notification">
-                <a href="#"></a>
-              </li>
-              <li className="section-task">
-                <a href="#"></a>
-              </li>
-              <li className="section-user">
-                <a href="#">
-                  <img
-                    src={adminSample}
-                    className="user-image"
-                    alt="User Image"
-                  ></img>
-                  <span className="user-info">Administrator</span>
-                </a>
-              </li>
-              <li className="section-logout" onClick={this.handleLogout}>
-                <FontAwesomeIcon
-                  icon={faSignOutAlt}
-                  size="lg"
-                ></FontAwesomeIcon>
-                <span className="logout">Logout</span>
-              </li>
-            </ul>
-          </div>
+        <div className="section-user">
+          <img src={adminSample} className="user-image" alt="User Image"></img>
+          <span className="user-info">Administrator</span>
+        </div>
+
+        <div className="section-logout" onClick={this.handleLogout}>
+          <FontAwesomeIcon icon={faSignOutAlt} size="lg" />
+          <span className="logout">Logout</span>
         </div>
       </nav>
     );

@@ -3,6 +3,7 @@ import NavigationBar from "component/bars/NavigationBar";
 import SideBar from "component/bars/SideBar";
 import Content from "component/content/Content";
 import AddProductModal from "component/modal/AddProductModal";
+import "./AdminPage.sass";
 
 import { connect } from "react-redux";
 import { adminActions } from "store/actions/index";
@@ -10,13 +11,15 @@ import { adminActions } from "store/actions/index";
 class AdminPage extends Component {
   render() {
     return (
-      <div>
-        <NavigationBar />
-        <SideBar />
-        <Content
-        // toggleOn={this.state.toggleOn}
-        // handleAddBtn={this.handleAddBtn}
-        />
+      <div className="adminPage">
+        <div className="navbar">
+          <NavigationBar />
+        </div>
+
+        <div className="main">
+          <SideBar />
+          <Content />
+        </div>
 
         {this.props.modalAdd && <AddProductModal />}
       </div>

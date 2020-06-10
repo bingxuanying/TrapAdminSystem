@@ -1,24 +1,18 @@
 .sidemain {
-  font-size: 14px;
-  position: absolute;
-  box-sizing: border-box;
-  background-color: #2e393f;
-  padding-top: 60px;
-  top: 0;
-  left: 0;
   height: 100%;
-  outline: none;
-  z-index: 1;
+  width: 230px;
+  background-color: #2e393f;
+  font-size: 14px;
 }
 
 /* User Panel */
 .user-panel {
-  color: #fff;
-  position: relative;
   width: 100%;
   height: 70px;
-  padding: 10px;
   background-color: #222d32;
+  position: relative;
+  padding: 10px;
+  color: #fff;
 }
 
 .user-image-side {
