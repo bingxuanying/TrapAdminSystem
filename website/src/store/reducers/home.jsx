@@ -25,7 +25,9 @@ const userReducer = (state = initialState, action) => {
         ...state,
         userInfo: {
           ...state.userInfo,
-          page: action.payload,
+          page: action.payload.role,
+          username: action.payload.username,
+          companyName: action.payload.company,
         },
       };
 

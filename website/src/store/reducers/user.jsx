@@ -9,6 +9,7 @@ const initialState = {
 };
 
 const trapInfoReducer = (state = initialState, action) => {
+  let newNum = null;
   switch (action.type) {
     // Fetch Trap Lst
     case "FETCH_TRAP_LST_DONE":
@@ -58,21 +59,44 @@ const trapInfoReducer = (state = initialState, action) => {
         err: action.payload,
       };
 
-    case "PRE_DATA":
+    case "HEAD_DATA":
       return {
         ...state,
         currentTrap: {
           ...state.currentTrap,
-          num: state.currentTrap.num - 1,
+          num: 0,
+        },
+      };
+
+    case "PRE_DATA":
+      newNum = state.currentTrap.num - 1;
+      return {
+        ...state,
+        currentTrap: {
+          ...state.currentTrap,
+          num: newNum < 0 ? 0 : newNum,
         },
       };
 
     case "NEXT_DATA":
+      newNum = state.currentTrap.num + 1;
       return {
         ...state,
         currentTrap: {
           ...state.currentTrap,
-          num: state.currentTrap.num + 1,
+          num:
+            newNum < state.currentTrap.data.length - 1
+              ? newNum
+              : state.currentTrap.data.length - 2,
+        },
+      };
+
+    case "END_DATA":
+      return {
+        ...state,
+        currentTrap: {
+          ...state.currentTrap,
+          num: state.currentTrap.data.length - 2,
         },
       };
 

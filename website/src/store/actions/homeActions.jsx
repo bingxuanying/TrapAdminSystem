@@ -2,10 +2,10 @@ import axios from "axios";
 import Cookies from "js-cookie";
 // axios.defaults.baseURL = "http://13.57.57.242:3000";
 
-export const updatePage = (name) => {
+export const updatePage = (data) => {
   return {
     type: "UPDATE_PAGE",
-    payload: name,
+    payload: data,
   };
 };
 

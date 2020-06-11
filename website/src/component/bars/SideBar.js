@@ -27,7 +27,7 @@ class SideBar extends Component {
           <img src={adminSample} className="user-image-side" alt="User Image" />
           {this.props.barToggle && (
             <div className="user-panel-info">
-              <p>Bingxuan Ying</p>
+              <p>{this.props.userInfo.username}</p>
               <div className="user-panel-info-online">
                 <FontAwesomeIcon icon={faCircle} size="xs"></FontAwesomeIcon>{" "}
                 <span>Online</span>
@@ -263,6 +263,7 @@ const mapStateToProps = (state) => {
   // console.log(state.plan[0].home);
   return {
     barToggle: state.admin.btn.barToggle,
+    userInfo: state.home.userInfo,
   };
 };
 

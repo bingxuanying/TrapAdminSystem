@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import NavigationBar from "component/bars/NavigationBar";
 import SideBar from "component/bars/SideBar";
-import Content from "component/content/Content";
-import AddProductModal from "component/modal/AddProductModal";
+import Content from "./components/content/Content";
+import AddProductModal from "./components/modal/AddProductModal";
 import "./AdminPage.sass";
 
 import { connect } from "react-redux";

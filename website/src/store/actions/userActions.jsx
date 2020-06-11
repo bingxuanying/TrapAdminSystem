@@ -1,6 +1,6 @@
 import axios from "axios";
 
-// axios.defaults.baseURL = 'http://13.57.57.242:3000';
+// axios.defaults.baseURL = "http://13.57.57.242:3000";
 
 // Fetch trap lst
 export const fetchTrapLst = () => {
@@ -11,7 +11,7 @@ export const fetchTrapLst = () => {
     });
 
     axios
-      .get("/api/fetchTrapIDs")
+      .get("http://13.57.57.242:3000/api/fetchTrapIDs")
       .then((res) => {
         dispatch({
           type: "FETCH_TRAP_LST_DONE",
@@ -32,22 +32,10 @@ export const fetchTrapLst = () => {
   };
 };
 
-export const updateCurTrap = (id) => {
-  return {
-    type: "UPDATE_CURRENT_TRAP",
-    payload: id,
-  };
-};
-
 export const fetchTrapData = (id) => {
   return function (dispatch) {
-    dispatch({
-      type: "FETCH_DATA_INIT",
-      payload: null,
-    });
-
     axios
-      .get("/fetchRecordsByID", {
+      .get("http://13.57.57.242:3000/fetchRecordsByID", {
         params: {
           id: id,
         },
@@ -57,6 +45,11 @@ export const fetchTrapData = (id) => {
           type: "FETCH_TRAP_DATA_DONE",
           payload: res.data,
         });
+
+        dispatch({
+          type: "UPDATE_CURRENT_TRAP",
+          payload: id,
+        });
       })
       .catch((err) => {
         dispatch({
@@ -64,17 +57,19 @@ export const fetchTrapData = (id) => {
           payload: err,
         });
       });
-
-    dispatch({
-      type: "FETCH_DATA_DONE",
-      payload: null,
-    });
   };
 };
 
 export const clearCurTrap = () => {
   return {
     type: "CLEAR_CURRENT_TRAP",
+    payload: null,
+  };
+};
+
+export const headTrapData = () => {
+  return {
+    type: "HEAD_DATA",
     payload: null,
   };
 };
@@ -89,6 +84,13 @@ export const preTrapData = () => {
 export const nextTrapData = () => {
   return {
     type: "NEXT_DATA",
+    payload: null,
+  };
+};
+
+export const endTrapData = () => {
+  return {
+    type: "END_DATA",
     payload: null,
   };
 };

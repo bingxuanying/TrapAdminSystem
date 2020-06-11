@@ -18,7 +18,7 @@ class NavigationBar extends Component {
   handleLogout(e) {
     console.log(document.cookie.length);
     Cookies.remove("token");
-    this.props.updatePage("home");
+    this.props.updatePage({ role: "home", username: null, company: null });
   }
 
   render() {
@@ -69,7 +69,7 @@ class NavigationBar extends Component {
 
         <div className="section-user">
           <img src={adminSample} className="user-image" alt="User Image"></img>
-          <span className="user-info">Administrator</span>
+          <span className="user-info">{this.props.username}</span>
         </div>
       </nav>
     );
@@ -80,6 +80,7 @@ const mapStateToProps = (state) => {
   // console.log(state.plan[0].home);
   return {
     barToggle: state.admin.btn.barToggle,
+    username: state.home.userInfo.username,
   };
 };
 

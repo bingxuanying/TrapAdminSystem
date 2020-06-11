@@ -8,7 +8,7 @@ import {
 import "./Modal.css";
 
 import { connect } from "react-redux";
-import { adminActions } from "store/actions/index";
+import { adminActions } from "store/actions";
 
 class AddProductModal extends Component {
   constructor() {

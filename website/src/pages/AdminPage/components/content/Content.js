@@ -1,32 +1,13 @@
 import React, { Component } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHome, faTachometerAlt } from "@fortawesome/free-solid-svg-icons";
 import UserInfoTable from "../box/UserInfoTable";
 import ProductInfoTable from "../box/ProductInfoTable";
 import OperatingFloor from "../box/OperatingFloor";
 import "./Content.css";
 
 import { connect } from "react-redux";
-import { adminActions } from "store/actions/index";
+import { adminActions } from "store/actions";
 
 class Content extends Component {
-  constructor() {
-    super();
-
-    this.fabSwitch = this.fabSwitch.bind(this);
-  }
-
-  fabSwitch(page) {
-    switch (page) {
-      case "Home":
-        return faHome;
-      case "Dashboard":
-        return faTachometerAlt;
-      default:
-        return null;
-    }
-  }
-
   render() {
     return (
       <div className="content-canvas">

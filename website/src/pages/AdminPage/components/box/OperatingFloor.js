@@ -12,7 +12,7 @@ import {
 import "./Table.css";
 
 import { connect } from "react-redux";
-import { adminActions } from "store/actions/index";
+import { adminActions } from "store/actions";
 
 class OperatingFloor extends Component {
   constructor() {

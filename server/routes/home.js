@@ -9,6 +9,24 @@ const { check, validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken");
 require("dotenv/config");
 
+// authentication middleware
+function withAuth(req, res, next) {
+  const token = req.cookies.token || req.body.token || req.query.token;
+
+  if (!token) {
+    res.status(401).send("Unauthorized: No token provided");
+  } else {
+    jwt.verify(token, process.env.SECRECT_KEY, (err, decode) => {
+      if (err) {
+        res.status(401).send("Unauthorized: Invalid token");
+      } else {
+        req.username = decode.username;
+        next();
+      }
+    });
+  }
+}
+
 // get index page
 router.get("/", (req, res, next) => {
   // res.status(200).sendFile(path.join(__dirname, "build", "index.html"));
@@ -24,7 +42,7 @@ router.get("/jwtAuth", (req, res) => {
       var jwtRole = adminList.includes(verifiedJwt.username)
         ? "administrator"
         : "user";
-      res.status(200).json({ role: jwtRole });
+      res.status(200).json({ role: jwtRole, username: verifiedJwt.username });
     }
   });
 });
@@ -56,6 +74,8 @@ router.post("/login", (req, res) => {
             .json({
               token: token,
               role: loginRole,
+              username: user.username,
+              company: user.company,
             });
         } else {
           // Password doesn't match
@@ -154,6 +174,8 @@ router.post(
                     .json({
                       token: token,
                       role: loginRole,
+                      username: req.body.username,
+                      company: req.body.company,
                     });
                   // res.redirect("/");
                 }
@@ -173,7 +195,7 @@ router.post(
 );
 
 // test
-router.get("/trap", withAuth, function (req, res) {
+router.get("/trap", withAuth, (req, res) => {
   if (req.query.id) {
     res.send(`You have requested trap ID #${req.query.id}`);
   } else {
@@ -184,23 +206,5 @@ router.get("/trap", withAuth, function (req, res) {
 router.get("/trap/:id", (req, res) => {
   res.send(`You have requested trap ID #${req.params.id}`);
 });
-
-// authentication middleware
-function withAuth(req, res, next) {
-  const token = req.cookies.token || req.body.token || req.query.token;
-
-  if (!token) {
-    res.status(401).send("Unauthorized: No token provided");
-  } else {
-    jwt.verify(token, process.env.SECRECT_KEY, function (err, decode) {
-      if (err) {
-        res.status(401).send("Unauthorized: Invalid token");
-      } else {
-        req.username = decode.username;
-        next();
-      }
-    });
-  }
-}
 
 module.exports = router;

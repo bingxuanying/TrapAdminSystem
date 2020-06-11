@@ -35,13 +35,13 @@ app.use(cookieParser());
 mongoose
   .connect(process.env.DB_CONNECTION, {
     useUnifiedTopology: true,
-    useNewUrlParser: true
+    useNewUrlParser: true,
   })
   .then(() => {
     console.log("DB connection successful");
   })
-  .catch(err => {
-    throw err;
+  .catch((err) => {
+    // throw err;
     console.error("DB connection error");
   });
 
@@ -49,7 +49,7 @@ mongoose
 app.use(bodyParser.json());
 app.use(
   bodyParser.urlencoded({
-    extended: true
+    extended: true,
   })
 );
 

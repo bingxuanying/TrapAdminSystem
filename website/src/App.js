@@ -7,14 +7,15 @@ import axios from "axios";
 
 import HomePage from "pages/HomePage/HomePage";
 import AdminPage from "pages/AdminPage/AdminPage";
-// import UserPage from "pages/UserPage/UserPage";
+import UserPage from "pages/UserPage/UserPage";
 
 class App extends Component {
   componentDidMount() {
     axios.get("/jwtAuth").then((res) => {
       console.log(res);
-      if (!res.err) this.props.updatePage(res.data.role);
-      else this.props.updatePage("home");
+      if (!res.err) this.props.updatePage(res.data);
+      else
+        this.props.updatePage({ role: "home", username: null, company: null });
     });
   }
 
@@ -26,7 +27,7 @@ class App extends Component {
         ) : this.props.page === "administrator" ? (
           <AdminPage />
         ) : (
-          <HomePage />
+          <UserPage />
         )}
       </>
     );
