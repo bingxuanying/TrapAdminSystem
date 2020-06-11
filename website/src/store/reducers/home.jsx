@@ -11,6 +11,7 @@ const initialState = {
   },
   registerInfo: {
     username: "",
+    home: "",
     password: "",
     rePassword: "",
   },
@@ -66,6 +67,15 @@ const userReducer = (state = initialState, action) => {
         registerInfo: {
           ...state.registerInfo,
           username: action.payload,
+        },
+      };
+
+    case "UPDATE_REGISTER_COMPANY":
+      return {
+        ...state,
+        registerInfo: {
+          ...state.registerInfo,
+          company: action.payload,
         },
       };
 

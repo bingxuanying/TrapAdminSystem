@@ -180,13 +180,20 @@ export const onChangeOPRT = (varName, val) => {
 };
 
 // Company Info
-export const selectCompany = (company) => {
+export const selectCompany = (company, btnOff = false) => {
   return function (dispatch) {
     fetchCompanyInfo(company).then((res) => {
       dispatch({
         type: "SELECT_COMPANY",
         payload: res,
       });
+
+      if (btnOff) {
+        dispatch({
+          type: "SWITCH_OPRT_ADDBTN",
+          payload: null,
+        });
+      }
     });
   };
 };

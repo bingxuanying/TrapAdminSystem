@@ -13,6 +13,7 @@ class SignUpForm extends Component {
     e.preventDefault();
     let data = {
       username: this.props.username,
+      company: this.props.company,
       password: this.props.password,
       rePassword: this.props.rePassword,
     };
@@ -36,6 +37,20 @@ class SignUpForm extends Component {
               name="username"
               value={this.props.username}
               onChange={(e) => this.props.updateRegisterUsr(e.target.value)}
+            />
+          </div>
+          <div className="FormField">
+            <label className="FormField_Label" htmlFor="company">
+              Company
+            </label>
+            <input
+              type="text"
+              id="company"
+              className="FormField_Input"
+              placeholder="Enter your company name"
+              name="company"
+              value={this.props.company}
+              onChange={(e) => this.props.updateRegisterCompany(e.target.value)}
             />
           </div>
           <div className="FormField">
@@ -87,6 +102,7 @@ const mapStateToProps = (state) => {
   // console.log(state.plan[0].home);
   return {
     username: state.home.registerInfo.username,
+    company: state.home.registerInfo.company,
     password: state.home.registerInfo.password,
     rePassword: state.home.registerInfo.rePassword,
   };
@@ -95,6 +111,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = () => {
   return {
     updateRegisterUsr: homeActions.updateRegisterUsr,
+    updateRegisterCompany: homeActions.updateRegisterCompany,
     updateRegisterPassword: homeActions.updateRegisterPassword,
     updateRegisterRePassword: homeActions.updateRegisterRePassword,
     proceedRegister: homeActions.proceedRegister,

@@ -4,8 +4,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import adminSample from "assets/adminSample.jpg";
 
+import Cookies from "js-cookie";
+
 import { connect } from "react-redux";
-import { adminActions } from "store/actions/index";
+import { homeActions, adminActions } from "store/actions/index";
 
 class NavigationBar extends Component {
   constructor() {
@@ -14,7 +16,9 @@ class NavigationBar extends Component {
   }
 
   handleLogout(e) {
-    this.props.history.push("/");
+    console.log(document.cookie.length);
+    Cookies.remove("token");
+    this.props.updatePage("home");
   }
 
   render() {
@@ -58,14 +62,14 @@ class NavigationBar extends Component {
           />
         </div>
 
-        <div className="section-user">
-          <img src={adminSample} className="user-image" alt="User Image"></img>
-          <span className="user-info">Administrator</span>
-        </div>
-
         <div className="section-logout" onClick={this.handleLogout}>
           <FontAwesomeIcon icon={faSignOutAlt} size="lg" />
           <span className="logout">Logout</span>
+        </div>
+
+        <div className="section-user">
+          <img src={adminSample} className="user-image" alt="User Image"></img>
+          <span className="user-info">Administrator</span>
         </div>
       </nav>
     );
@@ -82,6 +86,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = () => {
   return {
     switchBarToggle: adminActions.switchBarToggle,
+    updatePage: homeActions.updatePage,
   };
 };
 

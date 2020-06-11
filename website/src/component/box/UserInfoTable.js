@@ -19,7 +19,7 @@ import { adminActions } from "store/actions/index";
 class clientInfoTable extends Component {
   constructor() {
     super();
-    this.selectCompany = this.selectCompany.bind(this);
+    this.selectCompanyHandler = this.selectCompanyHandler.bind(this);
   }
 
   componentDidMount(e) {
@@ -30,9 +30,9 @@ class clientInfoTable extends Component {
     });
   }
 
-  selectCompany(e) {
+  selectCompanyHandler(e) {
     const company = e.currentTarget.getAttribute("company");
-    this.props.selectCompany(company);
+    this.props.selectCompany(company, this.props.addBtn);
   }
 
   render() {
@@ -99,7 +99,7 @@ class clientInfoTable extends Component {
                 <tr
                   key={Math.random()}
                   company={row.company}
-                  onClick={this.selectCompany}
+                  onClick={this.selectCompanyHandler}
                   className={
                     this.props.companyInfo.name === row.company
                       ? "active-row"
@@ -180,6 +180,7 @@ const mapStateToProps = (state) => {
     clientInfo: state.admin.userBox.clientInfo,
     companyInfo: state.admin.companyInfo,
     order: state.admin.userBox.order,
+    addBtn: state.admin.operatingBox.addBtn,
   };
 };
 
@@ -191,6 +192,7 @@ const mapDispatchToProps = () => {
     pageEnd: adminActions.pageEnd,
     selectCompany: adminActions.selectCompany,
     changeOrder: adminActions.changeOrder,
+    switchOPRTAdd: adminActions.switchOPRTAdd,
   };
 };
 

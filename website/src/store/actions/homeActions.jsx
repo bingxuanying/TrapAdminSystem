@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import Cookies from "js-cookie";
 // axios.defaults.baseURL = "http://13.57.57.242:3000";
 
 export const updatePage = (name) => {
@@ -30,15 +30,12 @@ export const proceedLogin = (req) => {
       .post("/login", req)
       .then((res) => {
         console.log(res);
-        if (res.data.role && res.data.role === "administrator") {
+        Cookies.set("token", res.data.token);
+
+        if (res.data.role) {
           dispatch({
             type: "UPDATE_PAGE",
-            payload: "administrator",
-          });
-        } else if (res.data.role && res.data.role === "user") {
-          dispatch({
-            type: "UPDATE_PAGE",
-            payload: "user",
+            payload: res.data.role,
           });
         }
 
@@ -58,6 +55,13 @@ export const updateRegisterUsr = (username) => {
   return {
     type: "UPDATE_REGISTER_USR",
     payload: username,
+  };
+};
+
+export const updateRegisterCompany = (company) => {
+  return {
+    type: "UPDATE_REGISTER_COMPANY",
+    payload: company,
   };
 };
 
@@ -81,10 +85,14 @@ export const proceedRegister = (req) => {
       .post("/register", req)
       .then((res) => {
         console.log(res);
-        dispatch({
-          type: "UPDATE_PAGE",
-          payload: "user",
-        });
+        Cookies.set("token", res.data.token);
+
+        if (res.data.role) {
+          dispatch({
+            type: "UPDATE_PAGE",
+            payload: res.data.role,
+          });
+        }
 
         dispatch({
           type: "CLEAR_REGISTER_INFO",

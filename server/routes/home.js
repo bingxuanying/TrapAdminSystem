@@ -52,8 +52,11 @@ router.post("/login", (req, res) => {
 
           res
             .status(200)
-            .cookie("token", token, { httpOnly: true })
-            .json({ role: loginRole });
+            // .cookie("token", token, { httpOnly: true })
+            .json({
+              token: token,
+              role: loginRole,
+            });
         } else {
           // Password doesn't match
           res.status(401).json({ err: "Wrong password" });
@@ -125,6 +128,7 @@ router.post(
                   // save to DB
                   var user = new User({
                     username: req.body.username,
+                    company: req.body.company,
                     password: hashedPassword,
                   });
 
@@ -135,12 +139,22 @@ router.post(
                     username: savedUser.username,
                   };
 
+                  let adminList = process.env.ADMINISTRATOR_LIST.split(",");
+                  let loginRole = adminList.includes(savedUser.username)
+                    ? "administrator"
+                    : "user";
+
                   let token = jwt.sign(payload, process.env.SECRECT_KEY, {
                     expiresIn: "12h",
                   });
                   console.log("register success");
-                  res.status(201).cookie("token", token, { httpOnly: true });
-                  // .json(savedUser);
+                  res
+                    .status(201)
+                    // .cookie("token", token, { httpOnly: true });
+                    .json({
+                      token: token,
+                      role: loginRole,
+                    });
                   // res.redirect("/");
                 }
               );

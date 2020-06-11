@@ -107,9 +107,12 @@ class OperatingFloor extends Component {
                   ? "tools-btn tools-add tools-add-active"
                   : "tools-btn tools-add"
               }
-              onClick={() => this.props.switchOPRTAdd()}
+              onClick={() => {
+                if (this.props.companyInfo.name !== "default")
+                  this.props.switchOPRTAdd();
+              }}
             >
-              <FontAwesomeIcon icon={faPlusSquare}></FontAwesomeIcon>
+              <FontAwesomeIcon icon={faPlusSquare} />
             </button>{" "}
             {this.props.addBtn && (
               <form className="tool-form" onSubmit={this.handleSubmit}>
