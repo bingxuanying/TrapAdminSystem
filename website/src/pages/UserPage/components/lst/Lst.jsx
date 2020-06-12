@@ -8,13 +8,15 @@ class Lst extends Component {
   render() {
     return (
       <div className="traplst">
-        <div className="traplst-title">Trap List</div>
+        <div className="box-header">
+          <h3 className="box-title">Trap List</h3>
+        </div>
         <div className="traplst-main">
           {this.props.trapLst.map((item) => (
             <div
               className="trap"
               style={
-                item === this.props.curid ? { backgroundColor: "#dbdbdb" } : {}
+                item === this.props.curid ? { backgroundColor: "#3c8dbc" } : {}
               }
               onClick={() => this.props.fetchTrapData(item)}
             >
