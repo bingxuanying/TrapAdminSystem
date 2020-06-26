@@ -12,6 +12,7 @@ import {
   ComposedChart,
   Area,
   Bar,
+  ResponsiveContainer,
 } from "recharts";
 
 import { connect } from "react-redux";
@@ -27,8 +28,12 @@ class plotBox extends Component {
         </div>
 
         <div className="infoBox-main">
-          <div className="infoBox-main-plot">
-            <LineChart width={1300} height={300} data={data}>
+          <ResponsiveContainer
+            className="infoBox-main-plot"
+            width="95%"
+            height="90%"
+          >
+            <LineChart data={data}>
               <CartesianGrid strokeDasharray="5 5" />
               <XAxis dataKey="timeStamp" />
               <YAxis />
@@ -37,7 +42,7 @@ class plotBox extends Component {
               <Line type="monotone" dataKey="humidity" stroke="#8884d8" />
               <Line type="monotone" dataKey="temperature" stroke="#82ca9d" />
             </LineChart>
-          </div>
+          </ResponsiveContainer>
         </div>
       </div>
     );

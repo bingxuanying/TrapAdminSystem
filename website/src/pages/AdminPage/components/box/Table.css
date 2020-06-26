@@ -44,7 +44,7 @@
 .box-header {
   color: #444;
   display: block;
-  padding: 0.7rem;
+  padding: 1.2vh;
   position: relative;
   border-bottom: 1px solid #f1f1f1;
 }
@@ -259,13 +259,13 @@
   float: right;
   font-size: 1rem;
   color: #666;
-  margin: 0.3rem;
+  padding: 0.5vh;
 }
 
 .pagination button {
   color: #666;
-  height: 3.2rem;
-  width: 3.2rem;
+  height: 5vh;
+  width: 5vh;
   background: transparent;
   background-image: none;
   text-decoration: none;
@@ -283,7 +283,6 @@
 }
 
 .pagination span {
-  padding-top: 5px;
   margin: 0 10px;
 }
 
