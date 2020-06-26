@@ -32,10 +32,10 @@ export const proceedLogin = (req) => {
         console.log(res);
         Cookies.set("token", res.data.token);
 
-        if (res.data.role) {
+        if (res.data) {
           dispatch({
             type: "UPDATE_PAGE",
-            payload: res.data.role,
+            payload: res.data,
           });
         }
 
