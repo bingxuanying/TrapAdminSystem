@@ -43,7 +43,7 @@ class NavigationBar extends Component {
           className="logo"
           style={
             this.props.barToggle === true
-              ? { width: "230px" }
+              ? { width: "14.5rem" }
               : { width: "70px" }
           }
         >
