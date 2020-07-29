@@ -85,9 +85,9 @@ const trapInfoReducer = (state = initialState, action) => {
         currentTrap: {
           ...state.currentTrap,
           num:
-            newNum < state.currentTrap.data.length - 1
+            newNum < state.currentTrap.data.length
               ? newNum
-              : state.currentTrap.data.length - 2,
+              : state.currentTrap.data.length - 1,
         },
       };
 
@@ -96,7 +96,7 @@ const trapInfoReducer = (state = initialState, action) => {
         ...state,
         currentTrap: {
           ...state.currentTrap,
-          num: state.currentTrap.data.length - 2,
+          num: state.currentTrap.data.length - 1,
         },
       };
 

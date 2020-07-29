@@ -20,7 +20,7 @@ class Lst extends Component {
               }
               onClick={() => this.props.fetchTrapData(item)}
             >
-              {item + 1}
+              {item}
             </div>
           ))}
         </div>

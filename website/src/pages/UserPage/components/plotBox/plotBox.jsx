@@ -24,7 +24,7 @@ class plotBox extends Component {
       <div className="plotBox">
         {/* Header */}
         <div className="box-header">
-          <h3 className="box-title">Trap #{id + 1} Data Plot</h3>
+          <h3 className="box-title">Trap #{id} Data Plot</h3>
         </div>
 
         <div className="infoBox-main">

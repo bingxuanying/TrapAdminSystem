@@ -13,14 +13,18 @@ import { userActions } from "store/actions";
 
 class infoBox extends Component {
   render() {
-    var enable = this.props.currentTrap.id !== null ? true : false;
+    var enable =
+      this.props.currentTrap.id !== null &&
+      this.props.currentTrap.data.length > 0
+        ? true
+        : false;
     var { id, num, data } = this.props.currentTrap;
     return (
       <div className="infoBox">
         {/* Header */}
         <div className="box-header">
           <h3 className="box-title">
-            Trap #{id + 1} Data - {num + 1}
+            Trap #{id} Data - {num + 1}
           </h3>
         </div>
 
@@ -78,7 +82,7 @@ class infoBox extends Component {
             <FontAwesomeIcon icon={faAngleLeft} />
           </button>{" "}
           <span>
-            Page {enable && num + 1} of {enable && data.length - 1}{" "}
+            Page {enable && num + 1} of {enable && data.length}{" "}
           </span>
           <button
             onClick={() => {
