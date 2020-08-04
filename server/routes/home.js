@@ -1,10 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const path = require("path");
-const mongoose = require("mongoose");
 const User = require("../models/users-model");
 const bcrypt = require("bcrypt");
-const passport = require("passport");
 const { check, validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken");
 require("dotenv/config");
