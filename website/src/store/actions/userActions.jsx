@@ -1,7 +1,5 @@
 import axios from "axios";
 
-// axios.defaults.baseURL = "http://13.57.57.242:3000";
-
 // Fetch trap lst
 export const fetchTrapLst = () => {
   return function (dispatch) {
@@ -11,7 +9,7 @@ export const fetchTrapLst = () => {
     });
 
     axios
-      .get("http://13.57.57.242:3000/api/fetchTrapIDs")
+      .get("/api/fetchTrapIDs")
       .then((res) => {
         dispatch({
           type: "FETCH_TRAP_LST_DONE",
@@ -35,7 +33,7 @@ export const fetchTrapLst = () => {
 export const fetchTrapData = (id) => {
   return function (dispatch) {
     axios
-      .get("http://13.57.57.242:3000/fetchRecordsByID", {
+      .get("/fetchRecordsByID", {
         params: {
           id: id,
         },

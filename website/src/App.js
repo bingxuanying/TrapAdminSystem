@@ -11,7 +11,7 @@ import UserPage from "pages/UserPage/UserPage";
 
 class App extends Component {
   componentDidMount() {
-    axios.get("/jwtAuth").then((res) => {
+    axios.get("/auth/jwtAuth").then((res) => {
       console.log(res);
       if (!res.err) this.props.updatePage(res.data);
       else

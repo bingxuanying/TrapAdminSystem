@@ -1,6 +1,5 @@
 import axios from "axios";
-
-// axios.defaults.baseURL = 'http://13.57.57.242:3000';
+// axios.defaults.baseURL = "http://13.57.57.242:3000";
 
 // Fetch Data
 const fetchUserInfo = (settings) => {

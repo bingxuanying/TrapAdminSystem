@@ -1,6 +1,8 @@
 import { createStore, applyMiddleware, compose } from "redux";
 import allReducers from "./reducers";
 import thunk from "redux-thunk";
+import axios from "axios";
+axios.defaults.baseURL = "http://13.57.57.242:3000";
 
 const composeEnhancers =
   typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__

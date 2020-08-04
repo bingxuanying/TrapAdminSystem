@@ -1,6 +1,5 @@
 import axios from "axios";
 import Cookies from "js-cookie";
-// axios.defaults.baseURL = "http://13.57.57.242:3000";
 
 export const updatePage = (data) => {
   return {
@@ -27,7 +26,7 @@ export const updateLoginPassword = (password) => {
 export const proceedLogin = (req) => {
   return function (dispatch) {
     axios
-      .post("/login", req)
+      .post("/auth/login", req)
       .then((res) => {
         console.log(res);
         Cookies.set("token", res.data.token);
@@ -82,7 +81,7 @@ export const updateRegisterRePassword = (rePassword) => {
 export const proceedRegister = (req) => {
   return function (dispatch) {
     axios
-      .post("/register", req)
+      .post("/auth/register", req)
       .then((res) => {
         console.log(res);
         Cookies.set("token", res.data.token);
