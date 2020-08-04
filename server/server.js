@@ -11,13 +11,6 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const path = require("path");
 
-const session = require("express-session");
-const MongoStore = require("connect-mongo")(session);
-const passport = require("passport");
-const LocalStrategy = require("passport-local").Strategy;
-const bcrypt = require("bcrypt");
-const User = require("./models/users-model");
-
 app.use((req, res, next) => {
   var myDate = new Date();
   myDate.setHours(myDate.getHours() - 8);
