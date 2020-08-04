@@ -32,7 +32,16 @@ class infoBox extends Component {
         <div className="infoBox-main">
           {/* Image */}
           <div className="infoBox-img">
-            <div className="infoBox-pic"></div>
+            <img
+              className="infoBox-pic"
+              src={
+                enable &&
+                "https://s3-us-west-1.amazonaws.com/grain.storage.project" +
+                  data[num].croppedFileUrl
+              }
+              alt={enable && data[num].croppedFileUrl}
+            />
+            {/* <div className="infoBox-pic"></div> */}
           </div>
           {/* Data */}
           <div className="infoBox-data">
