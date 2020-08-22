@@ -1,5 +1,10 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  NavLink,
+  Redirect,
+} from "react-router-dom";
 import SignUpForm from "./components/logIO/SignUpForm";
 import SignInForm from "./components/logIO/SignInForm";
 import "./HomePage.sass";
@@ -13,15 +18,15 @@ class HomePage extends Component {
           <div className="App_Form">
             <div className="PageSwitcher">
               <NavLink
-                to="/sign-in"
+                exact
+                to="/"
                 activeClassName="PageSwitcher_Item-Active"
                 className="PageSwitcher_Item"
               >
                 Sign In
               </NavLink>
               <NavLink
-                exact
-                to="/"
+                to="/register"
                 activeClassName="PageSwitcher_Item-Active"
                 className="PageSwitcher_Item "
               >
@@ -31,7 +36,8 @@ class HomePage extends Component {
 
             <div className="FormTitle">
               <NavLink
-                to="/sign-in"
+                exact
+                to="/"
                 activeClassName="FormTitle_Link-Active"
                 className="FormTitle_Link"
               >
@@ -39,8 +45,7 @@ class HomePage extends Component {
               </NavLink>{" "}
               or{" "}
               <NavLink
-                exact
-                to="/"
+                to="/register"
                 activeClassName="FormTitle_Link-Active"
                 className="FormTitle_Link"
               >
@@ -48,8 +53,9 @@ class HomePage extends Component {
               </NavLink>
             </div>
 
-            <Route exact path="/" component={SignUpForm}></Route>
-            <Route path="/sign-in" component={SignInForm}></Route>
+            <Route exact path="/" component={SignInForm} />
+            <Route path="/register" component={SignUpForm} />
+            <Redirect to="/" />
           </div>
         </div>
       </Router>

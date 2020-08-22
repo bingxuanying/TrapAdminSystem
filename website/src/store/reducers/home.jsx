@@ -4,6 +4,7 @@ const initialState = {
     page: "home",
     companyName: null,
     username: null,
+    token: null,
   },
   loginInfo: {
     username: "",
@@ -28,6 +29,7 @@ const userReducer = (state = initialState, action) => {
           page: action.payload.role,
           username: action.payload.username,
           companyName: action.payload.company,
+          token: "bearer " + action.payload.token,
         },
       };
 
