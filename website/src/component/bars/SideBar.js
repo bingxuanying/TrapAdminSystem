@@ -13,7 +13,7 @@ import "./SideBar.css";
 import adminSample from "assets/adminSample.jpg";
 
 import { connect } from "react-redux";
-import { adminActions } from "store/actions/index";
+import { adminActions, homeActions } from "store/actions/index";
 
 class SideBar extends Component {
   render() {
@@ -36,16 +36,9 @@ class SideBar extends Component {
           )}
         </div>
         {/* Main Menue */}
-        <ul className="mainmenu">
+        <div className="mainmenu">
           {/* --- MAIN Header --- */}
-          <li
-            className="header"
-            style={
-              this.props.barToggle === true
-                ? { width: "230px" }
-                : { width: "70" }
-            }
-          >
+          <div className="mainmenu-header">
             <span>
               {this.props.barToggle === true ? (
                 <div>MAIN NAVIGATION</div>
@@ -53,114 +46,52 @@ class SideBar extends Component {
                 <div>MAIN</div>
               )}
             </span>
-          </li>
-          {/* #0 Home */}
-          <li
-            className={
-              this.props.barToggle === true
-                ? "mainmenu-sub-lg"
-                : "mainmenu-sub-sm"
-            }
+          </div>
+          {/* #1 Almond */}
+          <div
+            className="mainmenu-row"
+            onClick={() => this.props.updateSection("Almond")}
           >
-            <a href="#">
-              <FontAwesomeIcon
-                className="mainmenu-fa"
-                icon={faHome}
-              ></FontAwesomeIcon>
-              {this.props.barToggle && (
-                <div>
-                  <span className="mainmenu-middle">Home</span>
-                  <span className="mainmenu-right">
-                    <FontAwesomeIcon
-                      icon={faAngleLeft}
-                      size="sm"
-                    ></FontAwesomeIcon>
-                  </span>
-                </div>
-              )}
-            </a>
-          </li>
-          {/* #1 Dashboard */}
-          <li
-            className={
-              this.props.barToggle === true
-                ? "mainmenu-sub-lg"
-                : "mainmenu-sub-sm"
-            }
+            <FontAwesomeIcon
+              className="mainmenu-fa"
+              icon={faHome}
+            ></FontAwesomeIcon>
+            {this.props.barToggle && (
+              <div>
+                <span className="mainmenu-middle">Almond</span>
+                <span className="mainmenu-right">
+                  <FontAwesomeIcon
+                    icon={faAngleLeft}
+                    size="sm"
+                  ></FontAwesomeIcon>
+                </span>
+              </div>
+            )}
+          </div>
+          {/* #2 Dashboard */}
+          <div
+            className="mainmenu-row"
+            onClick={() => this.props.updateSection("Grain")}
           >
-            <a href="#">
-              <FontAwesomeIcon
-                className="mainmenu-fa"
-                icon={faTachometerAlt}
-              ></FontAwesomeIcon>
-              {this.props.barToggle && (
-                <div>
-                  <span className="mainmenu-middle">Dashboard</span>
-                  <span className="mainmenu-right">
-                    <FontAwesomeIcon
-                      icon={faAngleLeft}
-                      size="sm"
-                    ></FontAwesomeIcon>
-                  </span>
-                </div>
-              )}
-            </a>
-          </li>
-          {/* #2 Monitoring */}
-          <li
-            className={
-              this.props.barToggle === true
-                ? "mainmenu-sub-lg"
-                : "mainmenu-sub-sm"
-            }
-          >
-            <a href="#">
-              <FontAwesomeIcon
-                className="mainmenu-fa"
-                icon={faCamera}
-              ></FontAwesomeIcon>
-              {this.props.barToggle && (
-                <div>
-                  <span className="mainmenu-middle">Monitoring</span>
-                  <span className="mainmenu-right">
-                    <FontAwesomeIcon
-                      icon={faAngleLeft}
-                      size="sm"
-                    ></FontAwesomeIcon>
-                  </span>
-                </div>
-              )}
-            </a>
-          </li>
-          {/* #3 Data Plot */}
-          <li
-            className={
-              this.props.barToggle === true
-                ? "mainmenu-sub-lg"
-                : "mainmenu-sub-sm"
-            }
-          >
-            <a href="#">
-              <FontAwesomeIcon
-                className="mainmenu-fa"
-                icon={faChartPie}
-              ></FontAwesomeIcon>
-              {this.props.barToggle && (
-                <div>
-                  <span className="mainmenu-middle">Data Plot</span>
-                  <span className="mainmenu-right">
-                    <FontAwesomeIcon
-                      icon={faAngleLeft}
-                      size="sm"
-                    ></FontAwesomeIcon>
-                  </span>
-                </div>
-              )}
-            </a>
-          </li>
+            <FontAwesomeIcon
+              className="mainmenu-fa"
+              icon={faTachometerAlt}
+            ></FontAwesomeIcon>
+            {this.props.barToggle && (
+              <div>
+                <span className="mainmenu-middle">Grain</span>
+                <span className="mainmenu-right">
+                  <FontAwesomeIcon
+                    icon={faAngleLeft}
+                    size="sm"
+                  ></FontAwesomeIcon>
+                </span>
+              </div>
+            )}
+          </div>
           {/* --- LABEL Header --- */}
-          <li
-            className="header"
+          <div
+            className="mainmenu-header"
             style={
               this.props.barToggle === true
                 ? { width: "230px" }
@@ -168,92 +99,34 @@ class SideBar extends Component {
             }
           >
             LABELS
-          </li>
+          </div>
           {/* #1 LABEL */}
-          <li
-            className={
-              this.props.barToggle === true
-                ? "mainmenu-sub-lg"
-                : "mainmenu-sub-sm"
-            }
-          >
-            <a href="#">
-              <FontAwesomeIcon
-                className="mainmenu-fa"
-                icon={faCircleNotch}
-                style={{ color: "#00a65a" }}
-              ></FontAwesomeIcon>
-              {this.props.barToggle && (
-                <div>
-                  <span className="mainmenu-middle">New Message</span>
-                </div>
-              )}
-            </a>
-          </li>
+          <div className="mainmenu-row">
+            <FontAwesomeIcon
+              className="mainmenu-fa"
+              icon={faCircleNotch}
+              style={{ color: "#f39c12 " }}
+            ></FontAwesomeIcon>
+            {this.props.barToggle && (
+              <div>
+                <span className="mainmenu-middle">Insect Detected</span>
+              </div>
+            )}
+          </div>
           {/* #2 LABEL */}
-          <li
-            className={
-              this.props.barToggle === true
-                ? "mainmenu-sub-lg"
-                : "mainmenu-sub-sm"
-            }
-          >
-            <a href="#">
-              <FontAwesomeIcon
-                className="mainmenu-fa"
-                icon={faCircleNotch}
-                style={{ color: "#00c0ef" }}
-              ></FontAwesomeIcon>
-              {this.props.barToggle && (
-                <div>
-                  <span className="mainmenu-middle">Information</span>
-                </div>
-              )}
-            </a>
-          </li>
-          {/* #3 LABEL */}
-          <li
-            className={
-              this.props.barToggle === true
-                ? "mainmenu-sub-lg"
-                : "mainmenu-sub-sm"
-            }
-          >
-            <a href="#">
-              <FontAwesomeIcon
-                className="mainmenu-fa"
-                icon={faCircleNotch}
-                style={{ color: "#f39c12 " }}
-              ></FontAwesomeIcon>
-              {this.props.barToggle && (
-                <div>
-                  <span className="mainmenu-middle">Warning</span>
-                </div>
-              )}
-            </a>
-          </li>
-          {/* #4 LABEL */}
-          <li
-            className={
-              this.props.barToggle === true
-                ? "mainmenu-sub-lg"
-                : "mainmenu-sub-sm"
-            }
-          >
-            <a href="#">
-              <FontAwesomeIcon
-                className="mainmenu-fa"
-                icon={faCircleNotch}
-                style={{ color: "#dd4b39  " }}
-              ></FontAwesomeIcon>
-              {this.props.barToggle && (
-                <div>
-                  <span className="mainmenu-middle">Important</span>
-                </div>
-              )}
-            </a>
-          </li>
-        </ul>
+          <div className="mainmenu-row">
+            <FontAwesomeIcon
+              className="mainmenu-fa"
+              icon={faCircleNotch}
+              style={{ color: "#dd4b39  " }}
+            ></FontAwesomeIcon>
+            {this.props.barToggle && (
+              <div>
+                <span className="mainmenu-middle">Severe Infestation</span>
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     );
   }
@@ -270,6 +143,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = () => {
   return {
     switchBarToggle: adminActions.switchBarToggle,
+    updateSection: homeActions.updateSection,
   };
 };
 

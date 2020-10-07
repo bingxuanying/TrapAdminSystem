@@ -8,6 +8,15 @@ export const updatePage = (data) => {
   };
 };
 
+export const updateSection = (section) => {
+  return {
+    type: "UPDATE_SECTION",
+    payload: {
+      section: section,
+    },
+  };
+};
+
 export const updateLoginUsr = (username) => {
   console.log(username);
   return {

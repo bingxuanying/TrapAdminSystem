@@ -12,17 +12,39 @@ class Lst extends Component {
           <h3 className="box-title">Trap List</h3>
         </div>
         <div className="traplst-main">
-          {this.props.trapLst.map((item) => (
-            <div
-              className="trap"
-              style={
-                item === this.props.curid ? { backgroundColor: "#3c8dbc" } : {}
-              }
-              onClick={() => this.props.fetchTrapData(item)}
-            >
-              {item}
-            </div>
-          ))}
+          {this.props.trapLst.map((trapid) => {
+            if (this.props.section === "Grain") {
+              return (
+                <div
+                  className="trap"
+                  style={
+                    trapid === this.props.curid
+                      ? { backgroundColor: "#3c8dbc" }
+                      : {}
+                  }
+                  onClick={() => this.props.fetchTrapData(trapid)}
+                >
+                  {trapid}
+                </div>
+              );
+            } else if (this.props.section === "Almond") {
+              return trapid === 1 || trapid == 2 ? (
+                <div
+                  className="trap"
+                  style={
+                    trapid === this.props.curid
+                      ? { backgroundColor: "#3c8dbc" }
+                      : {}
+                  }
+                  onClick={() => this.props.fetchTrapData(trapid)}
+                >
+                  {trapid}
+                </div>
+              ) : (
+                <></>
+              );
+            }
+          })}
         </div>
       </div>
     );
@@ -33,6 +55,7 @@ const mapStateToProps = (state) => {
   return {
     trapLst: state.user.trapLst,
     curid: state.user.currentTrap.id,
+    section: state.home.userInfo.section,
   };
 };
 

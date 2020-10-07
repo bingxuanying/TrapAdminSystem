@@ -2,6 +2,7 @@ const initialState = {
   isLogin: false,
   userInfo: {
     page: "home",
+    section: "Almond",
     companyName: null,
     username: null,
     token: null,
@@ -30,6 +31,15 @@ const userReducer = (state = initialState, action) => {
           username: action.payload.username,
           companyName: action.payload.company,
           token: "bearer " + action.payload.token,
+        },
+      };
+
+    case "UPDATE_SECTION":
+      return {
+        ...state,
+        userInfo: {
+          ...state.userInfo,
+          section: action.payload.section,
         },
       };
 

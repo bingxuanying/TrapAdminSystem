@@ -18,7 +18,7 @@ class Content extends Component {
       <div className="user-content-canvas">
         {/* Content Header */}
         <div className="user-content-header">
-          <span>Home ></span>
+          <span>{this.props.section} ></span>
         </div>
         {/* Main Content */}
         <div className="user-content-main">
@@ -42,6 +42,7 @@ class Content extends Component {
 const mapStateToProps = (state) => {
   return {
     trapLst: state.user.trapLst,
+    section: state.home.userInfo.section,
   };
 };
 
