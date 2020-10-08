@@ -39,9 +39,26 @@ export const fetchTrapData = (id) => {
         },
       })
       .then((res) => {
+        // Hard coded
+        let data = [];
+        if (id === 1 || id === 2) {
+          let len = res.data.length - 200;
+          for (let i = 0; i < len; i++) {
+            let curData = res.data[i];
+            let hr = parseInt(curData.timeStamp.slice(11, 13));
+            let min = parseInt(curData.timeStamp.slice(14, 16));
+
+            if (!(hr % 12) && min < 30) {
+              data.push(curData);
+            }
+          }
+        } else {
+          data = res.data;
+        }
+
         dispatch({
           type: "FETCH_TRAP_DATA_DONE",
-          payload: res.data,
+          payload: data,
         });
 
         dispatch({
